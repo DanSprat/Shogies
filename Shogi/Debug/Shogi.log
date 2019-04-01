@@ -1,0 +1,4 @@
+﻿  Source.cpp
+c:\users\work\source\repos\shogi\shogi\source.cpp(117): warning C4805: ==: небезопасное смешение типа "float" и типа "bool" в операции
+c:\users\work\source\repos\shogi\shogi\source.cpp(168): warning C4244: аргумент: преобразование "int" в "float", возможна потеря данных
+  Shogi.vcxproj -> C:\Users\Work\source\repos\Shogi\Debug\Shogi.exe

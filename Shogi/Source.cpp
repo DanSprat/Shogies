@@ -7,58 +7,59 @@ int main()
 	int tempX = 0; int tempY = 0;
 	int turn = 2;
 	float MouseLeft = false;
-	Figures KingWhite;
-	//Figures KingBlack;
-	Figures RookWhite1;
-	Figures RookWhite2;
-	Figures RookBlack1;
-	Figures RookBlack2;
-	Figures KnightWhite1;
-	Figures KnightWhite2;
-	Figures KnightBlack1;
-	Figures KnightBlack2;
-	Figures PawnWhite1;
-	Figures PawnWhite2;
-	Figures PawnWhite3;
-	Figures PawnWhite4;
-	Figures PawnWhite5;
-	Figures PawnWhite6;
-	Figures PawnWhite7;
-	Figures PawnWhite8;
-	Figures PawnWhite9;
-	Figures PawnBlack1;
-	Figures PawnBlack2;
-	Figures PawnBlack3;
-	Figures PawnBlack4;
-	Figures PawnBlack5;
-	Figures PawnBlack6;
-	Figures PawnBlack7;
-	Figures PawnBlack8;
-	Figures PawnBlack9;
-	Figures SilverWhite1;
-	Figures SilverWhite2;
-	Figures SilverBlack1;
-	Figures SilverBlack2;
-	Figures GoldWhite1;
-	Figures GoldWhite2;
-	Figures GoldBlack1;
-	Figures GoldBlack2;
-	Figures ArrowWhite1;
-	Figures ArrowWhite2;
-	Figures ArrowBlack1;
-	Figures ArrowBlack2;
-	Figures KingBlack(9, 9, 2, "figures1.png", "figures1.png", false);
+	King KingWhite;
+	King KingBlack(9, 9, 2, "figures1.png");
+	Rook RookWhite1(1, 1, 1, "figures1.png", "figures1.png");
+	Rook RookBlack1;
+	Horse HorseWhite1;
+	Horse HorseBlack1;
+	Horse HorseBlack2;
+	Horse HorseWhite2;
+	Knight KnightBlack1;
+	Knight KnightWhite1;
+	Pawn PawnWhite1(1, 1, 1, "figures1.png", "figures1.png");
+	Pawn PawnWhite2;
+	Pawn PawnWhite3;
+	Pawn PawnWhite4;
+	Pawn PawnWhite5;
+	Pawn PawnWhite6;
+	Pawn PawnWhite7;
+	Pawn PawnWhite8;
+	Pawn PawnWhite9;
+	Pawn PawnBlack1;
+	Pawn PawnBlack2;
+	Pawn PawnBlack3;
+	Pawn PawnBlack4;
+	Pawn PawnBlack5;
+	Pawn PawnBlack6;
+	Pawn PawnBlack7;
+	Pawn PawnBlack8;
+	Pawn PawnBlack9;
+	Silver SilverWhite1;
+	Silver SilverWhite2;
+	Silver SilverBlack1;
+	Silver SilverBlack2;
+	Gold GoldWhite1;
+	Gold GoldWhite2;
+	Gold GoldBlack1;
+	Gold GoldBlack2;
+	Arrow ArrowWhite1;
+	Arrow ArrowWhite2;
+	Arrow ArrowBlack1;
+	Arrow ArrowBlack2;
+	
+
 
 	Figures *FiguresBlack[20] = {
 								 &KingBlack,&ArrowBlack2,&ArrowBlack1,&GoldBlack1,&GoldBlack2,&SilverBlack1,&SilverBlack2,
 								 &PawnBlack1,&PawnBlack2,&PawnBlack3,&PawnBlack4,&PawnBlack5,&PawnBlack6,&PawnBlack7,&PawnBlack8,
-								 &PawnBlack9,&KnightBlack1,&KnightBlack2,&RookBlack1,&RookBlack2
+								 &PawnBlack9,&KnightBlack1,&HorseBlack2,&RookBlack1,&HorseBlack1
 	};
 
 	Figures *FiguresWhite[20] = {
 								 &KingWhite,&ArrowWhite2,&ArrowWhite1,&GoldWhite1,&GoldWhite2,&SilverWhite1,&SilverWhite2,
 								 &PawnWhite1,&PawnWhite2,&PawnWhite3,&PawnWhite4,&PawnWhite5,&PawnWhite6,&PawnWhite7,&PawnWhite8,
-								 &PawnWhite9,&KnightWhite1,&KnightWhite2,&RookWhite1,&RookWhite2
+								 &PawnWhite9,&KnightWhite1,&HorseWhite2,&RookWhite1,&HorseWhite1
 	};
 	Figures *pa;
 	pa = &KingWhite;
@@ -76,7 +77,6 @@ int main()
 							0,2,2,2,2,2,2,2,2,2 };
 
 
-	KingBlack.SetRoots(5, 1, 2, 3, 5, 8);
 	RenderWindow window(VideoMode(1920, 1080), "The Shogi Game");
 	Image board;
 	board.loadFromFile("images/TestBoard.jpg");
@@ -102,11 +102,7 @@ int main()
 	figuresprite.setTexture(figuretexture);
 	figuresprite.setPosition(555, 135);
 
-
-
-
-
-	while (window.isOpen())
+		while (window.isOpen())
 	{
 		Vector2i pixelPos = Mouse::getPosition(window);
 		Event event;
@@ -116,14 +112,14 @@ int main()
 				window.close();
 			if (MouseLeft == false)
 			{
-				if (event.type == Event::MouseButtonPressed)//если нажата клавиша мыши
+				if (event.type == Event::MouseButtonPressed)//РµСЃР»Рё РЅР°Р¶Р°С‚Р° РєР»Р°РІРёС€Р° РјС‹С€Рё
 					if (event.key.code == Mouse::Left)
 					{
 						pa = SelectedFigure(turn, FiguresBlack, FiguresWhite, pixelPos.x, pixelPos.y);
 						if (pa != 0)
 						{
-							(*pa).SpriteD.setColor(Color::Green);//красим спрайт в зеленый,тем самым говоря игроку,что он выбрал персонажа и может сделать ход
-							(*pa).isClicked = true;
+							(*pa).getSprite().setColor(Color::Green);//РєСЂР°СЃРёРј СЃРїСЂР°Р№С‚ РІ Р·РµР»РµРЅС‹Р№,С‚РµРј СЃР°РјС‹Рј РіРѕРІРѕСЂСЏ РёРіСЂРѕРєСѓ,С‡С‚Рѕ РѕРЅ РІС‹Р±СЂР°Р» РїРµСЂСЃРѕРЅР°Р¶Р° Рё РјРѕР¶РµС‚ СЃРґРµР»Р°С‚СЊ С…РѕРґ
+							(*pa).getIsClicked() = true;
 							event.type = Event::MouseButtonReleased;
 							MouseLeft = true;
 						}
@@ -131,26 +127,26 @@ int main()
 			}
 			if (pa != 0)
 			{
-				if ((*pa).isClicked)
+				if ((*pa).getIsClicked())
 				{
-					if (event.type == Event::MouseButtonPressed)//если нажата клавиша мыши
+					if (event.type == Event::MouseButtonPressed)//РµСЃР»Рё РЅР°Р¶Р°С‚Р° РєР»Р°РІРёС€Р° РјС‹С€Рё
 						 if (event.key.code == Mouse::Right)
 
 						{
-							(*pa).isClicked = false;
-							(*pa).SpriteD.setColor(Color::White);
+							(*pa).getIsClicked() = false;
+							(*pa).getSprite().setColor(Color::White);
 							MouseLeft = false;
 							
 							
 						}
 				
-					//if (event.type == Event::MouseButtonPressed)//если нажата клавиша мыши
+					
 						 else
 						if (event.key.code == Mouse::Left)
 						{
-							(*pa).isClicked = false;
-							(*pa).isMove = true;
-							(*pa).SpriteD.setColor(Color::White);
+							(*pa).getIsClicked() = false;
+							(*pa).getIsMove() = true;
+							(*pa).getSprite().setColor(Color::White);
 							MouseLeft = false;
 							tempX = (pixelPos.x);
 							tempY = pixelPos.y;
@@ -163,10 +159,10 @@ int main()
 		}
 		if (pa != 0)
 		{
-			if ((*pa).isMove)
+			if ((*pa).getIsMove())
 			{
-				(*pa).SpriteD.setPosition(tempX, tempY);
-				(*pa).isMove = false;
+				(*pa).getSprite().setPosition(tempX, tempY);
+				(*pa).getIsMove() = false;
 			}
 		}
 
@@ -174,7 +170,7 @@ int main()
 		window.clear();
 		window.draw(coversprite);
 		window.draw(boardsprite);
-		window.draw(KingBlack.SpriteD);
+		window.draw(KingBlack.getSprite());
 		window.display();
 	}
 

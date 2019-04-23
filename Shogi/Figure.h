@@ -25,15 +25,15 @@ protected:
 	int side; //Сторона к которой принадлежит фигура
 	int roots[10][10];//Матрица ходов,куда доступно ходить фигуре
 	int turn, transformation;//Флаг очереди хода {0,1} и состояние трансформации {0(обычная фигура),1(трансформированная),2(выбывшая)}
-	float x, y;//позиция фигуры на доске относительно левого верхнего угла
+	int x, y;//позиция фигуры на доске относительно левого верхнего угла
 	VectorMove *RulesMove;
 public:
 	Sprite& getSprite();
 	bool& getIsMove();
 	bool& getIsClicked();
-	int SearchRoots(Figures a);
+	void SearchRoots(int array[10][10],Figures &pa);
 	virtual void ChangeArr();
-	Figures(float x, float y, int side, String FS, String FT, bool HaveTransform);
+	Figures(int x, int y, int side, String FS, String FT, bool HaveTransform);
     VectorMove getRulesMove(int i);
 	Figures();
 	~Figures();
@@ -44,11 +44,12 @@ Figures* SelectedFigure(int &turn, Figures *FiguresBlack[], Figures *FiguresWhit
 
 class King :public Figures {
 protected:
+
 	VectorMove RulesMove[8] = { {0,1},{1,0},{1,1},{1,-1},{-1,1},{0,-1},{-1,0},{-1,-1} };
 	bool check;//For the Kings
 	bool checkmate;//also
 public:
-	King(float x, float y, int side, String FS);
+	King(int x, int y, int side, String FS);
 	King();
 };
 ////////////////////////////////////////////////////////////
@@ -59,7 +60,7 @@ protected:
 	//VectorMove *RulesMove;
 	VectorMove RulesMoveTransform[6];
 public:
-	Pawn(float x, float y, int side, String FS, String FT);
+	Pawn(int x, int y, int side, String FS, String FT);
 	virtual void ChangeArr()
 	{
 		delete[] RulesMove;
@@ -78,7 +79,7 @@ protected:
 	//VectorMove *RulesMove;
 	VectorMove RulesMoveTransform[36];
 public: 
-	Rook(float x, float y, int side, String FS, String FT);
+	Rook(int x, int y, int side, String FS, String FT);
 	virtual void ChangeArr()
 	{
 		delete[] RulesMove;
@@ -97,7 +98,7 @@ public:
 class Knight:public Figures {
 	VectorMove RulesMoveTransform[36];
 public:
-	Knight(float x, float y, int side, String FS, String FT);
+	Knight(int x, int y, int side, String FS, String FT);
 	virtual void ChangeArr()
 	{
 		delete[] RulesMove;
@@ -115,7 +116,7 @@ public:
 class Arrow:public Figures {
 	VectorMove RulesMoveTransform[6];
 public:
-	Arrow(float x, float y, int side, String FS, String FT);
+	Arrow(int x, int y, int side, String FS, String FT);
 	virtual void ChangeArr()
 	{
 		delete[] RulesMove;
@@ -137,7 +138,7 @@ public:
 class Horse:public Figures {
 	VectorMove RulesMoveTransform[6];
 public:
-	Horse(float x, float y, int side, String FS, String FT);
+	Horse(int x, int y, int side, String FS, String FT);
 	virtual void ChangeArr()
 	{
 		delete[] RulesMove;
@@ -156,14 +157,37 @@ public:
 //////////////CLASS OF THE GOLD////////////////////////////////////
 class Gold :public Figures {
 public:
-	Gold(float x, float y, int side, String FS);
+	Gold(int x, int y, int side, String FS);
 	Gold();
 };
 
 class Silver : public Figures {
 public:
-	Silver(float x, float y, int side, String FS);
+	Silver(int x, int y, int side, String FS);
 	Silver();
 };
 
+bool CheckCheck(Figures &a,int NewX,int NewY);
 
+struct Sosi {
+private:
+	int x, y;
+public:
+	
+	int getScaleX()
+	{
+		return x;
+	}
+	int getScaleY()
+	{
+		return y;
+	}
+	void putX(int a)
+	{
+		x = a;
+	}
+	void putY(int a)
+	{
+		y = a;
+	}
+};

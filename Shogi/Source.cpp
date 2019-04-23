@@ -101,7 +101,8 @@ int main()
 	Sprite figuresprite;
 	figuresprite.setTexture(figuretexture);
 	figuresprite.setPosition(555, 135);
-
+	VectorMove loh = { 1,3 };
+	cout << loh.getScaleCompX();
 		while (window.isOpen())
 	{
 		Vector2i pixelPos = Mouse::getPosition(window);
@@ -118,6 +119,7 @@ int main()
 						pa = SelectedFigure(turn, FiguresBlack, FiguresWhite, pixelPos.x, pixelPos.y);
 						if (pa != 0)
 						{
+							(*pa).SearchRoots(boardik,*pa);
 							(*pa).getSprite().setColor(Color::Green);//красим спрайт в зеленый,тем самым говоря игроку,что он выбрал персонажа и может сделать ход
 							(*pa).getIsClicked() = true;
 							event.type = Event::MouseButtonReleased;

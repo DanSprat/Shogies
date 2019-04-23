@@ -6,6 +6,8 @@ class VectorMove
 public:
 	int& getCompX();
 	int& getCompY();
+	int getScaleCompX();
+	int getScaleCompY();
 
 	VectorMove();
 	VectorMove(int a, int b);

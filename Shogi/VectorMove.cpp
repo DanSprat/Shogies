@@ -23,3 +23,11 @@ int& VectorMove::getCompY()
 {
 	return  this->y;
 }
+int VectorMove::getScaleCompX()
+{
+	return x;
+}
+int VectorMove::getScaleCompY()
+{
+	return this->y;
+}

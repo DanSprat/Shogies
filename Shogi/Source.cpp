@@ -9,7 +9,7 @@ int main()
 	float MouseLeft = false;
 	King KingWhite;
 	King KingBlack(9, 9, 2, "figures1.png");
-	Rook RookWhite1(1, 1, 1, "figures1.png", "figures1.png");
+	Rook RookWhite1(6, 5, 1, "figures1.png", "figures1.png");
 	Rook RookBlack1;
 	Horse HorseWhite1;
 	Horse HorseBlack1;
@@ -119,7 +119,8 @@ int main()
 						pa = SelectedFigure(turn, FiguresBlack, FiguresWhite, pixelPos.x, pixelPos.y);
 						if (pa != 0)
 						{
-							(*pa).SearchRoots(boardik,*pa);
+							pa = &PawnWhite1;
+							RookWhite1.SearchRoots(boardik,*pa);
 							(*pa).getSprite().setColor(Color::Green);//красим спрайт в зеленый,тем самым говоря игроку,что он выбрал персонажа и может сделать ход
 							(*pa).getIsClicked() = true;
 							event.type = Event::MouseButtonReleased;

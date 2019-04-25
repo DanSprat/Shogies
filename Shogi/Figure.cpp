@@ -92,7 +92,10 @@ bool& Figures::getIsClicked()
 {
 	return this->isClicked;
 }
-
+int Figures::getSizeOfRules()
+{
+	return this->SizeOfRules;
+}
 //////////////////////////////////////////////
 
 
@@ -122,14 +125,25 @@ Figures* SelectedFigure(int &turn, Figures* FiguresBlack[], Figures* FiguresWhit
 	}
 
 }
-King::King(int x, int y, int side, String FS)
+King::King(int a, int b, int s, String FS)
 {
+	side = s;
+	RulesMove = new VectorMove[8];
+	SizeOfRules = 8;
+	RulesMove[0] = {0,1};
+	RulesMove[1] = {1,1};
+	RulesMove[2] = {1,0};
+	RulesMove[3] = {1,-1};
+	RulesMove[4] = {-1,1};
+	RulesMove[5] = {-1,0};
+	RulesMove[6] = {0,-1};
+	RulesMove[7] = {-1,-1};
 	roots[10][10];
-	memset(roots, 0, sizeof(roots));
+	memset(roots, 0, sizeof(roots)/4);
 	isMove = false; isClicked = false;
 	int X, Y;
-	X = x;
-	Y = y;
+	x = a;
+	y = b;
 	transformation = 0;
 	String FileDef = FS;
 	SpriteD.setOrigin(55 / 2, 65 / 2);
@@ -212,8 +226,10 @@ VectorMove Figures::getRulesMove(int i)
 {
 	return RulesMove[i];
 }
-Rook::Rook(int x, int y, int side, String FS, String FT)
+Rook::Rook(int a, int b, int s, String FS, String FT)
+
 {
+	SizeOfRules = 32;
 	RulesMove = new VectorMove[32];
 	for (int i = 1; i < 9; i++)
 	{
@@ -245,13 +261,14 @@ Rook::Rook(int x, int y, int side, String FS, String FT)
 	memset(roots, 0, sizeof(roots));
 	isMove = false; isClicked = false;
 	int X, Y;
-	X = x;
-	Y = y;
+	x = a;
+	y = b;
 	transformation = 0;
 	HaveTransform = 1;
 	String FileDef = FS;
 	String FileTrans = FT;
 	SpriteD.setOrigin(55 / 2, 65 / 2);
+	side = s;
 
 	//***************************Описываем изображение фигуры в обычном виде*************************//
 
@@ -546,6 +563,7 @@ Horse::Horse(int x, int y, int side, String FS, String FT)
  }
  void Figures::SearchRoots(int array[10][10],Figures& pa)
  {
+	 cout << array[8][8];
 	 VectorMove StopPos[8];
 	 for (int i = 0; i < 8; i++)
 	 {
@@ -553,21 +571,23 @@ Horse::Horse(int x, int y, int side, String FS, String FT)
 		 StopPos[i].getCompY() = 0;
 
 	 }
+
 	 int i = 0;
 	 int  tempX=0;
 	 int tempY=0;
-	 for (i = 0; i < sizeof(RulesMove); i++)
+	 int k = sizeof(RulesMove);
+	 for (i = 0; i < SizeOfRules; i++)
 	 {
 		 tempX = x + RulesMove[i].getScaleCompX();
 		 tempY = y + RulesMove[i].getScaleCompY();
 		 if ((tempX<10)&&(tempX>0)&&(tempY<10)&&(tempY>0))
 		 {
-			 if (sizeof(RulesMove) > 10)
+			 if (SizeOfRules > 10)
 			 {
 				 if ((array[tempX][tempY]!=side) && (CheckCheck(pa, tempX, tempY) == 1))
 				 {
 					 roots[tempX][tempY] = 1;
-					 if (array[tempX][tempY] == 0)
+					 if (array[tempY][tempX] == 0)
 					 { }
 					 else
 					 {
@@ -576,43 +596,46 @@ Horse::Horse(int x, int y, int side, String FS, String FT)
 				 }
 				 else
 				 {
-					 roots[tempX][tempY] = 0;
+					 roots[tempY][tempX] = 0;
 					 StopPos[i++] = { tempX,tempY };
 				 }
 			 }
-			 else if ((array[tempX][tempY] != side) && (CheckCheck(pa, tempX, tempY) == 1))
+			 else if ((array[tempY][tempX] != side) && (CheckCheck(pa, tempX, tempY) == 1))
 			 {
-				 roots[tempX][tempY] = 1;
+				 roots[tempY][tempX] = 1;
 			 }
 			 else
 			 {
-				 roots[tempX][tempY] = 0;
+				 roots[tempY][tempX] = 0;
 			 }
 
 		 }
 	}
-	 for (i = 0; i < 8; i++)
+	 if (SizeOfRules > 10)
 	 {
-		 int j = 1;
-		 int temp2X = 0;
-		 int temp2Y = 0;
-		 if (StopPos[i].getCompX() > StopPos[i].getCompY())
+		 for (i = 0; i < 8; i++)
 		 {
-			 temp2X = (StopPos[i].getCompX()) / abs(StopPos[i].getCompX());
-			 temp2Y= (StopPos[i].getCompY()) / abs(StopPos[i].getCompX());
-		 }
-		 else
-		 {
-			 temp2X = (StopPos[i].getCompX()) / abs(StopPos[i].getCompY());
-			 temp2Y = (StopPos[i].getCompY()) / abs(StopPos[i].getCompY());
-		 }
-		 while (((StopPos[i].getCompX()+temp2X*j) < 10) && ((StopPos[i].getCompX() + temp2X * j) > 0) && ((StopPos[i].getCompY() + temp2Y * j) < 10) && ((StopPos[i].getCompY() + temp2Y * j > 0)))
-		 {
-			 StopPos[i].getCompX() += temp2X*(j);
-			 StopPos[i].getCompY() += temp2Y*(j);
-             roots[StopPos[i].getCompX()][StopPos[i].getCompY()] = 0;
-			 j++;
+			 int j = 1;
+			 int temp2X = 0;
+			 int temp2Y = 0;
+			 if (StopPos[i].getCompX() > StopPos[i].getCompY())
+			 {
+				 temp2X = (StopPos[i].getCompX()) / abs(StopPos[i].getCompX());
+				 temp2Y = (StopPos[i].getCompY()) / abs(StopPos[i].getCompX());
+			 }
+			 else
+			 {
+				 temp2X = (StopPos[i].getCompX()) / abs(StopPos[i].getCompY());
+				 temp2Y = (StopPos[i].getCompY()) / abs(StopPos[i].getCompY());
+			 }
+			 while (((StopPos[i].getCompX() + temp2X * j) < 10) && ((StopPos[i].getCompX() + temp2X * j) > 0) && ((StopPos[i].getCompY() + temp2Y * j) < 10) && ((StopPos[i].getCompY() + temp2Y * j > 0)))
+			 {
+				 StopPos[i].getCompX() += temp2X * (j);
+				 StopPos[i].getCompY() += temp2Y * (j);
+				 roots[StopPos[i].getCompX()][StopPos[i].getCompY()] = 0;
+				 j++;
 
+			 }
 		 }
 	 }
  }

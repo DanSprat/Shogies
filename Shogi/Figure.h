@@ -27,7 +27,9 @@ protected:
 	int turn, transformation;//Флаг очереди хода {0,1} и состояние трансформации {0(обычная фигура),1(трансформированная),2(выбывшая)}
 	int x, y;//позиция фигуры на доске относительно левого верхнего угла
 	VectorMove *RulesMove;
+	int SizeOfRules;
 public:
+	int getSizeOfRules();
 	Sprite& getSprite();
 	bool& getIsMove();
 	bool& getIsClicked();
@@ -45,11 +47,10 @@ Figures* SelectedFigure(int &turn, Figures *FiguresBlack[], Figures *FiguresWhit
 class King :public Figures {
 protected:
 
-	VectorMove RulesMove[8] = { {0,1},{1,0},{1,1},{1,-1},{-1,1},{0,-1},{-1,0},{-1,-1} };
 	bool check;//For the Kings
 	bool checkmate;//also
 public:
-	King(int x, int y, int side, String FS);
+	King(int x, int y, int s, String FS);
 	King();
 };
 ////////////////////////////////////////////////////////////
@@ -57,7 +58,6 @@ public:
 //////////////////CLASS OF THE PAWN /////////////////////////
 class Pawn :public Figures {
 protected:
-	//VectorMove *RulesMove;
 	VectorMove RulesMoveTransform[6];
 public:
 	Pawn(int x, int y, int side, String FS, String FT);
@@ -76,10 +76,9 @@ public:
 ///////CLASS OF THE ROOK ////////////////////////
 class Rook :public Figures {
 protected:
-	//VectorMove *RulesMove;
 	VectorMove RulesMoveTransform[36];
 public: 
-	Rook(int x, int y, int side, String FS, String FT);
+	Rook(int a, int b, int s, String FS, String FT);
 	virtual void ChangeArr()
 	{
 		delete[] RulesMove;

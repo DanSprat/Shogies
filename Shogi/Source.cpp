@@ -1,5 +1,5 @@
 #include <SFML/Graphics.hpp>
-#include "Figure.h"
+#include "Figures.h"
 using namespace sf;
 int main()
 
@@ -47,7 +47,7 @@ int main()
 	Arrow ArrowWhite2;
 	Arrow ArrowBlack1;
 	Arrow ArrowBlack2;
-	
+
 
 
 	Figures *FiguresBlack[20] = {
@@ -62,7 +62,7 @@ int main()
 								 &PawnWhite9,&KnightWhite1,&HorseWhite2,&RookWhite1,&HorseWhite1
 	};
 	Figures *pa;
-	pa = &KingWhite;
+	pa = &RookWhite1;
 	float heroteleporttimer = 0;
 	Clock clock;
 	int boardik[10][10] = { 0,0,0,0,0,0,0,0,0,0,
@@ -101,9 +101,7 @@ int main()
 	Sprite figuresprite;
 	figuresprite.setTexture(figuretexture);
 	figuresprite.setPosition(555, 135);
-	VectorMove loh = { 1,3 };
-	cout << loh.getScaleCompX();
-		while (window.isOpen())
+	while (window.isOpen())
 	{
 		Vector2i pixelPos = Mouse::getPosition(window);
 		Event event;
@@ -119,8 +117,7 @@ int main()
 						pa = SelectedFigure(turn, FiguresBlack, FiguresWhite, pixelPos.x, pixelPos.y);
 						if (pa != 0)
 						{
-							pa = &PawnWhite1;
-							RookWhite1.SearchRoots(boardik,*pa);
+							(*pa).SearchRoots(boardik, *pa);
 							(*pa).getSprite().setColor(Color::Green);//красим спрайт в зеленый,тем самым говоря игроку,что он выбрал персонажа и может сделать ход
 							(*pa).getIsClicked() = true;
 							event.type = Event::MouseButtonReleased;
@@ -133,30 +130,30 @@ int main()
 				if ((*pa).getIsClicked())
 				{
 					if (event.type == Event::MouseButtonPressed)//если нажата клавиша мыши
-						 if (event.key.code == Mouse::Right)
+						if (event.key.code == Mouse::Right)
 
 						{
 							(*pa).getIsClicked() = false;
 							(*pa).getSprite().setColor(Color::White);
 							MouseLeft = false;
-							
-							
+
+
 						}
-				
-					
-						 else
-						if (event.key.code == Mouse::Left)
-						{
-							(*pa).getIsClicked() = false;
-							(*pa).getIsMove() = true;
-							(*pa).getSprite().setColor(Color::White);
-							MouseLeft = false;
-							tempX = (pixelPos.x);
-							tempY = pixelPos.y;
 
-					    }
+
+						else
+							if (event.key.code == Mouse::Left)
+							{
+								(*pa).getIsClicked() = false;
+								(*pa).getIsMove() = true;
+								(*pa).getSprite().setColor(Color::White);
+								MouseLeft = false;
+								tempX = (pixelPos.x);
+								tempY = pixelPos.y;
+
+							}
 				}
-				
+
 			}
 
 		}

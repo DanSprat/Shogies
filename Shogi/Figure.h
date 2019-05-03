@@ -31,13 +31,13 @@ protected:
 public:
 	int getCordX();
 	int getCordY();
-
-	bool CheckCheck(Figures *FiguresB[],Figures &a, int array[10][10], int NewX, int NewY);
+	bool IsCheck(int array[10][10],int KingX,int KingY);
+	bool CheckCheck(Figures *FiguresB[], Figures* FiguresW[], Figures &a, int array[10][10], int NewX, int NewY);
 	int getSizeOfRules();
 	Sprite& getSprite();
 	bool& getIsMove();
 	bool& getIsClicked();
-	void SearchRoots(Figures *FiguresB[],int array[10][10], Figures &pa);
+	void SearchRoots(Figures *FiguresB[], Figures* FiguresW[], int array[10][10], Figures &pa);
 	virtual void ChangeArr();
 	Figures(int x, int y, int side, String FS, String FT, bool HaveTransform);
 	VectorMove getRulesMove(int i);

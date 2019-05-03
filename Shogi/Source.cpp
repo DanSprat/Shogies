@@ -1,5 +1,5 @@
 #include <SFML/Graphics.hpp>
-#include "Figures.h"
+#include "Figure.h"
 using namespace sf;
 int main()
 
@@ -7,8 +7,8 @@ int main()
 	int tempX = 0; int tempY = 0;
 	int turn = 2;
 	float MouseLeft = false;
-	King KingWhite;
-	King KingBlack(9, 9, 2, "figures1.png");
+	King KingWhite(3,4,1, "figures1.png");
+	King KingBlack(4, 3, 2, "figures1.png");
 	Rook RookWhite1(6, 5, 1, "figures1.png", "figures1.png");
 	Rook RookBlack1;
 	Horse HorseWhite1;
@@ -65,7 +65,7 @@ int main()
 	pa = &RookWhite1;
 	float heroteleporttimer = 0;
 	Clock clock;
-	int boardik[10][10] = { 0,0,0,0,0,0,0,0,0,0,
+	/*int boardik[10][10] = { 0,0,0,0,0,0,0,0,0,0,
 							0,1,1,1,1,1,1,1,1,1,
 							0,0,1,0,0,0,0,0,1,0,
 							0,1,1,1,1,1,1,1,1,1,
@@ -75,6 +75,17 @@ int main()
 							0,2,2,2,2,2,2,2,2,2,
 							0,0,2,0,0,0,0,0,2,0,
 							0,2,2,2,2,2,2,2,2,2 };
+							*/
+	int boardik[10][10] = { 0,0,0,0,0,0,0,0,0,0,
+							0,1,0,0,0,0,0,0,0,0,
+							0,0,0,0,0,0,0,0,0,0,
+							0,0,0,0,0,1,0,0,0,0,
+							0,0,0,2,0,0,0,0,0,0,
+							0,0,0,0,0,0,0,0,0,0,
+							0,0,0,0,0,0,0,0,0,0,
+							0,2,0,0,0,0,0,0,0,0,
+							0,2,0,0,0,0,0,0,0,0,
+							0,0,0,0,0,0,0,0,0,0 };
 
 
 	RenderWindow window(VideoMode(1920, 1080), "The Shogi Game");
@@ -117,7 +128,7 @@ int main()
 						pa = SelectedFigure(turn, FiguresBlack, FiguresWhite, pixelPos.x, pixelPos.y);
 						if (pa != 0)
 						{
-							(*pa).SearchRoots(boardik, *pa);
+							(*pa).SearchRoots(FiguresBlack, FiguresWhite,boardik, *pa);
 							(*pa).getSprite().setColor(Color::Green);//красим спрайт в зеленый,тем самым говоря игроку,что он выбрал персонажа и может сделать ход
 							(*pa).getIsClicked() = true;
 							event.type = Event::MouseButtonReleased;

@@ -1,4 +1,4 @@
-#include "Figures.h"
+#include "Figure.h"
 #include "VectorMove.h"
 
 Figures::Figures(int x, int y, int side, String FS, String FT, bool HaveTransform)
@@ -267,7 +267,7 @@ Rook::Rook(int a, int b, int s, String FS, String FT)
 	RulesMoveTransform[35] = { -1, -1 };
 
 	roots[10][10];
-	memset(roots, 0, sizeof(roots)/sizeof(roots[0][0]));
+	memset(roots, 0, sizeof(roots) / sizeof(roots[0][0]));
 	isMove = false; isClicked = false;
 	x = a;
 	y = b;
@@ -334,7 +334,7 @@ Knight::Knight(int a, int b, int s, String FS, String FT)
 	roots[10][10];
 	memset(roots, 0, sizeof(roots));
 	isMove = false; isClicked = false;
-	
+
 	x = a;
 	y = b;
 	side = s;
@@ -398,7 +398,7 @@ Arrow::Arrow(int a, int b, int s, String FS, String FT)
 		RulesMoveTransform[5] = { 1,-1 };
 	}
 	roots[10][10];
-	memset(roots, 0, sizeof(roots)/sizeof(roots[0][0]));
+	memset(roots, 0, sizeof(roots) / sizeof(roots[0][0]));
 	isMove = false; isClicked = false;
 	x = a;
 	y = b;
@@ -513,7 +513,7 @@ Gold::Gold(int a, int b, int s, String FS) {
 		RulesMove[5] = { 1,-1 };
 	}
 	roots[10][10];
-	memset(roots, 0, sizeof(roots)/sizeof(roots[0][0]));
+	memset(roots, 0, sizeof(roots) / sizeof(roots[0][0]));
 	isMove = false; isClicked = false;
 	x = a;
 	y = b;
@@ -556,7 +556,7 @@ Silver::Silver(int a, int b, int s, String FS)
 	}
 
 	roots[10][10];
-	memset(roots, 0, sizeof(roots)/sizeof(roots[0][0]));
+	memset(roots, 0, sizeof(roots) / sizeof(roots[0][0]));
 	isMove = false; isClicked = false;
 	x = a;
 	y = b;
@@ -575,7 +575,7 @@ Silver::Silver(int a, int b, int s, String FS)
 
 	///////////////////////////////////////////////////////////////////////////////////////////////////
 }
-void Figures::SearchRoots(Figures *FiguresB[],int array[10][10], Figures& pa)
+void Figures::SearchRoots(Figures *FiguresB[], Figures* FiguresW[],int array[10][10], Figures& pa)
 {
 	cout << array[8][8];
 	VectorMove StopPos[8];
@@ -594,11 +594,12 @@ void Figures::SearchRoots(Figures *FiguresB[],int array[10][10], Figures& pa)
 	{
 		tempX = x + RulesMove[i].getScaleCompX();
 		tempY = y + RulesMove[i].getScaleCompY();
+
 		if ((tempX < 10) && (tempX > 0) && (tempY < 10) && (tempY > 0))
 		{
 			if (SizeOfRules > 10)
 			{
-				if ((array[tempX][tempY] != side) && (CheckCheck(FiguresB,pa,array, tempX, tempY) == 1))
+				if ((array[tempX][tempY] != side) && (pa.CheckCheck(FiguresB,FiguresW, pa, array, RulesMove[i].getScaleCompX(), RulesMove[i].getScaleCompY()) == 1))
 				{
 					roots[tempX][tempY] = 1;
 					if (array[tempX][tempY] == 0)
@@ -615,7 +616,7 @@ void Figures::SearchRoots(Figures *FiguresB[],int array[10][10], Figures& pa)
 					StopPos[i++] = { tempX,tempY };
 				}
 			}
-			else if ((array[tempX][tempY] != side) && (CheckCheck (FiguresB,pa,array,tempX, tempY) == 1))
+			else if ((array[tempX][tempY] != side) && (pa.CheckCheck(FiguresB,FiguresW, pa, array, RulesMove[i].getScaleCompX(), RulesMove[i].getScaleCompY()) == 1))
 			{
 				roots[tempX][tempY] = 1;
 			}
@@ -654,7 +655,7 @@ void Figures::SearchRoots(Figures *FiguresB[],int array[10][10], Figures& pa)
 		}
 	}
 }
-bool Figures::CheckCheck(Figures* FiguresB[] ,Figures &a,int array[10][10], int NewX, int NewY)
+bool Figures::CheckCheck(Figures* FiguresB[],Figures* FiguresW[], Figures &a, int array[10][10], int NewX, int NewY)
 {
 	int mate = 0;
 	int KingX, KingY;
@@ -662,16 +663,81 @@ bool Figures::CheckCheck(Figures* FiguresB[] ,Figures &a,int array[10][10], int 
 	array[NewX][NewY] = side;
 	if (side == 1)
 	{
-		KingX = a.getCordX;
-		KingY = a.getCordY;
-		while (mate == 0)
+
+		KingX = (*FiguresW[0]).getCordX();
+		KingY = (*FiguresW[0]).getCordY();
+		if ((x == KingX) && (y == KingY))
 		{
+			KingX += NewX;
+			KingY += NewY;
+		}
 			for (int i = 0; i < 20; i++)
 			{
-				(*FiguresB[i]).
+				if ((*FiguresB[i]).IsCheck(array, KingX, KingY) == true)
+				{
+					return false;
+				}
+			}
+	  return true;
+
+	}
+	if (side == 2)
+	{
+		KingX = (*FiguresB[0]).getCordX();
+		KingY = (*FiguresB[0]).getCordY();
+		if ((x == KingX) && (y == KingY))
+		{
+			KingX += NewX;
+			KingY += NewY;
+		}
+		for (int i = 0; i < 20; i++)
+		{
+			if ((*FiguresW[i]).IsCheck(array, KingX, KingY) == true)
+			{
+				return false;
 			}
 		}
+		return true;
 	}
-	return true;
-}
 
+}
+bool Figures::IsCheck(int Arr[10][10], int a, int b)
+{
+	int TempX;
+	int TempY;
+	int Size=0;
+	int Middle = 0;
+	for (int i = 0; i < SizeOfRules; i++)
+	{
+		if ((a == x + RulesMove[i].getScaleCompX()) && (b == y + RulesMove[i].getScaleCompY()))
+		{
+			TempX = RulesMove[i].getScaleCompX();
+			TempY = RulesMove[i].getScaleCompY();
+			if (abs(TempX) > abs(TempY))
+			{
+				Size = abs(TempX);
+				TempX = TempX / abs(TempX);
+				TempY = TempY / abs(TempX);
+            }
+			else
+			{
+				Size = abs(TempY);
+				TempX = TempX / abs(TempY);
+				TempY = TempY / abs(TempY);
+			}
+			for (int j = 1; j < Size; j++)
+			{
+				if (Arr[x + (TempX*j)][y + (TempY*j)]!=0)
+				{
+					return false;
+				}
+		    }
+			return true;
+		}
+	}
+	if (Middle == 0)
+	{
+		return false;
+	}
+	
+}

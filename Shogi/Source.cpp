@@ -1,15 +1,20 @@
 #include <SFML/Graphics.hpp>
+#include "map.h"
 #include "Figure.h"
+
 using namespace sf;
 int main()
 
 {
+	int j = 0;
 	int tempX = 0; int tempY = 0;
 	int turn = 2;
 	float MouseLeft = false;
-	King KingWhite(3,4,1, "figures1.png");
+	VectorMove NewCoords = { 0,0 };
+	King KingWhite(3,5,1, "figures1.png");
+	
+	Rook RookWhite1;
 	King KingBlack(4, 3, 2, "figures1.png");
-	Rook RookWhite1(6, 5, 1, "figures1.png", "figures1.png");
 	Rook RookBlack1;
 	Horse HorseWhite1;
 	Horse HorseBlack1;
@@ -76,8 +81,8 @@ int main()
 							0,0,2,0,0,0,0,0,2,0,
 							0,2,2,2,2,2,2,2,2,2 };
 							*/
-	int boardik[10][10] = { 0,0,0,0,0,0,0,0,0,0,
-							0,1,0,0,0,0,0,0,0,0,
+	int boardTrue[10][10] = {0,0,0,0,0,0,0,0,0,0,
+							0,0,0,0,0,0,0,0,0,0,
 							0,0,0,0,0,0,0,0,0,0,
 							0,0,0,0,0,1,0,0,0,0,
 							0,0,0,2,0,0,0,0,0,0,
@@ -86,9 +91,18 @@ int main()
 							0,2,0,0,0,0,0,0,0,0,
 							0,2,0,0,0,0,0,0,0,0,
 							0,0,0,0,0,0,0,0,0,0 };
+	int boardik[10][10];
+	Template(boardik, boardTrue);
 
+    Image map_image;//объект изображения для карты
+	map_image.loadFromFile("images/Green.png");//загружаем файл для карты
+	Texture map;//текстура карты
+	map.loadFromImage(map_image);//заряжаем текстуру картинкой
+	Sprite s_map;//создаём спрайт для карты
+	s_map.setTexture(map);//заливаем текстуру спрайтом
+	
 
-	RenderWindow window(VideoMode(1920, 1080), "The Shogi Game");
+    RenderWindow window(VideoMode(1920, 1080), "The Shogi Game");
 	Image board;
 	board.loadFromFile("images/TestBoard.jpg");
 	Texture boardtexture;
@@ -128,6 +142,11 @@ int main()
 						pa = SelectedFigure(turn, FiguresBlack, FiguresWhite, pixelPos.x, pixelPos.y);
 						if (pa != 0)
 						{
+							j++;
+							if (j == 2)
+							{
+								j = 3;
+							}
 							(*pa).SearchRoots(FiguresBlack, FiguresWhite,boardik, *pa);
 							(*pa).getSprite().setColor(Color::Green);//красим спрайт в зеленый,тем самым говоря игроку,что он выбрал персонажа и может сделать ход
 							(*pa).getIsClicked() = true;
@@ -151,16 +170,28 @@ int main()
 
 						}
 
-
+					
 						else
 							if (event.key.code == Mouse::Left)
 							{
-								(*pa).getIsClicked() = false;
-								(*pa).getIsMove() = true;
-								(*pa).getSprite().setColor(Color::White);
-								MouseLeft = false;
-								tempX = (pixelPos.x);
-								tempY = pixelPos.y;
+								
+								if ((*pa).CheckTrue(pixelPos.x, pixelPos.y,NewCoords) == true)
+								{
+									cout << boardTrue[pa->getCordX()][pa->getCordY()];
+									boardTrue[pa->getCordX()][pa->getCordY()]=0;
+									pa->setCordX(NewCoords.getScaleCompX());
+									pa->setCordY(NewCoords.getScaleCompY());
+									boardTrue[pa->getCordX()][pa->getCordY()] = pa->getSide();
+									Template(boardik, boardTrue);
+                                    (*pa).getIsClicked() = false;
+									(*pa).getIsMove() = true;
+									(*pa).getSprite().setColor(Color::White);
+									MouseLeft = false;
+									tempX = (575+40)+5*(NewCoords.getScaleCompY()-1)+80*(NewCoords.getScaleCompY()- 1);
+									tempY = (155 + 40) + 5 * (NewCoords.getScaleCompX() - 1) + 80 * (NewCoords.getScaleCompX() - 1);
+
+
+								}
 
 							}
 				}
@@ -174,14 +205,31 @@ int main()
 			{
 				(*pa).getSprite().setPosition(tempX, tempY);
 				(*pa).getIsMove() = false;
+				
+				
 			}
 		}
 
 
 		window.clear();
+		
+
 		window.draw(coversprite);
 		window.draw(boardsprite);
 		window.draw(KingBlack.getSprite());
+
+		if (pa != 0)
+		{
+			if ((*pa).getIsClicked())
+				
+				pa->ShowRoots(TileMap,s_map,window);
+		}
+		
+		
+	
+		
+
+
 		window.display();
 	}
 

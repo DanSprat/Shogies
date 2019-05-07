@@ -104,6 +104,19 @@ int Figures::getCordY()
 {
 	return this->y;
 }
+void Figures:: setCordX(int a)
+{
+	this->x = a;
+}
+void Figures::setCordY(int a)
+{
+	this->y = a;
+}
+int Figures::getSide()
+{
+	return this->side;
+}
+
 
 //////////////////////////////////////////////
 
@@ -577,6 +590,12 @@ Silver::Silver(int a, int b, int s, String FS)
 }
 void Figures::SearchRoots(Figures *FiguresB[], Figures* FiguresW[],int array[10][10], Figures& pa)
 {
+	
+    for (int i=0;i<10;i++)
+		for (int j = 0; j < 10; j++)
+		{
+			roots[i][j] = 0;
+		}
 	cout << array[8][8];
 	VectorMove StopPos[8];
 	for (int i = 0; i < 8; i++)
@@ -657,10 +676,12 @@ void Figures::SearchRoots(Figures *FiguresB[], Figures* FiguresW[],int array[10]
 }
 bool Figures::CheckCheck(Figures* FiguresB[],Figures* FiguresW[], Figures &a, int array[10][10], int NewX, int NewY)
 {
+	int arrayHelp[10][10];
+	
 	int mate = 0;
 	int KingX, KingY;
-	array[x][y] = 0;
-	array[NewX][NewY] = side;
+	//array[x][y] = 0;
+	//array[NewX][NewY] = side;
 	if (side == 1)
 	{
 
@@ -673,7 +694,8 @@ bool Figures::CheckCheck(Figures* FiguresB[],Figures* FiguresW[], Figures &a, in
 		}
 			for (int i = 0; i < 20; i++)
 			{
-				if ((*FiguresB[i]).IsCheck(array, KingX, KingY) == true)
+				Template(arrayHelp, array);
+				if ((*FiguresB[i]).IsCheck(arrayHelp, KingX, KingY) == true)
 				{
 					return false;
 				}
@@ -692,7 +714,11 @@ bool Figures::CheckCheck(Figures* FiguresB[],Figures* FiguresW[], Figures &a, in
 		}
 		for (int i = 0; i < 20; i++)
 		{
-			if ((*FiguresW[i]).IsCheck(array, KingX, KingY) == true)
+			Template(arrayHelp, array);
+			arrayHelp[x][y] = 0;///
+			arrayHelp[KingX][KingY] = 2;///ЭЭЭЭЭЭЭКСПЕРИМЕНТ
+
+			if ((*FiguresW[i]).IsCheck(arrayHelp, KingX, KingY) == true)
 			{
 				return false;
 			}
@@ -740,4 +766,63 @@ bool Figures::IsCheck(int Arr[10][10], int a, int b)
 		return false;
 	}
 	
+}
+void Figures::ShowRoots(String *array,Sprite& a,RenderWindow& b)
+{
+	for (int i = 1; i < 10; i++)
+		for (int j = 1; j < 10; j++)
+		{
+			array[i][j] = ' ';
+
+		}
+	for (int i = 0; i < 10; i++)
+		for (int j = 0; j < 10; j++)
+		{
+			if (roots[i][j] == 1)
+			{
+				array[i][j] = 'G';
+			}
+		}
+	for (int i = 0; i < 10; i++)
+		for (int j = 0; j < 10; j++)
+		{
+			if (array[i][j] == 'G')  a.setTextureRect(IntRect(0, 0, 80, 80)); //
+			if ((array[i][j] == '0')) a.setTextureRect(IntRect(80, 0, 80, 80));
+			if ((array[i][j] == ' ')) a.setTextureRect(IntRect(80, 0, 80, 80));
+
+
+
+			a.setPosition((555 - 65) + j * 80 + (5 * j), (135 - 65) + i * 80 + (5 * i));//по сути раскидывает квадратики, превращая в карту. то есть задает каждому из них позицию. если убрать, то вся карта нарисуется в одном квадрате 32*32 и мы увидим один квадрат
+
+			b.draw(a);//рисуем квадратики на экран
+		}
+}
+int* Figures::getRoots()
+{
+	return *roots;
+}
+bool Figures::CheckTrue(int x, int y,VectorMove& a)
+{
+	int c, b;
+	c = (y - 155) / 85 + 1;
+	b = ((x - 575) / 85 + 1);
+	if ((c > 0) && (c < 10) && (b > 0) && (b < 10))
+	{
+		if (roots[c][b] == 1)
+		{
+			a.getCompX() = c;
+			a.getCompY() = b;
+			return true;
+		}
+	}
+	
+
+
+	return false;
+}
+void Template(int a[10][10], int b[10][10])
+{
+	for (int i = 0; i<10; i++)
+		for (int j = 0; j < 10; j++)
+			a[i][j] = b[i][j];
 }

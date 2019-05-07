@@ -29,6 +29,12 @@ protected:
 	VectorMove *RulesMove;
 	int SizeOfRules;
 public:
+	void setCordX(int x);
+	void setCordY(int y);
+	int getSide();
+	bool CheckTrue(int x, int y,VectorMove& a);
+	int* getRoots();
+	void ShowRoots(String *array, Sprite& a, RenderWindow& b);
 	int getCordX();
 	int getCordY();
 	bool IsCheck(int array[10][10],int KingX,int KingY);
@@ -194,3 +200,4 @@ public:
 		y = a;
 	}
 };
+void Template(int a[10][10], int b[10][10]);

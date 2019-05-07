@@ -1,4 +1,4 @@
-#include "Figure.h"
+#include "Figures.h"
 #include "VectorMove.h"
 
 Figures::Figures(int x, int y, int side, String FS, String FT, bool HaveTransform)
@@ -104,7 +104,7 @@ int Figures::getCordY()
 {
 	return this->y;
 }
-void Figures:: setCordX(int a)
+void Figures::setCordX(int a)
 {
 	this->x = a;
 }
@@ -179,7 +179,7 @@ King::King(int a, int b, int s, String FS)
 	TextureD.loadFromImage(ImageD);
 	SpriteD.setTexture(TextureD);
 	SpriteD.setTextureRect(IntRect(33, 709, 55, 65));//В дальнейшем координаты x,y будут перемножаться на 85  и размеры его будут 85 на 85 p.s Разобраться с картинкой
-	SpriteD.setPosition(1235, 815);// тут тоже все будет зависеть от координат  p.s Разобраться с картинкой
+	SpriteD.setPosition(615+80*(y-1)+5*(y-1),195+80*(x-1)+5*(x-1));// тут тоже все будет зависеть от координат  p.s Разобраться с картинкой
 }
 Pawn::Pawn(int a, int b, int s, String FS, String FT)
 {
@@ -588,10 +588,10 @@ Silver::Silver(int a, int b, int s, String FS)
 
 	///////////////////////////////////////////////////////////////////////////////////////////////////
 }
-void Figures::SearchRoots(Figures *FiguresB[], Figures* FiguresW[],int array[10][10], Figures& pa)
+void Figures::SearchRoots(Figures *FiguresB[], Figures* FiguresW[], int array[10][10], Figures& pa)
 {
-	
-    for (int i=0;i<10;i++)
+
+	for (int i = 0; i < 10; i++)
 		for (int j = 0; j < 10; j++)
 		{
 			roots[i][j] = 0;
@@ -618,7 +618,7 @@ void Figures::SearchRoots(Figures *FiguresB[], Figures* FiguresW[],int array[10]
 		{
 			if (SizeOfRules > 10)
 			{
-				if ((array[tempX][tempY] != side) && (pa.CheckCheck(FiguresB,FiguresW, pa, array, RulesMove[i].getScaleCompX(), RulesMove[i].getScaleCompY()) == 1))
+				if ((array[tempX][tempY] != side) && (pa.CheckCheck(FiguresB, FiguresW, pa, array, RulesMove[i].getScaleCompX(), RulesMove[i].getScaleCompY()) == 1))
 				{
 					roots[tempX][tempY] = 1;
 					if (array[tempX][tempY] == 0)
@@ -635,7 +635,7 @@ void Figures::SearchRoots(Figures *FiguresB[], Figures* FiguresW[],int array[10]
 					StopPos[i++] = { tempX,tempY };
 				}
 			}
-			else if ((array[tempX][tempY] != side) && (pa.CheckCheck(FiguresB,FiguresW, pa, array, RulesMove[i].getScaleCompX(), RulesMove[i].getScaleCompY()) == 1))
+			else if ((array[tempX][tempY] != side) && (pa.CheckCheck(FiguresB, FiguresW, pa, array, RulesMove[i].getScaleCompX(), RulesMove[i].getScaleCompY()) == 1))
 			{
 				roots[tempX][tempY] = 1;
 			}
@@ -674,10 +674,10 @@ void Figures::SearchRoots(Figures *FiguresB[], Figures* FiguresW[],int array[10]
 		}
 	}
 }
-bool Figures::CheckCheck(Figures* FiguresB[],Figures* FiguresW[], Figures &a, int array[10][10], int NewX, int NewY)
+bool Figures::CheckCheck(Figures* FiguresB[], Figures* FiguresW[], Figures &a, int array[10][10], int NewX, int NewY)
 {
 	int arrayHelp[10][10];
-	
+
 	int mate = 0;
 	int KingX, KingY;
 	//array[x][y] = 0;
@@ -692,15 +692,15 @@ bool Figures::CheckCheck(Figures* FiguresB[],Figures* FiguresW[], Figures &a, in
 			KingX += NewX;
 			KingY += NewY;
 		}
-			for (int i = 0; i < 20; i++)
+		for (int i = 0; i < 20; i++)
+		{
+			Template(arrayHelp, array);
+			if ((*FiguresB[i]).IsCheck(arrayHelp, KingX, KingY) == true)
 			{
-				Template(arrayHelp, array);
-				if ((*FiguresB[i]).IsCheck(arrayHelp, KingX, KingY) == true)
-				{
-					return false;
-				}
+				return false;
 			}
-	  return true;
+		}
+		return true;
 
 	}
 	if (side == 2)
@@ -731,7 +731,7 @@ bool Figures::IsCheck(int Arr[10][10], int a, int b)
 {
 	int TempX;
 	int TempY;
-	int Size=0;
+	int Size = 0;
 	int Middle = 0;
 	for (int i = 0; i < SizeOfRules; i++)
 	{
@@ -744,7 +744,7 @@ bool Figures::IsCheck(int Arr[10][10], int a, int b)
 				Size = abs(TempX);
 				TempX = TempX / abs(TempX);
 				TempY = TempY / abs(TempX);
-            }
+			}
 			else
 			{
 				Size = abs(TempY);
@@ -753,11 +753,11 @@ bool Figures::IsCheck(int Arr[10][10], int a, int b)
 			}
 			for (int j = 1; j < Size; j++)
 			{
-				if (Arr[x + (TempX*j)][y + (TempY*j)]!=0)
+				if (Arr[x + (TempX*j)][y + (TempY*j)] != 0)
 				{
 					return false;
 				}
-		    }
+			}
 			return true;
 		}
 	}
@@ -765,9 +765,9 @@ bool Figures::IsCheck(int Arr[10][10], int a, int b)
 	{
 		return false;
 	}
-	
+
 }
-void Figures::ShowRoots(String *array,Sprite& a,RenderWindow& b)
+void Figures::ShowRoots(String *array, Sprite& a, RenderWindow& b)
 {
 	for (int i = 1; i < 10; i++)
 		for (int j = 1; j < 10; j++)
@@ -801,7 +801,7 @@ int* Figures::getRoots()
 {
 	return *roots;
 }
-bool Figures::CheckTrue(int x, int y,VectorMove& a)
+bool Figures::CheckTrue(int x, int y, VectorMove& a)
 {
 	int c, b;
 	c = (y - 155) / 85 + 1;
@@ -815,14 +815,14 @@ bool Figures::CheckTrue(int x, int y,VectorMove& a)
 			return true;
 		}
 	}
-	
+
 
 
 	return false;
 }
 void Template(int a[10][10], int b[10][10])
 {
-	for (int i = 0; i<10; i++)
+	for (int i = 0; i < 10; i++)
 		for (int j = 0; j < 10; j++)
 			a[i][j] = b[i][j];
 }

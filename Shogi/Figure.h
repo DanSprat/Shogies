@@ -29,28 +29,29 @@ protected:
 	VectorMove *RulesMove;
 	int SizeOfRules;
 public:
+	bool Eating(Figures  *b[], Figures *w[], int& sizeb, int& sizew);
 	void setCordX(int x);
 	void setCordY(int y);
 	int getSide();
-	bool CheckTrue(int x, int y,VectorMove& a);
+	bool CheckTrue(int x, int y, VectorMove& a);
 	int* getRoots();
 	void ShowRoots(String *array, Sprite& a, RenderWindow& b);
 	int getCordX();
 	int getCordY();
-	bool IsCheck(int array[10][10],int KingX,int KingY);
-	bool CheckCheck(Figures *FiguresB[], Figures* FiguresW[], Figures &a, int array[10][10], int NewX, int NewY);
+	bool IsCheck(int array[10][10], int KingX, int KingY);
+	bool CheckCheck(Figures *FiguresB[], Figures* FiguresW[], Figures &a, int array[10][10], int NewX, int NewY,int SizeB,int SizeW);
 	int getSizeOfRules();
 	Sprite& getSprite();
 	bool& getIsMove();
 	bool& getIsClicked();
-	void SearchRoots(Figures *FiguresB[], Figures* FiguresW[], int array[10][10], Figures &pa);
+	void SearchRoots(Figures *FiguresB[], Figures* FiguresW[], int array[10][10], Figures &pa,int SizeB,int SizeW);
 	virtual void ChangeArr();
 	Figures(int x, int y, int side, String FS, String FT, bool HaveTransform);
 	VectorMove getRulesMove(int i);
 	Figures();
 	~Figures();
 };
-Figures* SelectedFigure(int &turn, Figures *FiguresBlack[], Figures *FiguresWhite[], int x, int y);
+Figures* SelectedFigure(int &turn, Figures *FiguresBlack[], Figures *FiguresWhite[], int x, int y,int SizeB,int SizeW);
 
 ////////////CLASS OF THE KING ///////////////////////
 

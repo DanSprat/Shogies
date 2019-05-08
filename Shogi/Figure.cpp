@@ -121,11 +121,11 @@ int Figures::getSide()
 //////////////////////////////////////////////
 
 
-Figures* SelectedFigure(int &turn, Figures* FiguresBlack[], Figures* FiguresWhite[], int x, int y)
+Figures* SelectedFigure(int &turn, Figures* FiguresBlack[], Figures* FiguresWhite[], int x, int y,int SizeB,int SizeW)
 {
 	if (turn == 2)
 	{
-		for (int i = 0; i < 20; i++)
+		for (int i = 0; i < SizeB; i++)
 		{
 			if ((*FiguresBlack[i]).getSprite().getGlobalBounds().contains(x, y))
 			{
@@ -136,7 +136,7 @@ Figures* SelectedFigure(int &turn, Figures* FiguresBlack[], Figures* FiguresWhit
 	}
 	else
 	{
-		for (int i = 0; i < 20; i++)
+		for (int i = 0; i < SizeW; i++)
 		{
 			if ((*FiguresWhite[i]).getSprite().getGlobalBounds().contains(x, y))
 			{
@@ -588,7 +588,7 @@ Silver::Silver(int a, int b, int s, String FS)
 
 	///////////////////////////////////////////////////////////////////////////////////////////////////
 }
-void Figures::SearchRoots(Figures *FiguresB[], Figures* FiguresW[], int array[10][10], Figures& pa)
+void Figures::SearchRoots(Figures *FiguresB[], Figures* FiguresW[], int array[10][10], Figures& pa,int SizeB,int SizeW)
 {
 
 	for (int i = 0; i < 10; i++)
@@ -618,7 +618,7 @@ void Figures::SearchRoots(Figures *FiguresB[], Figures* FiguresW[], int array[10
 		{
 			if (SizeOfRules > 10)
 			{
-				if ((array[tempX][tempY] != side) && (pa.CheckCheck(FiguresB, FiguresW, pa, array, RulesMove[i].getScaleCompX(), RulesMove[i].getScaleCompY()) == 1))
+				if ((array[tempX][tempY] != side) && (pa.CheckCheck(FiguresB, FiguresW, pa, array, RulesMove[i].getScaleCompX(), RulesMove[i].getScaleCompY(),SizeB,SizeW) == 1))
 				{
 					roots[tempX][tempY] = 1;
 					if (array[tempX][tempY] == 0)
@@ -635,7 +635,7 @@ void Figures::SearchRoots(Figures *FiguresB[], Figures* FiguresW[], int array[10
 					StopPos[i++] = { tempX,tempY };
 				}
 			}
-			else if ((array[tempX][tempY] != side) && (pa.CheckCheck(FiguresB, FiguresW, pa, array, RulesMove[i].getScaleCompX(), RulesMove[i].getScaleCompY()) == 1))
+			else if ((array[tempX][tempY] != side) && (pa.CheckCheck(FiguresB, FiguresW, pa, array, RulesMove[i].getScaleCompX(), RulesMove[i].getScaleCompY(),SizeB,SizeW) == 1))
 			{
 				roots[tempX][tempY] = 1;
 			}
@@ -674,7 +674,7 @@ void Figures::SearchRoots(Figures *FiguresB[], Figures* FiguresW[], int array[10
 		}
 	}
 }
-bool Figures::CheckCheck(Figures* FiguresB[], Figures* FiguresW[], Figures &a, int array[10][10], int NewX, int NewY)
+bool Figures::CheckCheck(Figures* FiguresB[], Figures* FiguresW[], Figures &a, int array[10][10], int NewX, int NewY,int SizeB,int SizeW)
 {
 	int arrayHelp[10][10];
 
@@ -692,7 +692,7 @@ bool Figures::CheckCheck(Figures* FiguresB[], Figures* FiguresW[], Figures &a, i
 			KingX += NewX;
 			KingY += NewY;
 		}
-		for (int i = 0; i < 20; i++)
+		for (int i = 0; i < SizeB; i++)
 		{
 			Template(arrayHelp, array);
 			if ((*FiguresB[i]).IsCheck(arrayHelp, KingX, KingY) == true)
@@ -712,7 +712,7 @@ bool Figures::CheckCheck(Figures* FiguresB[], Figures* FiguresW[], Figures &a, i
 			KingX += NewX;
 			KingY += NewY;
 		}
-		for (int i = 0; i < 20; i++)
+		for (int i = 0; i < SizeW; i++)
 		{
 			Template(arrayHelp, array);
 			arrayHelp[x][y] = 0;///
@@ -825,4 +825,71 @@ void Template(int a[10][10], int b[10][10])
 	for (int i = 0; i < 10; i++)
 		for (int j = 0; j < 10; j++)
 			a[i][j] = b[i][j];
+}
+bool Figures:: Eating(Figures  *b[], Figures *w[], int& sizeb, int& sizew)
+{
+	if (side == 1)
+	{
+		for (int i = 0; i < sizeb; i++)
+		{
+			if ((x == (*b[i]).getCordX()) && (y == (*b[i]).getCordY()))
+			{
+				Figures **NewB;
+				Figures **NewW;
+				sizeb -= 1;
+				sizew += 1;
+				NewB = new Figures *[sizeb];
+				NewW = new Figures *[sizew];
+				for (int j = 0; j < i; j++)
+				{
+					NewB[j] = b[j];
+				}
+				for (int j = i; j < sizeb; j++)
+				{
+					NewB[j] = b[j];
+				}
+				for (int j = 0; j < sizew-1; j++)
+				{
+					NewW[j] = w[j];
+				}
+				NewW[sizew] = b[i];
+				b = NewB;
+				w = NewW;
+				return true;
+			}
+		}
+		return false;
+	}
+	else
+	{
+		for (int i = 0; i < sizew; i++)
+		{
+			if ((x == (*w[i]).getCordX()) && (y == (*w[i]).getCordY()))
+			{
+				sizew -= 1;
+				sizeb += 1;
+				Figures **NewB;
+				Figures **NewW;
+				NewB = new Figures *[sizeb];
+				NewW = new Figures *[sizew];
+				for (int j = 0; j < i; j++)
+				{
+					NewW[j] = w[j];
+				}
+				for (int j = i; j < sizew; j++)
+				{
+					NewW[j] = w[j];
+				}
+				for (int j = 0; j < sizeb - 1; j++)
+				{
+					NewB[j] = b[j];
+				}
+				NewB[sizeb] = w[i];
+				b = NewB;
+				w = NewW;
+				return true;
+			}
+		}
+		return false;
+	}
 }

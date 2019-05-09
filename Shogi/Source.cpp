@@ -23,47 +23,47 @@ int main()
 	int turn = 2;
 	float MouseLeft = false;
 	VectorMove NewCoords = { 0,0 };
-	King KingWhite(3, 5, 1, "figures1.png");
+	King KingWhite(1, 5, 1, "figures1.png");
 
-	Rook RookWhite1;
-	King KingBlack(4, 4, 2, "figures1.png");
-	Rook RookBlack1;
-	Horse HorseWhite1;
-	Horse HorseBlack1;
-	Horse HorseBlack2;
-	Horse HorseWhite2;
-	Knight KnightBlack1;
-	Knight KnightWhite1;
-	Pawn PawnWhite1(1, 1, 1, "figures1.png", "figures1.png");
-	Pawn PawnWhite2;
-	Pawn PawnWhite3;
-	Pawn PawnWhite4;
-	Pawn PawnWhite5;
-	Pawn PawnWhite6;
-	Pawn PawnWhite7;
-	Pawn PawnWhite8;
-	Pawn PawnWhite9;
-	Pawn PawnBlack1;
-	Pawn PawnBlack2;
-	Pawn PawnBlack3;
-	Pawn PawnBlack4;
-	Pawn PawnBlack5;
-	Pawn PawnBlack6;
-	Pawn PawnBlack7;
-	Pawn PawnBlack8;
-	Pawn PawnBlack9;
-	Silver SilverWhite1;
-	Silver SilverWhite2;
-	Silver SilverBlack1;
-	Silver SilverBlack2;
-	Gold GoldWhite1;
-	Gold GoldWhite2;
-	Gold GoldBlack1;
-	Gold GoldBlack2;
-	Arrow ArrowWhite1;
-	Arrow ArrowWhite2;
-	Arrow ArrowBlack1;
-	Arrow ArrowBlack2;
+	Rook RookWhite1(2, 8, 1, "figures1.png", "figures1.png");
+	King KingBlack(9, 5, 2, "figures1.png");
+	Rook RookBlack1(8, 8, 2, "figures1.png", "figures1.png");
+	Horse HorseWhite1(1, 2, 1, "figures1.png", "figures1.png");
+	Horse HorseBlack1(9, 2, 2, "figures1.png", "figures1.png");
+	Horse HorseBlack2(9, 8, 2, "figures1.png", "figures1.png");
+	Horse HorseWhite2(1, 8, 1, "figures1.png", "figures1.png");
+	Knight KnightBlack1(8, 2, 2, "figures1.png", "figures1.png");
+	Knight KnightWhite1(2, 2, 1, "figures1.png", "figures1.png");
+	Pawn PawnWhite1(3, 1, 1, "figures1.png", "figures1.png");
+	Pawn PawnWhite2(3, 2, 1, "figures1.png", "figures1.png");
+	Pawn PawnWhite3(3, 3, 1, "figures1.png", "figures1.png");
+	Pawn PawnWhite4(3, 4, 1, "figures1.png", "figures1.png");
+	Pawn PawnWhite5(3, 5, 1, "figures1.png", "figures1.png");
+	Pawn PawnWhite6(3, 6, 1, "figures1.png", "figures1.png");
+	Pawn PawnWhite7(3, 7, 1, "figures1.png", "figures1.png");
+	Pawn PawnWhite8(3, 8, 1, "figures1.png", "figures1.png");
+	Pawn PawnWhite9(3, 9, 1, "figures1.png", "figures1.png");
+	Pawn PawnBlack1(7, 1, 2, "figures1.png", "figures1.png");
+	Pawn PawnBlack2(7, 2, 2, "figures1.png", "figures1.png");
+	Pawn PawnBlack3(7, 3, 2, "figures1.png", "figures1.png");
+	Pawn PawnBlack4(7, 4, 2, "figures1.png", "figures1.png");
+	Pawn PawnBlack5(7, 5, 2, "figures1.png", "figures1.png");
+	Pawn PawnBlack6(7, 6, 2, "figures1.png", "figures1.png");
+	Pawn PawnBlack7(7, 7, 2, "figures1.png", "figures1.png");
+	Pawn PawnBlack8(7, 8, 2, "figures1.png", "figures1.png");
+	Pawn PawnBlack9(7, 9, 2, "figures1.png", "figures1.png");
+	Silver SilverWhite1(1, 3, 1, "figures1.png");
+	Silver SilverWhite2(1, 7, 1, "figures1.png");
+	Silver SilverBlack1(9, 3, 2, "figures1.png");
+	Silver SilverBlack2(9, 7, 2, "figures1.png");
+	Gold GoldWhite1(1, 4, 1, "figures1.png");
+	Gold GoldWhite2(1, 6, 1, "figures1.png");
+	Gold GoldBlack1(9, 4, 2, "figures1.png");
+	Gold GoldBlack2(9, 6, 2, "figures1.png");
+	Arrow ArrowWhite1(1, 1, 1, "figures1.png", "figures1.png");
+	Arrow ArrowWhite2(1, 9, 1, "figures1.png", "figures1.png");
+	Arrow ArrowBlack1(9, 1, 2, "figures1.png", "figures1.png");
+	Arrow ArrowBlack2(9, 9, 2, "figures1.png", "figures1.png");
 	
 
 
@@ -150,6 +150,14 @@ int main()
 	im.setPosition(1550, 600);
 
 
+	Texture YesMusic, NoMusic;
+	YesMusic.loadFromFile("images/YesMusic.png");
+	NoMusic.loadFromFile("images/NoMusic.png");
+	Sprite YesM(YesMusic), NoM(NoMusic);
+	YesM.setPosition(1650, 50);
+	NoM.setPosition(1650, 50);
+
+
 	Image figure;
 	figure.loadFromFile("images/figures.png");
 	Texture figuretexture;
@@ -158,7 +166,20 @@ int main()
 	figuresprite.setTexture(figuretexture);
 	figuresprite.setPosition(555, 135);
 
+	int k = 0;
+	int IsMusic = 1;
 	int Num;
+
+	Music music;//создаем объект музыки
+	music.openFromFile("shogi.ogg");//загружаем файл
+	music.play();//воспроизводим музыку
+	music.setLoop(true);
+
+	SoundBuffer Click,Thanos;//создаём буфер для звука
+	Thanos.loadFromFile("thanos.ogg");//загружаем в него звук
+	Click.loadFromFile("click.ogg");
+	Sound thanos(Thanos), click(Click);//создаем звук и загружаем в него звук из буфера
+
 	while (window.isOpen())
 	{
 		int Num = 0;
@@ -180,17 +201,59 @@ int main()
 			*/
 			im.setColor(Color::White);
 			if (IntRect(1550, 600, 400, 100).contains(Mouse::getPosition(window))) { im.setColor(Color::Yellow); Num = 1; }
+			if (IntRect(1650, 50, 200, 200).contains(Mouse::getPosition(window)))  Num = 4; 
 			if (Num == 1)
 			{
 				while (Mouse::isButtonPressed(Mouse::Left))
 				{
+					click.play();
 					event.type = Event::MouseButtonReleased;
 				}
 				if (event.type == Event::MouseButtonReleased)
 				{
+					music.stop();
+					IsMusic = 0;
 					menu(window);
+					music.play(); IsMusic = 1; music.setLoop(true);
+					
 				}
 			}
+			if (Num == 4) {
+				int Check = 1;
+				while (Mouse::isButtonPressed(Mouse::Left))
+				{
+					if (!IntRect(1650, 50, 200, 200).contains(Mouse::getPosition(window)))
+					{
+						Check = 0;
+						break;
+					}
+
+				}
+
+				if (Check == 1)
+				{
+					event.type = Event::MouseButtonReleased;
+
+
+					if (event.type == Event::MouseButtonReleased)
+					{
+						k++;
+						if ((k % 2) == 1) {
+							music.stop();
+							IsMusic = 0;
+						}
+						else
+						{
+							IsMusic = 1;
+							music.play();
+							music.setLoop(true);
+
+						}
+
+					}
+				}
+				}
+				
 			if (event.type == Event::Closed)
 				window.close();
 			
@@ -231,7 +294,7 @@ int main()
 						else
 							if (event.key.code == Mouse::Left)
 							{
-
+								
 								if ((*pa).CheckTrue(pixelPos.x, pixelPos.y, NewCoords) == true)
 								{
 									cout << boardTrue[pa->getCordX()][pa->getCordY()];
@@ -252,7 +315,7 @@ int main()
 									MouseLeft = false;
 									tempX = (575 + 40) + 5 * (NewCoords.getScaleCompY() - 1) + 80 * (NewCoords.getScaleCompY() - 1);
 									tempY = (155 + 40) + 5 * (NewCoords.getScaleCompX() - 1) + 80 * (NewCoords.getScaleCompX() - 1);
-
+									thanos.play();
 
 								}
 
@@ -280,8 +343,18 @@ int main()
 		
 		window.draw(coversprite);
 		window.draw(boardsprite);
+		if (IsMusic == 0)
+		{
+
+			window.draw(NoM);
+		}
+		else
+		{
+			window.draw(YesM);
+		}
 		window.draw(im);
 		window.draw(KingBlack.getSprite());
+		window.draw(GoldWhite1.getSprite());
 
 		if (pa != 0)
 		{
@@ -300,4 +373,3 @@ int main()
 
 	return 0;
 }
-

@@ -20,8 +20,13 @@ void menu(RenderWindow & window)
 	menuRules2.loadFromFile("images/r2.png");
 	Sprite menu1(NewGame), menu2(Rules), menu3(Exit), menu4(Figur), menubbg(BackBackGround), menuR1(menuRules1);
 	Sprite menuR2(menuRules2), Mus(Musica),YesM(YesMusic),NoM(NoMusic);
+
+	SoundBuffer Click;//создаём буфер для звука
+	Click.loadFromFile("click.ogg");//загружаем в него звук
+	Sound click(Click);//создаем звук и загружаем в него звук из буфера
+
 	bool isMenu = 1;
-	int Num = 0;// ����� ������ ���� 
+	int Num = 0;// номер пункта меню 
 	menu1.setPosition(760, 250);
 	menu2.setPosition(760, 550);
 	menu3.setPosition(760, 700);
@@ -30,13 +35,14 @@ void menu(RenderWindow & window)
 	NoM.setPosition(1650, 50);
 
 	menubbg.setPosition(0, 0);
-	Music music;//������� ������ ������
-	music.openFromFile("shogi.ogg");//��������� ����
-	music.play();//������������� ������
+	Music music;//создаем объект музыки
+	music.openFromFile("shogi.ogg");//загружаем файл
+	music.play();//воспроизводим музыку
 	music.setLoop(true);
+	//music.setPitch(5);
 	int k=0;
 
-	////////////////////////////////����/////////////////// 
+	////////////////////////////////МЕНЮ/////////////////// 
 	while (isMenu) {
 		Event event;
 		while (window.pollEvent(event))
@@ -57,6 +63,7 @@ void menu(RenderWindow & window)
 		if (IntRect(1650, 50, 200, 200).contains(Mouse::getPosition(window))) { Mus.setColor(Color::Yellow); Num = 4; }
 
 		if (Mouse::isButtonPressed(Mouse::Left)) {
+			click.play();
 			if (Num == 1)
 				isMenu = false;
 			if (Num == 2)
@@ -65,7 +72,8 @@ void menu(RenderWindow & window)
 				window.draw(menuR1);
 				window.display();
 
-				while (!Keyboard::isKeyPressed(Keyboard::Escape));
+				while (!Keyboard::isKeyPressed(Keyboard::Escape))
+					;
 			}
 			if (Num == 3)
 			{
@@ -110,7 +118,8 @@ void menu(RenderWindow & window)
 				window.draw(menuR2);
 				window.display();
 
-				while (!Keyboard::isKeyPressed(Keyboard::Escape));
+				while (!Keyboard::isKeyPressed(Keyboard::Escape))
+					;
 
 			}
 

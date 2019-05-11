@@ -1,31 +1,32 @@
 #include <SFML/Graphics.hpp>
 #include "map.h"
-#include "Figures.h"
+#include "Figure.h"
 #include "Header.h"
 
 using namespace sf;
 int main()
 
 {
+	Figures empty;//Нулевой (пустой) элмемент класса фигур
 	int SizeBlack = 20;
 	int SizeWhite = 20;
+	int SizeByBlack = 0;
+	int SizeByWhite = 0;
 	Figures **BlackFigures;
 	BlackFigures = new Figures *[20];
 	Figures **WhiteFigures;
 	WhiteFigures = new Figures *[20];
-	Figures **NewBlack;
-	//NewBlack = new Figures *[0];
-	Figures **NewWHite;
-	//NewWHite = new Figures *[0];
-
+	Figures **EatenByBlack;
+	Figures **EatenByWhite;
+	EatenByBlack = new Figures *[1];
+	EatenByWhite= new Figures *[0];
 	int j = 0;
 	int tempX = 0; int tempY = 0;
 	int turn = 2;
 	float MouseLeft = false;
 	VectorMove NewCoords = { 0,0 };
 	King KingWhite(1, 5, 1, "figures1.png");
-
-	Rook RookWhite1(2, 8, 1, "figures1.png", "figures1.png");
+    Rook RookWhite1(2, 8, 1, "figures1.png", "figures1.png");
 	King KingBlack(9, 5, 2, "figures1.png");
 	Rook RookBlack1(8, 8, 2, "figures1.png", "figures1.png");
 	Horse HorseWhite1(1, 2, 1, "figures1.png", "figures1.png");
@@ -52,19 +53,19 @@ int main()
 	Pawn PawnBlack7(7, 7, 2, "figures1.png", "figures1.png");
 	Pawn PawnBlack8(7, 8, 2, "figures1.png", "figures1.png");
 	Pawn PawnBlack9(7, 9, 2, "figures1.png", "figures1.png");
-	Silver SilverWhite1(1, 3, 1, "figures1.png");
-	Silver SilverWhite2(1, 7, 1, "figures1.png");
-	Silver SilverBlack1(9, 3, 2, "figures1.png");
-	Silver SilverBlack2(9, 7, 2, "figures1.png");
+	Silver SilverWhite1(1, 3, 1, "figures1.png", "figures1.png");
+	Silver SilverWhite2(1, 7, 1, "figures1.png","figures1.png");
+	Silver SilverBlack1(9, 3, 2, "figures1.png", "figures1.png");
+	Silver SilverBlack2(9, 7, 2, "figures1.png", "figures1.png");
 	Gold GoldWhite1(1, 4, 1, "figures1.png");
 	Gold GoldWhite2(1, 6, 1, "figures1.png");
-	Gold GoldBlack1(9, 4, 2, "figures1.png");
-	Gold GoldBlack2(9, 6, 2, "figures1.png");
 	Arrow ArrowWhite1(1, 1, 1, "figures1.png", "figures1.png");
 	Arrow ArrowWhite2(1, 9, 1, "figures1.png", "figures1.png");
 	Arrow ArrowBlack1(9, 1, 2, "figures1.png", "figures1.png");
 	Arrow ArrowBlack2(9, 9, 2, "figures1.png", "figures1.png");
-	
+	Gold GoldBlack1(9, 4, 2, "figures1.png");
+	Gold GoldBlack2(9, 6, 2, "figures1.png");
+
 
 
 
@@ -93,7 +94,7 @@ int main()
 	pa = &RookWhite1;
 	float heroteleporttimer = 0;
 	Clock clock;
-	/*int boardik[10][10] = { 0,0,0,0,0,0,0,0,0,0,
+	int boardTrue[10][10] = { 0,0,0,0,0,0,0,0,0,0,
 							0,1,1,1,1,1,1,1,1,1,
 							0,0,1,0,0,0,0,0,1,0,
 							0,1,1,1,1,1,1,1,1,1,
@@ -103,17 +104,8 @@ int main()
 							0,2,2,2,2,2,2,2,2,2,
 							0,0,2,0,0,0,0,0,2,0,
 							0,2,2,2,2,2,2,2,2,2 };
-							*/
-	int boardTrue[10][10] = { 0,0,0,0,0,0,0,0,0,0,
-							0,0,0,0,0,0,0,0,0,0,
-							0,0,0,0,0,0,0,0,0,0,
-							0,0,0,0,0,1,0,0,0,0,
-							0,0,0,0,2,0,0,0,0,0,
-							0,0,0,0,0,0,0,0,0,0,
-							0,0,0,0,0,0,0,0,0,0,
-							0,2,0,0,0,0,0,0,0,0,
-							0,2,0,0,0,0,0,0,0,0,
-							0,0,0,0,0,0,0,0,0,0 };
+
+	
 	int boardik[10][10];
 	Template(boardik, boardTrue);
 
@@ -144,18 +136,10 @@ int main()
 	Image Inmenu1;
 	Inmenu1.loadFromFile("images/inmenu.png");
 	Texture InMenu;
-    InMenu.loadFromImage(Inmenu1);
+	InMenu.loadFromImage(Inmenu1);
 	Sprite im;
 	im.setTexture(InMenu);
 	im.setPosition(1550, 600);
-
-
-	Texture YesMusic, NoMusic;
-	YesMusic.loadFromFile("images/YesMusic.png");
-	NoMusic.loadFromFile("images/NoMusic.png");
-	Sprite YesM(YesMusic), NoM(NoMusic);
-	YesM.setPosition(1650, 50);
-	NoM.setPosition(1650, 50);
 
 
 	Image figure;
@@ -165,27 +149,27 @@ int main()
 	Sprite figuresprite;
 	figuresprite.setTexture(figuretexture);
 	figuresprite.setPosition(555, 135);
-
-	int k = 0;
-	int IsMusic = 1;
-	int Num;
-
-	Music music;//создаем объект музыки
-	music.openFromFile("shogi.ogg");//загружаем файл
-	music.play();//воспроизводим музыку
-	music.setLoop(true);
-
-	SoundBuffer Click,Thanos;//создаём буфер для звука
-	Thanos.loadFromFile("thanos.ogg");//загружаем в него звук
-	Click.loadFromFile("click.ogg");
+	SoundBuffer Click, Thanos;//создаём буфер для звука
+	Thanos.loadFromFile("sounds/thanos.ogg");//загружаем в него звук
+	Click.loadFromFile("sounds/click.ogg");
 	Sound thanos(Thanos), click(Click);//создаем звук и загружаем в него звук из буфера
-
+	if (*BlackFigures[0] == empty)
+	{
+		cout << "Jopa";
+	}
+	Image icon;
+	if (!icon.loadFromFile("images/icon.png"))
+	{
+		return 1;
+	}
+	window.setIcon(32, 32, icon.getPixelsPtr());
+	int Num;
 	while (window.isOpen())
 	{
 		int Num = 0;
 		Vector2i pixelPos = Mouse::getPosition(window);
 		Event event;
-		
+
 
 		while (window.pollEvent(event))
 		{
@@ -199,75 +183,33 @@ int main()
 				menu(window);
 			}
 			*/
+
 			im.setColor(Color::White);
 			if (IntRect(1550, 600, 400, 100).contains(Mouse::getPosition(window))) { im.setColor(Color::Yellow); Num = 1; }
-			if (IntRect(1650, 50, 200, 200).contains(Mouse::getPosition(window)))  Num = 4; 
 			if (Num == 1)
 			{
 				while (Mouse::isButtonPressed(Mouse::Left))
 				{
-					click.play();
 					event.type = Event::MouseButtonReleased;
 				}
 				if (event.type == Event::MouseButtonReleased)
 				{
-					music.stop();
-					IsMusic = 0;
 					menu(window);
-					music.play(); IsMusic = 1; music.setLoop(true);
-					
 				}
 			}
-			if (Num == 4) {
-				int Check = 1;
-				while (Mouse::isButtonPressed(Mouse::Left))
-				{
-					if (!IntRect(1650, 50, 200, 200).contains(Mouse::getPosition(window)))
-					{
-						Check = 0;
-						break;
-					}
-
-				}
-
-				if (Check == 1)
-				{
-					event.type = Event::MouseButtonReleased;
-
-
-					if (event.type == Event::MouseButtonReleased)
-					{
-						k++;
-						if ((k % 2) == 1) {
-							music.stop();
-							IsMusic = 0;
-						}
-						else
-						{
-							IsMusic = 1;
-							music.play();
-							music.setLoop(true);
-
-						}
-
-					}
-				}
-				}
-				
 			if (event.type == Event::Closed)
 				window.close();
-			
+
 			if (MouseLeft == false)
 			{
 				if (event.type == Event::MouseButtonPressed)//если нажата клавиша мыши
 					if (event.key.code == Mouse::Left)
 					{
-						pa = SelectedFigure(turn, BlackFigures, WhiteFigures, pixelPos.x, pixelPos.y,SizeBlack,SizeWhite);
+						
+						pa = SelectedFigure(turn, BlackFigures, WhiteFigures, pixelPos.x, pixelPos.y, SizeBlack, SizeWhite);
 						if (pa != 0)
 						{
-							j++;
-							
-							(*pa).SearchRoots(BlackFigures, WhiteFigures, boardik, *pa,SizeBlack,SizeWhite);
+							(*pa).SearchRoots(BlackFigures, WhiteFigures, boardik, *pa, SizeBlack, SizeWhite);
 							(*pa).getSprite().setColor(Color::Green);//красим спрайт в зеленый,тем самым говоря игроку,что он выбрал персонажа и может сделать ход
 							(*pa).getIsClicked() = true;
 							event.type = Event::MouseButtonReleased;
@@ -294,19 +236,18 @@ int main()
 						else
 							if (event.key.code == Mouse::Left)
 							{
-								
+
 								if ((*pa).CheckTrue(pixelPos.x, pixelPos.y, NewCoords) == true)
+
 								{
+									
 									cout << boardTrue[pa->getCordX()][pa->getCordY()];
 									boardTrue[pa->getCordX()][pa->getCordY()] = 0;
 									pa->setCordX(NewCoords.getScaleCompX());
 									pa->setCordY(NewCoords.getScaleCompY());
-									
-									if (pa->Eating(BlackFigures, WhiteFigures, SizeBlack, SizeWhite) == 1)
-									{
-										
-									}
-
+									int k = sizeof(EatenByWhite);
+									pa->Eating(BlackFigures, WhiteFigures, SizeBlack, SizeWhite,EatenByBlack,EatenByWhite,SizeByBlack,SizeByWhite);
+									j++;
 									boardTrue[pa->getCordX()][pa->getCordY()] = pa->getSide();
 									Template(boardik, boardTrue);
 									(*pa).getIsClicked() = false;
@@ -315,7 +256,7 @@ int main()
 									MouseLeft = false;
 									tempX = (575 + 40) + 5 * (NewCoords.getScaleCompY() - 1) + 80 * (NewCoords.getScaleCompY() - 1);
 									tempY = (155 + 40) + 5 * (NewCoords.getScaleCompX() - 1) + 80 * (NewCoords.getScaleCompX() - 1);
-									thanos.play();
+
 
 								}
 
@@ -329,10 +270,12 @@ int main()
 		{
 			if ((*pa).getIsMove())
 			{
+				thanos.setVolume(50);
+				thanos.play();
 				(*pa).getSprite().setPosition(tempX, tempY);
 				(*pa).getIsMove() = false;
 				turn = (turn % 2) + 1;
-
+				
 
 			}
 		}
@@ -340,21 +283,51 @@ int main()
 
 		window.clear();
 
-		
+
 		window.draw(coversprite);
 		window.draw(boardsprite);
-		if (IsMusic == 0)
-		{
-
-			window.draw(NoM);
-		}
-		else
-		{
-			window.draw(YesM);
-		}
 		window.draw(im);
+		window.draw(PawnBlack1.getSprite());
+		window.draw(PawnBlack2.getSprite());
+		window.draw(PawnBlack3.getSprite());
+		window.draw(PawnBlack4.getSprite());
+		window.draw(PawnBlack5.getSprite());
+		window.draw(PawnBlack6.getSprite());
+		window.draw(PawnBlack7.getSprite());
+		window.draw(PawnBlack8.getSprite());
+		window.draw(PawnBlack9.getSprite());
 		window.draw(KingBlack.getSprite());
+		window.draw(KnightBlack1.getSprite());
+		window.draw(RookBlack1.getSprite());
+		window.draw(ArrowBlack1.getSprite());
+		window.draw(ArrowBlack2.getSprite());
+		window.draw(HorseBlack1.getSprite());
+		window.draw(HorseBlack2.getSprite());
+		window.draw(GoldBlack1.getSprite());
+		window.draw(GoldBlack2.getSprite());
+		window.draw(SilverBlack1.getSprite());
+		window.draw(SilverBlack2.getSprite());
+		
+		window.draw(PawnWhite1.getSprite());
+		window.draw(PawnWhite2.getSprite());
+		window.draw(PawnWhite3.getSprite());
+		window.draw(PawnWhite4.getSprite());
+		window.draw(PawnWhite5.getSprite());
+		window.draw(PawnWhite6.getSprite());
+		window.draw(PawnWhite7.getSprite());
+		window.draw(PawnWhite8.getSprite());
+		window.draw(PawnWhite9.getSprite());
+		window.draw(KingWhite.getSprite());
+		window.draw(KnightWhite1.getSprite());
+		window.draw(RookWhite1.getSprite());
+		window.draw(ArrowWhite1.getSprite());
+		window.draw(ArrowWhite2.getSprite());
+		window.draw(HorseWhite1.getSprite());
+		window.draw(HorseWhite2.getSprite());
 		window.draw(GoldWhite1.getSprite());
+		window.draw(GoldWhite2.getSprite());
+		window.draw(SilverWhite1.getSprite());
+		window.draw(SilverWhite2.getSprite());
 
 		if (pa != 0)
 		{
@@ -373,3 +346,4 @@ int main()
 
 	return 0;
 }
+

@@ -1,15 +1,15 @@
-#include "Figures.h"
+#include "Figure.h"
 #include "VectorMove.h"
 
-Figures::Figures(int x, int y, int side, String FS, String FT, bool HaveTransform)
+Figures::Figures(int a, int b, int side, String FS, String FT, bool HaveTransform)
 {
 	RulesMove = new VectorMove[1];
 	roots[10][10];
 	memset(roots, 0, sizeof(roots));
 	isMove = false; isClicked = false;
-	int X, Y;
-	X = x;
-	Y = y;
+	isActive = 1;
+	x = a;
+	y = b;
 	transformation = 0;
 	String FileDef = FS;
 	String FileTrans = FT;
@@ -21,7 +21,7 @@ Figures::Figures(int x, int y, int side, String FS, String FT, bool HaveTransfor
 	ImageD.loadFromFile("images/" + FileDef);
 	TextureD.loadFromImage(ImageD);
 	SpriteD.setTexture(TextureD);
-	SpriteD.setTextureRect(IntRect(33, 709, 55, 65));//В дальнейшем координаты x,y будут перемножаться на 85  и размеры его будут 85 на 85 p.s Разобраться с картинкой
+	SpriteD.setTextureRect(IntRect(34 + (85 * y - 85), 28 + (85 * x - 85), 55, 65));//В дальнейшем координаты x,y будут перемножаться на 85  и размеры его будут 85 на 85 p.s Разобраться с картинкой
 	SpriteD.setPosition(1235, 815);// тут тоже все будет зависеть от координат  p.s Разобраться с картинкой
 
 	///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -121,7 +121,7 @@ int Figures::getSide()
 //////////////////////////////////////////////
 
 
-Figures* SelectedFigure(int &turn, Figures* FiguresBlack[], Figures* FiguresWhite[], int x, int y,int SizeB,int SizeW)
+Figures* SelectedFigure(int &turn, Figures* FiguresBlack[], Figures* FiguresWhite[], int x, int y, int SizeB, int SizeW)
 {
 	if (turn == 2)
 	{
@@ -163,7 +163,7 @@ King::King(int a, int b, int s, String FS)
 	roots[10][10];
 	memset(roots, 0, sizeof(roots) / 4);
 	isMove = false; isClicked = false;
-	int X, Y;
+	isActive = true;
 	x = a;
 	y = b;
 	transformation = 0;
@@ -178,15 +178,18 @@ King::King(int a, int b, int s, String FS)
 	ImageD.loadFromFile("images/" + FileDef);
 	TextureD.loadFromImage(ImageD);
 	SpriteD.setTexture(TextureD);
-	SpriteD.setTextureRect(IntRect(33, 709, 55, 65));//В дальнейшем координаты x,y будут перемножаться на 85  и размеры его будут 85 на 85 p.s Разобраться с картинкой
-	SpriteD.setPosition(615+80*(y-1)+5*(y-1),195+80*(x-1)+5*(x-1));// тут тоже все будет зависеть от координат  p.s Разобраться с картинкой
+	SpriteD.setTextureRect(IntRect(34 + (85 * y - 85), 28 + (85 * x - 85), 55, 65));//В дальнейшем координаты x,y будут перемножаться на 85  и размеры его будут 85 на 85 p.s Разобраться с картинкой
+	SpriteD.setPosition(615 + 80 * (y - 1) + 5 * (y - 1), 195 + 80 * (x - 1) + 5 * (x - 1));// тут тоже все будет зависеть от координат  p.s Разобраться с картинкой
 }
 Pawn::Pawn(int a, int b, int s, String FS, String FT)
 {
+	SizeOfRules = 1;
 	RulesMove = new VectorMove[1];
+	side = s;
 	if (side == 1)
 	{
-		RulesMove[0] = { 0,1 };
+
+		RulesMove[0] = { 1,0 };
 		RulesMoveTransform[0] = { 0,1 };
 		RulesMoveTransform[1] = { 1,0 };
 		RulesMoveTransform[2] = { 0,-1 };
@@ -197,7 +200,7 @@ Pawn::Pawn(int a, int b, int s, String FS, String FT)
 	}
 	else
 	{
-		RulesMove[0] = { 0,-1 };
+		RulesMove[0] = { -1,0 };
 		RulesMoveTransform[0] = { 0,1 };
 		RulesMoveTransform[1] = { 1,0 };
 		RulesMoveTransform[2] = { 0,-1 };
@@ -205,11 +208,11 @@ Pawn::Pawn(int a, int b, int s, String FS, String FT)
 		RulesMoveTransform[4] = { -1,-1 };
 		RulesMoveTransform[5] = { 1,-1 };
 	}
-
+	isActive = true;
 	roots[10][10];
-	memset(roots, 0, sizeof(roots));
+	memset(roots, 0, sizeof(roots) / sizeof(roots[0][0]));
 	isMove = false; isClicked = false;
-	int X, Y;
+	isActive = true;
 	x = a;
 	y = b;
 	transformation = 0;
@@ -224,8 +227,8 @@ Pawn::Pawn(int a, int b, int s, String FS, String FT)
 	ImageD.loadFromFile("images/" + FileDef);
 	TextureD.loadFromImage(ImageD);
 	SpriteD.setTexture(TextureD);
-	SpriteD.setTextureRect(IntRect(33, 709, 55, 65));//В дальнейшем координаты x,y будут перемножаться на 85  и размеры его будут 85 на 85 p.s Разобраться с картинкой
-	SpriteD.setPosition(1235, 815);// тут тоже все будет зависеть от координат  p.s Разобраться с картинкой
+	SpriteD.setTextureRect(IntRect(34 + (85 * y - 85), 28 + (85 * x - 85), 55, 65));//В дальнейшем координаты x,y будут перемножаться на 85  и размеры его будут 85 на 85 p.s Разобраться с картинкой
+	SpriteD.setPosition(615 + 80 * (y - 1) + 5 * (y - 1), 195 + 80 * (x - 1) + 5 * (x - 1));
 
 	///////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -278,10 +281,10 @@ Rook::Rook(int a, int b, int s, String FS, String FT)
 	RulesMoveTransform[33] = { 1, 1 };
 	RulesMoveTransform[34] = { -1, -1 };
 	RulesMoveTransform[35] = { -1, -1 };
-
 	roots[10][10];
 	memset(roots, 0, sizeof(roots) / sizeof(roots[0][0]));
 	isMove = false; isClicked = false;
+	isActive = true;
 	x = a;
 	y = b;
 	transformation = 0;
@@ -296,8 +299,8 @@ Rook::Rook(int a, int b, int s, String FS, String FT)
 	ImageD.loadFromFile("images/" + FileDef);
 	TextureD.loadFromImage(ImageD);
 	SpriteD.setTexture(TextureD);
-	SpriteD.setTextureRect(IntRect(33, 709, 55, 65));//В дальнейшем координаты x,y будут перемножаться на 85  и размеры его будут 85 на 85 p.s Разобраться с картинкой
-	SpriteD.setPosition(1235, 815);// тут тоже все будет зависеть от координат  p.s Разобраться с картинкой
+	SpriteD.setTextureRect(IntRect(34 + (85 * y - 85), 28 + (85 * x - 85), 55, 65));//В дальнейшем координаты x,y будут перемножаться на 85  и размеры его будут 85 на 85 p.s Разобраться с картинкой
+	SpriteD.setPosition(615 + 80 * (y - 1) + 5 * (y - 1), 195 + 80 * (x - 1) + 5 * (x - 1));
 
 	///////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -316,6 +319,7 @@ Rook::Rook(int a, int b, int s, String FS, String FT)
 
 Knight::Knight(int a, int b, int s, String FS, String FT)
 {
+	side = s;
 	SizeOfRules = 32;
 	RulesMove = new VectorMove[32];
 	for (int i = 1; i < 9; i++)
@@ -347,10 +351,10 @@ Knight::Knight(int a, int b, int s, String FS, String FT)
 	roots[10][10];
 	memset(roots, 0, sizeof(roots));
 	isMove = false; isClicked = false;
-
+	isActive = true;
 	x = a;
 	y = b;
-	side = s;
+
 	transformation = 0;
 	HaveTransform = 1;
 	String FileDef = FS;
@@ -362,8 +366,8 @@ Knight::Knight(int a, int b, int s, String FS, String FT)
 	ImageD.loadFromFile("images/" + FileDef);
 	TextureD.loadFromImage(ImageD);
 	SpriteD.setTexture(TextureD);
-	SpriteD.setTextureRect(IntRect(33, 709, 55, 65));//В дальнейшем координаты x,y будут перемножаться на 85  и размеры его будут 85 на 85 p.s Разобраться с картинкой
-	SpriteD.setPosition(1235, 815);// тут тоже все будет зависеть от координат  p.s Разобраться с картинкой
+	SpriteD.setTextureRect(IntRect(34 + (85 * y - 85), 28 + (85 * x - 85), 55, 65));//В дальнейшем координаты x,y будут перемножаться на 85  и размеры его будут 85 на 85 p.s Разобраться с картинкой
+	SpriteD.setPosition(615 + 80 * (y - 1) + 5 * (y - 1), 195 + 80 * (x - 1) + 5 * (x - 1));
 
 	///////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -381,15 +385,23 @@ Knight::Knight(int a, int b, int s, String FS, String FT)
 
 Arrow::Arrow(int a, int b, int s, String FS, String FT)
 {
-	SizeOfRules = 16;
-	RulesMove = new VectorMove[16];
-	for (int i = 1; i < 9; i++)
+	side = s;
+	SizeOfRules = 8;
+	RulesMove = new VectorMove[8];
+	if (side == 1)
 	{
-		RulesMove[i - 1] = { 0,1 * i };
+		for (int i = 1; i < 9; i++)
+		{
+			RulesMove[i - 1] = { 1 * i,0 };
+		}
+
 	}
-	for (int i = 9; i < 17; i++)
+	else 
 	{
-		RulesMove[i - 1] = { 0,-1 * (i - 8) };
+		for (int i = 1; i < 9; i++)
+		{
+			RulesMove[i - 1] = { -1 * i,0 };
+		}
 	}
 	if (side == 1)
 	{
@@ -413,9 +425,9 @@ Arrow::Arrow(int a, int b, int s, String FS, String FT)
 	roots[10][10];
 	memset(roots, 0, sizeof(roots) / sizeof(roots[0][0]));
 	isMove = false; isClicked = false;
+	isActive = true;
 	x = a;
 	y = b;
-	side = s;
 	transformation = 0;
 	HaveTransform = 1;
 	String FileDef = FS;
@@ -427,8 +439,8 @@ Arrow::Arrow(int a, int b, int s, String FS, String FT)
 	ImageD.loadFromFile("images/" + FileDef);
 	TextureD.loadFromImage(ImageD);
 	SpriteD.setTexture(TextureD);
-	SpriteD.setTextureRect(IntRect(33, 709, 55, 65));//В дальнейшем координаты x,y будут перемножаться на 85  и размеры его будут 85 на 85 p.s Разобраться с картинкой
-	SpriteD.setPosition(1235, 815);// тут тоже все будет зависеть от координат  p.s Разобраться с картинкой
+	SpriteD.setTextureRect(IntRect(34 + (85 * y - 85), 28 + (85 * x - 85), 55, 65));//В дальнейшем координаты x,y будут перемножаться на 85  и размеры его будут 85 на 85 p.s Разобраться с картинкой
+	SpriteD.setPosition(615 + 80 * (y - 1) + 5 * (y - 1), 195 + 80 * (x - 1) + 5 * (x - 1));
 
 	///////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -445,6 +457,7 @@ Arrow::Arrow(int a, int b, int s, String FS, String FT)
 }
 Horse::Horse(int a, int b, int s, String FS, String FT)
 {
+	side = s;
 	SizeOfRules = 2;
 	RulesMove = new VectorMove[2];
 	if (side == 1)
@@ -472,11 +485,12 @@ Horse::Horse(int a, int b, int s, String FS, String FT)
 	}
 
 	roots[10][10];
-	memset(roots, 0, sizeof(roots));
+	memset(roots, 0, sizeof(roots) / sizeof(roots[0][0]));
 	isMove = false; isClicked = false;
+	isActive = true;
 	x = a;
 	y = b;
-	side = s;
+
 	transformation = 0;
 	HaveTransform = 1;
 	String FileDef = FS;
@@ -488,8 +502,8 @@ Horse::Horse(int a, int b, int s, String FS, String FT)
 	ImageD.loadFromFile("images/" + FileDef);
 	TextureD.loadFromImage(ImageD);
 	SpriteD.setTexture(TextureD);
-	SpriteD.setTextureRect(IntRect(33, 709, 55, 65));//В дальнейшем координаты x,y будут перемножаться на 85  и размеры его будут 85 на 85 p.s Разобраться с картинкой
-	SpriteD.setPosition(1235, 815);// тут тоже все будет зависеть от координат  p.s Разобраться с картинкой
+	SpriteD.setTextureRect(IntRect(34 + (85 * y - 85), 28 + (85 * x - 85), 55, 65));//В дальнейшем координаты x,y будут перемножаться на 85  и размеры его будут 85 на 85 p.s Разобраться с картинкой
+	SpriteD.setPosition(615 + 80 * (y - 1) + 5 * (y - 1), 195 + 80 * (x - 1) + 5 * (x - 1));
 
 	///////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -504,34 +518,36 @@ Horse::Horse(int a, int b, int s, String FS, String FT)
 	///////////////////////////////////////////////////////////////////////////////////////////////////
 }
 Gold::Gold(int a, int b, int s, String FS) {
+	side = s;
 	SizeOfRules = 6;
 	RulesMove = new VectorMove[6];
 	if (side == 1)
 	{
-		RulesMove[0] = { 0,1 };
+		RulesMove[0] = { 1,1 };
 		RulesMove[1] = { 1,0 };
-		RulesMove[2] = { 0,-1 };
-		RulesMove[3] = { -1,0 };
-		RulesMove[4] = { 1,1 };
-		RulesMove[5] = { -1,1 };
+		RulesMove[2] = { 1,-1 };
+		RulesMove[3] = { 0,1 };
+		RulesMove[4] = { 0,-1 };
+		RulesMove[5] = { -1,0 };
 
 	}
 	else
 	{
-		RulesMove[0] = { 0,1 };
-		RulesMove[1] = { 1,0 };
-		RulesMove[2] = { 0,-1 };
-		RulesMove[3] = { -1,0 };
-		RulesMove[4] = { -1,-1 };
-		RulesMove[5] = { 1,-1 };
+		RulesMove[0] = { -1,1 };
+		RulesMove[1] = { -1,0 };
+		RulesMove[2] = { -1,-1 };
+		RulesMove[3] = { 1,0 };
+		RulesMove[4] = { 0,-1 };
+		RulesMove[5] = { 0,1 };
 	}
 	roots[10][10];
 	memset(roots, 0, sizeof(roots) / sizeof(roots[0][0]));
 	isMove = false; isClicked = false;
+	isActive = true;
 	x = a;
 	y = b;
-	side = s;
 	transformation = 0;
+
 	String FileDef = FS;
 	SpriteD.setOrigin(55 / 2, 65 / 2);
 
@@ -540,42 +556,46 @@ Gold::Gold(int a, int b, int s, String FS) {
 	ImageD.loadFromFile("images/" + FileDef);
 	TextureD.loadFromImage(ImageD);
 	SpriteD.setTexture(TextureD);
-	SpriteD.setTextureRect(IntRect(33, 709, 55, 65));//В дальнейшем координаты x,y будут перемножаться на 85  и размеры его будут 85 на 85 p.s Разобраться с картинкой
-	SpriteD.setPosition(1235, 815);// тут тоже все будет зависеть от координат  p.s Разобраться с картинкой
+	SpriteD.setTextureRect(IntRect(34 + (85 * y - 85), 28 + (85 * x - 85), 55, 65));//В дальнейшем координаты x,y будут перемножаться на 85  и размеры его будут 85 на 85 p.s Разобраться с картинкой
+	SpriteD.setPosition(615 + 80 * (y - 1) + 5 * (y - 1), 195 + 80 * (x - 1) + 5 * (x - 1));
 
 	///////////////////////////////////////////////////////////////////////////////////////////////////
 
 }
-Silver::Silver(int a, int b, int s, String FS)
+Silver::Silver(int a, int b, int s, String FS, String FT)
 {
+	side = s;
 	RulesMove = new VectorMove[5];
 	SizeOfRules = 5;
 	if (side == 1)
 	{
-		RulesMove[0] = { 0,1 };
-		RulesMove[1] = { -1,-1 };
-		RulesMove[2] = { -1,1 };
-		RulesMove[3] = { 1,1 };
-		RulesMove[4] = { -1,1 };
+		RulesMove[0] = { 1,1 };
+		RulesMove[1] = { 1,-1 };
+		RulesMove[2] = { 1,0 };
+		RulesMove[3] = { -1,1 };
+		RulesMove[4] = { -1,-1 };
 
 	}
 	else
 	{
-		RulesMove[0] = { 1,1 };
-		RulesMove[1] = { -1,1 };
-		RulesMove[2] = { 0,-1 };
-		RulesMove[3] = { -1,-1 };
-		RulesMove[4] = { 1,-1 };
+		RulesMove[0] = { -1,1 };
+		RulesMove[1] = { -1,-1 };
+		RulesMove[2] = { -1,0 };
+		RulesMove[3] = { 1,-1 };
+		RulesMove[4] = { 1,1 };
 	}
 
 	roots[10][10];
 	memset(roots, 0, sizeof(roots) / sizeof(roots[0][0]));
 	isMove = false; isClicked = false;
+	isActive = true;
+	HaveTransform = 1;
 	x = a;
 	y = b;
-	side = s;
+
 	transformation = 0;
 	String FileDef = FS;
+	String FileTrans = FT;
 	SpriteD.setOrigin(55 / 2, 65 / 2);
 
 	//***************************Описываем изображение фигуры в обычном виде*************************//
@@ -583,12 +603,13 @@ Silver::Silver(int a, int b, int s, String FS)
 	ImageD.loadFromFile("images/" + FileDef);
 	TextureD.loadFromImage(ImageD);
 	SpriteD.setTexture(TextureD);
-	SpriteD.setTextureRect(IntRect(33, 709, 55, 65));//В дальнейшем координаты x,y будут перемножаться на 85  и размеры его будут 85 на 85 p.s Разобраться с картинкой
-	SpriteD.setPosition(1235, 815);// тут тоже все будет зависеть от координат  p.s Разобраться с картинкой
+	SpriteD.setTextureRect(IntRect(34 + (85 * y - 85), 28 + (85 * x - 85), 55, 65));//В дальнейшем координаты x,y будут перемножаться на 85  и размеры его будут 85 на 85 p.s Разобраться с картинкой
+	SpriteD.setPosition(615 + 80 * (y - 1) + 5 * (y - 1), 195 + 80 * (x - 1) + 5 * (x - 1));
 
 	///////////////////////////////////////////////////////////////////////////////////////////////////
+
 }
-void Figures::SearchRoots(Figures *FiguresB[], Figures* FiguresW[], int array[10][10], Figures& pa,int SizeB,int SizeW)
+void Figures::SearchRoots(Figures *FiguresB[], Figures* FiguresW[], int array[10][10], Figures& pa, int SizeB, int SizeW)
 {
 
 	for (int i = 0; i < 10; i++)
@@ -596,7 +617,7 @@ void Figures::SearchRoots(Figures *FiguresB[], Figures* FiguresW[], int array[10
 		{
 			roots[i][j] = 0;
 		}
-	cout << array[8][8];
+	cout << array[7][9];
 	VectorMove StopPos[8];
 	for (int i = 0; i < 8; i++)
 	{
@@ -616,9 +637,12 @@ void Figures::SearchRoots(Figures *FiguresB[], Figures* FiguresW[], int array[10
 
 		if ((tempX < 10) && (tempX > 0) && (tempY < 10) && (tempY > 0))
 		{
-			if (SizeOfRules > 10)
+			cout << typeid(pa).name();
+			String  a = "class King";
+
+			if ((SizeOfRules > 7) && ((typeid(pa).name())!= typeid(King).name()))
 			{
-				if ((array[tempX][tempY] != side) && (pa.CheckCheck(FiguresB, FiguresW, pa, array, RulesMove[i].getScaleCompX(), RulesMove[i].getScaleCompY(),SizeB,SizeW) == 1))
+				if ((array[tempX][tempY] != side) && (pa.CheckCheck(FiguresB, FiguresW, pa, array, RulesMove[i].getScaleCompX(), RulesMove[i].getScaleCompY(), SizeB, SizeW) == 1))
 				{
 					roots[tempX][tempY] = 1;
 					if (array[tempX][tempY] == 0)
@@ -626,16 +650,25 @@ void Figures::SearchRoots(Figures *FiguresB[], Figures* FiguresW[], int array[10
 					}
 					else
 					{
-						StopPos[i++] = { tempX,tempY };
+						if (i<32)
+							while (i%8!=7)
+							{
+								i++;
+							}
+
 					}
 				}
 				else
 				{
 					roots[tempX][tempY] = 0;
-					StopPos[i++] = { tempX,tempY };
+					if (i < 32)
+						while (i % 8 != 7)
+						{
+							i++;
+						}
 				}
 			}
-			else if ((array[tempX][tempY] != side) && (pa.CheckCheck(FiguresB, FiguresW, pa, array, RulesMove[i].getScaleCompX(), RulesMove[i].getScaleCompY(),SizeB,SizeW) == 1))
+			else if ((array[tempX][tempY] != side) && (pa.CheckCheck(FiguresB, FiguresW, pa, array, RulesMove[i].getScaleCompX(), RulesMove[i].getScaleCompY(), SizeB, SizeW) == 1))
 			{
 				roots[tempX][tempY] = 1;
 			}
@@ -646,7 +679,7 @@ void Figures::SearchRoots(Figures *FiguresB[], Figures* FiguresW[], int array[10
 
 		}
 	}
-	if (SizeOfRules > 10)
+	/*if (SizeOfRules > 10)
 	{
 		for (i = 0; i < 8; i++)
 		{
@@ -673,8 +706,9 @@ void Figures::SearchRoots(Figures *FiguresB[], Figures* FiguresW[], int array[10
 			}
 		}
 	}
+	*/
 }
-bool Figures::CheckCheck(Figures* FiguresB[], Figures* FiguresW[], Figures &a, int array[10][10], int NewX, int NewY,int SizeB,int SizeW)
+bool Figures::CheckCheck(Figures* FiguresB[], Figures* FiguresW[], Figures &a, int array[10][10], int NewX, int NewY, int SizeB, int SizeW)
 {
 	int arrayHelp[10][10];
 
@@ -826,35 +860,74 @@ void Template(int a[10][10], int b[10][10])
 		for (int j = 0; j < 10; j++)
 			a[i][j] = b[i][j];
 }
-bool Figures:: Eating(Figures  *b[], Figures *w[], int& sizeb, int& sizew)
+bool Figures::Eating(Figures  **&b, Figures **&w, int& sizeb, int& sizew, Figures **&byB, Figures **&byW, int& sizebyB, int&sizebyW)
 {
+	Figures empty;
+	bool isEmpty=0;
+	int k;
 	if (side == 1)
 	{
 		for (int i = 0; i < sizeb; i++)
 		{
 			if ((x == (*b[i]).getCordX()) && (y == (*b[i]).getCordY()))
 			{
+				b[i]->side = 1;
+				b[i]->isActive = 0;
+				b[i]->x = -100;
+				b[i]->y = -100;
 				Figures **NewB;
 				Figures **NewW;
 				sizeb -= 1;
 				sizew += 1;
+				
 				NewB = new Figures *[sizeb];
 				NewW = new Figures *[sizew];
+				
+				for (int j = 0; j < sizebyW; j++)
+				{
+					if (*byW[j] == empty)
+					{
+						isEmpty = true;
+						k = j;
+						break;
+					}
+				}
+				if (isEmpty == true)
+				{
+					byW[k] = b[i];
+					byW[k]->getSprite().setPosition(1400+90*k, 240);
+				}
+				else
+				{
+					Figures **byWhite;
+					sizebyW += 1;
+					byWhite = new Figures *[sizebyW];
+					for (int j = 0; j < sizebyW - 1; j++)
+					{
+						byWhite[j] = byW[j];
+					}
+					byWhite[sizebyW - 1] = b[i];
+					
+					byW = byWhite;
+					(**&byW[sizebyW - 1]).getSprite().setPosition(500 - 80 * (sizebyW - 1), 365);
+					(**&byW[sizebyW - 1]).getSprite().rotate(180);
+				}
 				for (int j = 0; j < i; j++)
 				{
 					NewB[j] = b[j];
 				}
 				for (int j = i; j < sizeb; j++)
 				{
-					NewB[j] = b[j];
+					NewB[j] = b[j + 1];
 				}
-				for (int j = 0; j < sizew-1; j++)
+				for (int j = 0; j < sizew - 1; j++)
 				{
 					NewW[j] = w[j];
 				}
-				NewW[sizew] = b[i];
+                NewW[sizew - 1] = b[i];
 				b = NewB;
 				w = NewW;
+				
 				return true;
 			}
 		}
@@ -866,30 +939,75 @@ bool Figures:: Eating(Figures  *b[], Figures *w[], int& sizeb, int& sizew)
 		{
 			if ((x == (*w[i]).getCordX()) && (y == (*w[i]).getCordY()))
 			{
+				w[i]->side = 1;
+				w[i]->isActive = 0;
+				w[i]->x = -100;
+				w[i]->y = -100;
 				sizew -= 1;
 				sizeb += 1;
 				Figures **NewB;
 				Figures **NewW;
+				
+				
 				NewB = new Figures *[sizeb];
 				NewW = new Figures *[sizew];
+				for (int j = 0; j < sizebyB; j++)
+				{
+					if (**&byB[j] == empty)
+					{
+						isEmpty = true;
+						k = j;
+						break;
+					}
+				}
+					if (isEmpty == true)
+					{
+						byB[k] = w[i];
+					}
+					else
+					{
+						Figures **byBlack;
+						sizebyB += 1;
+						byBlack = new Figures *[sizebyB];
+						for (int j = 0; j < sizebyW - 1; j++)
+						{
+							byBlack[j] = byB[j];
+						}
+						byBlack[sizebyB - 1] = w[i];
+						byB = byBlack;
+						(**&byB[sizebyB - 1]).getSprite().setPosition(1450 + 80 * (sizebyB - 1), 710);
+						(**&byB[sizebyB - 1]).getSprite().rotate(180);
+					}
 				for (int j = 0; j < i; j++)
 				{
 					NewW[j] = w[j];
 				}
 				for (int j = i; j < sizew; j++)
 				{
-					NewW[j] = w[j];
+					NewW[j] = w[j + 1];
 				}
 				for (int j = 0; j < sizeb - 1; j++)
 				{
 					NewB[j] = b[j];
 				}
-				NewB[sizeb] = w[i];
+				NewB[sizeb - 1] = w[i];
 				b = NewB;
 				w = NewW;
 				return true;
 			}
 		}
+		return false;
+	}
+}
+bool operator==(Figures& left, Figures& right)
+{
+	
+	if ((left.x == right.x) && (left.y == right.y) && (left.side == right.side) && (left.SizeOfRules == right.SizeOfRules) && (left.isActive == right.isActive))
+	{
+		return true;
+	}
+	else
+	{
 		return false;
 	}
 }

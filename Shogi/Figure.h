@@ -16,10 +16,10 @@ protected:
 	Image ImageD;
 	Texture TextureD;
 	Sprite SpriteD;
-
-	Image ImageSwap;
+    Image ImageSwap;
 	Texture TextureSwap;
 	Sprite SpriteSwap;
+	bool isActive;
 	bool isMove, isClicked;
 	bool HaveTransform = 0;//Может ли фигура трансфромироваться
 	int side; //Сторона к которой принадлежит фигура
@@ -29,7 +29,8 @@ protected:
 	VectorMove *RulesMove;
 	int SizeOfRules;
 public:
-	bool Eating(Figures  *b[], Figures *w[], int& sizeb, int& sizew);
+	friend bool operator==(Figures& left, Figures& right);
+	bool Eating(Figures  **&b, Figures **&w, int& sizeb, int& sizew,Figures **&,Figures **&,int&,int&);
 	void setCordX(int x);
 	void setCordY(int y);
 	int getSide();
@@ -39,19 +40,19 @@ public:
 	int getCordX();
 	int getCordY();
 	bool IsCheck(int array[10][10], int KingX, int KingY);
-	bool CheckCheck(Figures *FiguresB[], Figures* FiguresW[], Figures &a, int array[10][10], int NewX, int NewY,int SizeB,int SizeW);
+	bool CheckCheck(Figures *FiguresB[], Figures* FiguresW[], Figures &a, int array[10][10], int NewX, int NewY, int SizeB, int SizeW);
 	int getSizeOfRules();
 	Sprite& getSprite();
 	bool& getIsMove();
 	bool& getIsClicked();
-	void SearchRoots(Figures *FiguresB[], Figures* FiguresW[], int array[10][10], Figures &pa,int SizeB,int SizeW);
+	void SearchRoots(Figures *FiguresB[], Figures* FiguresW[], int array[10][10], Figures &pa, int SizeB, int SizeW);
 	virtual void ChangeArr();
 	Figures(int x, int y, int side, String FS, String FT, bool HaveTransform);
 	VectorMove getRulesMove(int i);
 	Figures();
 	~Figures();
 };
-Figures* SelectedFigure(int &turn, Figures *FiguresBlack[], Figures *FiguresWhite[], int x, int y,int SizeB,int SizeW);
+Figures* SelectedFigure(int &turn, Figures *FiguresBlack[], Figures *FiguresWhite[], int x, int y, int SizeB, int SizeW);
 
 ////////////CLASS OF THE KING ///////////////////////
 
@@ -67,7 +68,7 @@ public:
 ////////////////////////////////////////////////////////////
 
 //////////////////CLASS OF THE PAWN /////////////////////////
-class Pawn :public Figures {
+class Pawn:public Figures {
 protected:
 	VectorMove RulesMoveTransform[6];
 public:
@@ -173,7 +174,7 @@ public:
 
 class Silver : public Figures {
 public:
-	Silver(int a, int b, int side, String FS);
+	Silver(int a, int b, int side, String FS,String FT);
 	Silver();
 };
 

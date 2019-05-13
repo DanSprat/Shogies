@@ -340,8 +340,8 @@ Knight::Knight(int a, int b, int s, String FS, String FT)
 	}
 	for (int i = 25; i < 33; i++)
 	{
-		RulesMove[i - 1] = { 1 * (i - 16),-1 * (i - 16) };
-		RulesMoveTransform[i - 1] = { 1 * (i - 16),-1 * (i - 16) };
+		RulesMove[i - 1] = { 1 * (i - 24),-1 * (i - 24) };
+		RulesMoveTransform[i - 1] = { 1 * (i - 24),-1 * (i - 24) };
 	}
 
 	RulesMoveTransform[32] = { 1, 0 };
@@ -617,15 +617,6 @@ void Figures::SearchRoots(Figures *FiguresB[], Figures* FiguresW[], int array[10
 		{
 			roots[i][j] = 0;
 		}
-	cout << array[7][9];
-	VectorMove StopPos[8];
-	for (int i = 0; i < 8; i++)
-	{
-		StopPos[i].getCompX() = 0;
-		StopPos[i].getCompY() = 0;
-
-	}
-
 	int i = 0;
 	int  tempX = 0;
 	int tempY = 0;
@@ -637,16 +628,14 @@ void Figures::SearchRoots(Figures *FiguresB[], Figures* FiguresW[], int array[10
 
 		if ((tempX < 10) && (tempX > 0) && (tempY < 10) && (tempY > 0))
 		{
-			cout << typeid(pa).name();
-			String  a = "class King";
-
 			if ((SizeOfRules > 7) && ((typeid(pa).name())!= typeid(King).name()))
 			{
-				if ((array[tempX][tempY] != side) && (pa.CheckCheck(FiguresB, FiguresW, pa, array, RulesMove[i].getScaleCompX(), RulesMove[i].getScaleCompY(), SizeB, SizeW) == 1))
+				if ((array[tempX][tempY] != side) && ((pa).CheckCheck(FiguresB, FiguresW, pa, array, RulesMove[i].getScaleCompX(), RulesMove[i].getScaleCompY(), SizeB, SizeW) == 1)&&(CheckCheck(FiguresB, FiguresW, pa, array, 0, 0, SizeB, SizeW) == 1))
 				{
 					roots[tempX][tempY] = 1;
 					if (array[tempX][tempY] == 0)
 					{
+						
 					}
 					else
 					{
@@ -655,20 +644,61 @@ void Figures::SearchRoots(Figures *FiguresB[], Figures* FiguresW[], int array[10
 							{
 								i++;
 							}
+						
 
+						
 					}
 				}
 				else
 				{
-					roots[tempX][tempY] = 0;
-					if (i < 32)
-						while (i % 8 != 7)
+					if (CheckCheck(FiguresB, FiguresW, pa, array, 0, 0, SizeB, SizeW) == 1)
+					{
+						if (i < 32)
+							while (i % 8 != 7)
+							{
+								i++;
+							}
+					}
+					else
+					{
+						if (array[tempX][tempY] != side)
 						{
-							i++;
+
+
+							if ((pa).CheckCheck(FiguresB, FiguresW, pa, array, RulesMove[i].getScaleCompX(), RulesMove[i].getScaleCompY(), SizeB, SizeW) == 1)
+							{
+								if (array[tempX][tempY] == 0)
+								{
+									roots[tempX][tempY] = 1;
+								}
+								else
+								{
+									roots[tempX][tempY] = 1;
+									if (i < 32)
+										while (i % 8 != 7)
+										{
+											i++;
+										}
+								}
+							}
+								
+							
 						}
+						else
+						{
+							if (i < 32)
+								while (i % 8 != 7)
+								{
+									i++;
+								}
+						}
+					}
+					
+				
+
 				}
 			}
-			else if ((array[tempX][tempY] != side) && (pa.CheckCheck(FiguresB, FiguresW, pa, array, RulesMove[i].getScaleCompX(), RulesMove[i].getScaleCompY(), SizeB, SizeW) == 1))
+			else if ((array[tempX][tempY] != side) && ((pa).CheckCheck(FiguresB, FiguresW, pa, array, RulesMove[i].getScaleCompX(), RulesMove[i].getScaleCompY(), SizeB, SizeW) == 1))
 			{
 				roots[tempX][tempY] = 1;
 			}
@@ -678,60 +708,47 @@ void Figures::SearchRoots(Figures *FiguresB[], Figures* FiguresW[], int array[10
 			}
 
 		}
-	}
-	/*if (SizeOfRules > 10)
-	{
-		for (i = 0; i < 8; i++)
-		{
-			int j = 1;
-			int temp2X = 0;
-			int temp2Y = 0;
-			if (StopPos[i].getCompX() > StopPos[i].getCompY())
-			{
-				temp2X = (StopPos[i].getCompX()) / abs(StopPos[i].getCompX());
-				temp2Y = (StopPos[i].getCompY()) / abs(StopPos[i].getCompX());
-			}
-			else
-			{
-				temp2X = (StopPos[i].getCompX()) / abs(StopPos[i].getCompY());
-				temp2Y = (StopPos[i].getCompY()) / abs(StopPos[i].getCompY());
-			}
-			while (((StopPos[i].getCompX() + temp2X * j) < 10) && ((StopPos[i].getCompX() + temp2X * j) > 0) && ((StopPos[i].getCompY() + temp2Y * j) < 10) && ((StopPos[i].getCompY() + temp2Y * j > 0)))
-			{
-				StopPos[i].getCompX() += temp2X * (j);
-				StopPos[i].getCompY() += temp2Y * (j);
-				roots[StopPos[i].getCompX()][StopPos[i].getCompY()] = 0;
-				j++;
-
-			}
-		}
-	}
-	*/
+	}	
 }
 bool Figures::CheckCheck(Figures* FiguresB[], Figures* FiguresW[], Figures &a, int array[10][10], int NewX, int NewY, int SizeB, int SizeW)
 {
 	int arrayHelp[10][10];
-
+	//Template(arrayHelp, array);
 	int mate = 0;
 	int KingX, KingY;
-	//array[x][y] = 0;
-	//array[NewX][NewY] = side;
+	int k=-1;
 	if (side == 1)
 	{
-
+		if (array[x + NewX][y + NewY] == 2)
+		{
+			for (int i = 0; i<SizeB; i++)
+			{
+				if ((x + NewX == FiguresB[i]->x) && (y + NewY == FiguresB[i]->y))
+					k = i;
+			}
+		}
+		
 		KingX = (*FiguresW[0]).getCordX();
 		KingY = (*FiguresW[0]).getCordY();
 		if ((x == KingX) && (y == KingY))
 		{
 			KingX += NewX;
 			KingY += NewY;
+			arrayHelp[x][y] = 0;///
+			arrayHelp[KingX][KingY] = 1;
 		}
 		for (int i = 0; i < SizeB; i++)
 		{
-			Template(arrayHelp, array);
-			if ((*FiguresB[i]).IsCheck(arrayHelp, KingX, KingY) == true)
+			if (i != k)
 			{
-				return false;
+				
+				Template(arrayHelp, array);
+				arrayHelp[x][y] = 0;
+				arrayHelp[x + NewX][y + NewY] = 1;
+				if ((*FiguresB[i]).IsCheck(arrayHelp, KingX, KingY) == true)
+				{
+					return false;
+				}
 			}
 		}
 		return true;
@@ -739,22 +756,36 @@ bool Figures::CheckCheck(Figures* FiguresB[], Figures* FiguresW[], Figures &a, i
 	}
 	if (side == 2)
 	{
+		if (array[x + NewX][y + NewY] == 1)
+		{
+			for (int i = 0; i < SizeW; i++)
+			{
+				if ((x + NewX == FiguresW[i]->x) && (y + NewY == FiguresW[i]->y))
+					k = i;
+			}
+		}
 		KingX = (*FiguresB[0]).getCordX();
 		KingY = (*FiguresB[0]).getCordY();
 		if ((x == KingX) && (y == KingY))
 		{
 			KingX += NewX;
 			KingY += NewY;
+			arrayHelp[x][y] = 0;///
+			arrayHelp[KingX][KingY] = 2;
 		}
 		for (int i = 0; i < SizeW; i++)
 		{
-			Template(arrayHelp, array);
-			arrayHelp[x][y] = 0;///
-			arrayHelp[KingX][KingY] = 2;///ЭЭЭЭЭЭЭКСПЕРИМЕНТ
-
-			if ((*FiguresW[i]).IsCheck(arrayHelp, KingX, KingY) == true)
+			if (i != k)
 			{
-				return false;
+				arrayHelp[x][y] = 0;
+				arrayHelp[x + NewX][y + NewY] = 2;
+				Template(arrayHelp, array);
+
+
+				if ((*FiguresW[i]).IsCheck(arrayHelp, KingX, KingY) == true)
+				{
+					return false;
+				}
 			}
 		}
 		return true;
@@ -953,7 +984,7 @@ bool Figures::Eating(Figures  **&b, Figures **&w, int& sizeb, int& sizew, Figure
 				NewW = new Figures *[sizew];
 				for (int j = 0; j < sizebyB; j++)
 				{
-					if (**&byB[j] == empty)
+					if (*byB[j] == empty)
 					{
 						isEmpty = true;
 						k = j;
@@ -969,15 +1000,16 @@ bool Figures::Eating(Figures  **&b, Figures **&w, int& sizeb, int& sizew, Figure
 						Figures **byBlack;
 						sizebyB += 1;
 						byBlack = new Figures *[sizebyB];
-						for (int j = 0; j < sizebyW - 1; j++)
+						for (int j = 0; j < sizebyB - 1; j++)
 						{
 							byBlack[j] = byB[j];
 						}
 						byBlack[sizebyB - 1] = w[i];
 						byB = byBlack;
-						(**&byB[sizebyB - 1]).getSprite().setPosition(1450 + 80 * (sizebyB - 1), 710);
+						(**&byB[sizebyB - 1]).getSprite().setPosition(1450 + 70 * ((sizebyB - 1)%5), 710 + 80*((sizebyB-1)/5));
 						(**&byB[sizebyB - 1]).getSprite().rotate(180);
 					}
+				
 				for (int j = 0; j < i; j++)
 				{
 					NewW[j] = w[j];

@@ -26,7 +26,7 @@ int main()
 	float MouseLeft = false;
 	VectorMove NewCoords = { 0,0 };
 	King KingWhite(1, 5, 1, "figures1.png");
-    Rook RookWhite1(2, 8, 1, "figures1.png", "figures1.png");
+    Rook RookWhite1(2, 2, 1, "figures1.png", "figures1.png");
 	King KingBlack(9, 5, 2, "figures1.png");
 	Rook RookBlack1(8, 8, 2, "figures1.png", "figures1.png");
 	Horse HorseWhite1(1, 2, 1, "figures1.png", "figures1.png");
@@ -34,7 +34,7 @@ int main()
 	Horse HorseBlack2(9, 8, 2, "figures1.png", "figures1.png");
 	Horse HorseWhite2(1, 8, 1, "figures1.png", "figures1.png");
 	Knight KnightBlack1(8, 2, 2, "figures1.png", "figures1.png");
-	Knight KnightWhite1(2, 2, 1, "figures1.png", "figures1.png");
+	Knight KnightWhite1(2, 8, 1, "figures1.png", "figures1.png");
 	Pawn PawnWhite1(3, 1, 1, "figures1.png", "figures1.png");
 	Pawn PawnWhite2(3, 2, 1, "figures1.png", "figures1.png");
 	Pawn PawnWhite3(3, 3, 1, "figures1.png", "figures1.png");
@@ -158,7 +158,7 @@ int main()
 		cout << "Jopa";
 	}
 	Image icon;
-	if (!icon.loadFromFile("images/icon.png"))
+	if (!icon.loadFromFile("images/icon2.png"))
 	{
 		return 1;
 	}
@@ -209,6 +209,11 @@ int main()
 						pa = SelectedFigure(turn, BlackFigures, WhiteFigures, pixelPos.x, pixelPos.y, SizeBlack, SizeWhite);
 						if (pa != 0)
 						{
+							j++;
+								if (j == 8)
+								{
+									cout << "Hello";
+								}
 							(*pa).SearchRoots(BlackFigures, WhiteFigures, boardik, *pa, SizeBlack, SizeWhite);
 							(*pa).getSprite().setColor(Color::Green);//красим спрайт в зеленый,тем самым говоря игроку,что он выбрал персонажа и может сделать ход
 							(*pa).getIsClicked() = true;
@@ -240,14 +245,13 @@ int main()
 								if ((*pa).CheckTrue(pixelPos.x, pixelPos.y, NewCoords) == true)
 
 								{
-									
 									cout << boardTrue[pa->getCordX()][pa->getCordY()];
 									boardTrue[pa->getCordX()][pa->getCordY()] = 0;
 									pa->setCordX(NewCoords.getScaleCompX());
 									pa->setCordY(NewCoords.getScaleCompY());
 									int k = sizeof(EatenByWhite);
 									pa->Eating(BlackFigures, WhiteFigures, SizeBlack, SizeWhite,EatenByBlack,EatenByWhite,SizeByBlack,SizeByWhite);
-									j++;
+						
 									boardTrue[pa->getCordX()][pa->getCordY()] = pa->getSide();
 									Template(boardik, boardTrue);
 									(*pa).getIsClicked() = false;

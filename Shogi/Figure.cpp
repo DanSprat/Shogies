@@ -15,27 +15,6 @@ Figures::Figures(int a, int b, int side, String FS, String FT, bool HaveTransfor
 	String FileTrans = FT;
 	SpriteD.setOrigin(55 / 2, 65 / 2);
 
-
-	//***************************Описываем изображение фигуры в обычном виде*************************//
-
-	ImageD.loadFromFile("images/" + FileDef);
-	TextureD.loadFromImage(ImageD);
-	SpriteD.setTexture(TextureD);
-	SpriteD.setTextureRect(IntRect(34 + (85 * y - 85), 28 + (85 * x - 85), 55, 65));//В дальнейшем координаты x,y будут перемножаться на 85  и размеры его будут 85 на 85 p.s Разобраться с картинкой
-	SpriteD.setPosition(1235, 815);// тут тоже все будет зависеть от координат  p.s Разобраться с картинкой
-
-	///////////////////////////////////////////////////////////////////////////////////////////////////
-
-	//********************Описываем изображение фигуры в трансформированном виде*********************//
-
-	ImageSwap.loadFromFile("images/" + FileTrans);
-	TextureSwap.loadFromImage(ImageSwap);
-	SpriteSwap.setTexture(TextureSwap);
-	SpriteSwap.setTextureRect(IntRect(100, 710, 85, 80));
-	//SpriteSwap.setPosition(655, 135);
-
-	///////////////////////////////////////////////////////////////////////////////////////////////////
-
 }
 
 Figures::Figures()  {     }
@@ -129,7 +108,7 @@ Figures* SelectedFigure(int &turn, Figures* FiguresBlack[], Figures* FiguresWhit
 	}
 
 }
-King::King(int a, int b, int s)
+King::King(int a, int b, int s,Texture& T)
 {
 	side = s;
 	RulesMove = new VectorMove[8];
@@ -160,18 +139,15 @@ King::King(int a, int b, int s)
 	SpriteD.setOrigin(55 / 2, 65 / 2);
 	check = 0;
 	checkmate = 0;
-
-
-	//***************************Описываем изображение фигуры в обычном виде*************************//
-
-	ImageD.loadFromFile("images/figures1.png");
-	TextureD.loadFromImage(ImageD);
-	SpriteD.setTexture(TextureD);
-	//SpriteD.setPosition(615 + 80 * (y - 1) + 5 * (y - 1), 195 + 80 * (x - 1) + 5 * (x - 1));// тут тоже все будет зависеть от координат  p.s Разобраться с картинкой
-	SpriteD.setTextureRect(IntRect(34 + (85 * y - 85), 28 + (85 * x - 85), 55, 65));//В дальнейшем координаты x,y будут перемножаться на 85  и размеры его будут 85 на 85 p.s Разобраться с картинкой
+	SpriteD.setTexture(T);
+	SpriteD.setTextureRect(IntRect(34 + (85 * 5 - 85), 28 + (85 * 9 - 85), 55, 65));//В дальнейшем координаты x,y будут перемножаться на 85  и размеры его будут 85 на 85 p.s Разобраться с картинкой
+	if (side == 1)
+	{
+		SpriteD.setRotation(180);
+	}
 	SpriteD.setPosition(615 + 80 * (y - 1) + 5 * (y - 1), 195 + 80 * (x - 1) + 5 * (x - 1));// тут тоже все будет зависеть от координат  p.s Разобраться с картинкой
 }
-Pawn::Pawn(int a, int b, int s)
+Pawn::Pawn(int a, int b, int s,Texture& T)
 {
 	SizeOfRules = 1;
 	SizeofRulesTransform = 6;
@@ -182,24 +158,24 @@ Pawn::Pawn(int a, int b, int s)
 	{
 		TransformCoords= { 7,9 };
 		RulesMove[0] = { 1,0 };
-		RulesMoveTransform[0] = { 0,1 };
-		RulesMoveTransform[1] = { 1,0 };
-		RulesMoveTransform[2] = { 0,-1 };
-		RulesMoveTransform[3] = { -1,0 };
-		RulesMoveTransform[4] = { 1,1 };
-		RulesMoveTransform[5] = { -1,1 };
+		RulesMoveTransform[0] = { 1,0 };
+		RulesMoveTransform[1] = { 1,1 };
+		RulesMoveTransform[2] = { 1,-1 };
+		RulesMoveTransform[3] = { 0,1 };
+		RulesMoveTransform[4] = { 0,-1 };
+		RulesMoveTransform[5] = { -1,0 };
 
 	}
 	else
 	{
 		TransformCoords = { 3,1 };
 		RulesMove[0] = { -1,0 };
-		RulesMoveTransform[0] = { 0,1 };
-		RulesMoveTransform[1] = { 1,0 };
-		RulesMoveTransform[2] = { 0,-1 };
-		RulesMoveTransform[3] = { -1,0 };
-		RulesMoveTransform[4] = { -1,-1 };
-		RulesMoveTransform[5] = { 1,-1 };
+		RulesMoveTransform[0] = { -1,1 };
+		RulesMoveTransform[1] = { -1,0 };
+		RulesMoveTransform[2] = { -1,-1 };
+		RulesMoveTransform[3] = { 0,1 };
+		RulesMoveTransform[4] = { 0,-1 };
+		RulesMoveTransform[5] = { 1,-0 };
 	}
 	isActive = true;
 	roots[10][10];
@@ -211,27 +187,15 @@ Pawn::Pawn(int a, int b, int s)
 	transformation = 0;
 	HaveTransform = 1;
 	SpriteD.setOrigin(55 / 2, 65 / 2);
+    SpriteD.setTexture(T);
+	SpriteD.setTextureRect(IntRect(34 + (85 * 1 - 85), 28 + (85 * 7 - 85), 55, 65));//В дальнейшем координаты x,y будут перемножаться на 85  и размеры его будут 85 на 85 p.s Разобраться с картинкой
+	if (side == 1)
+	{
+		SpriteD.setRotation(180);
+	}
+	SpriteD.setPosition(615 + 80 * (y - 1) + 5 * (y - 1), 195 + 80 * (x - 1) + 5 * (x - 1)); 
 
-
-	//***************************Описываем изображение фигуры в обычном виде*************************//
-
-	ImageD.loadFromFile("images/figures1.png");
-	TextureD.loadFromImage(ImageD);
-	SpriteD.setTexture(TextureD);
-	SpriteD.setTextureRect(IntRect(34 + (85 * y - 85), 28 + (85 * x - 85), 55, 65));//В дальнейшем координаты x,y будут перемножаться на 85  и размеры его будут 85 на 85 p.s Разобраться с картинкой
-	SpriteD.setPosition(615 + 80 * (y - 1) + 5 * (y - 1), 195 + 80 * (x - 1) + 5 * (x - 1));
-
-	///////////////////////////////////////////////////////////////////////////////////////////////////
-
-	//********************Описываем изображение фигуры в трансформированном виде*********************//
-
-	ImageSwap.loadFromFile("images/figures3.png");
-	TextureSwap.loadFromImage(ImageSwap);
-	SpriteSwap.setTexture(TextureSwap);
-	SpriteSwap.setTextureRect(IntRect(100, 710, 85, 80));
-	//SpriteSwap.setPosition(655, 135);
-
-	///////////////////////////////////////////////////////////////////////////////////////////////////
+	
 
 }
 void Figures::ChangeArr()
@@ -242,7 +206,7 @@ VectorMove Figures::getRulesMove(int i)
 {
 	return RulesMove[i];
 }
-Rook::Rook(int a, int b, int s)
+Rook::Rook(int a, int b, int s,Texture &T)
 
 {
 	side = s;
@@ -282,7 +246,7 @@ Rook::Rook(int a, int b, int s)
 	RulesMoveTransform[32] = { 1, -1 };
 	RulesMoveTransform[33] = { 1, 1 };
 	RulesMoveTransform[34] = { -1, -1 };
-	RulesMoveTransform[35] = { -1, -1 };
+	RulesMoveTransform[35] = { -1, 1 };
 	roots[10][10];
 	memset(roots, 0, sizeof(roots) / sizeof(roots[0][0]));
 	isMove = false; isClicked = false;
@@ -295,29 +259,20 @@ Rook::Rook(int a, int b, int s)
 	
 
 	//***************************Описываем изображение фигуры в обычном виде*************************//
-
-	ImageD.loadFromFile("images/figures1.png");
-	TextureD.loadFromImage(ImageD);
-	SpriteD.setTexture(TextureD);
-	SpriteD.setTextureRect(IntRect(34 + (85 * y - 85), 28 + (85 * x - 85), 55, 65));//В дальнейшем координаты x,y будут перемножаться на 85  и размеры его будут 85 на 85 p.s Разобраться с картинкой
+	SpriteD.setTexture(T);
+	SpriteD.setTextureRect(IntRect(34 + (85 * 8 - 85), 28 + (85 * 8 - 85), 55, 65));//В дальнейшем координаты x,y будут перемножаться на 85  и размеры его будут 85 на 85 p.s Разобраться с картинкой
+	if (side == 1)
+	{
+		SpriteD.setRotation(180);
+	}
 	SpriteD.setPosition(615 + 80 * (y - 1) + 5 * (y - 1), 195 + 80 * (x - 1) + 5 * (x - 1));
 
-	///////////////////////////////////////////////////////////////////////////////////////////////////
-
-	//********************Описываем изображение фигуры в трансформированном виде*********************//
-
-	ImageSwap.loadFromFile("images/figures1.png");
-	TextureSwap.loadFromImage(ImageSwap);
-	SpriteSwap.setTexture(TextureSwap);
-	SpriteSwap.setTextureRect(IntRect(100, 710, 85, 80));
-	//SpriteSwap.setPosition(655, 135);
-
-	///////////////////////////////////////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////////////////////////
 
 
 }
 
-Knight::Knight(int a, int b, int s)
+Knight::Knight(int a, int b, int s,Texture& T)
 {
 	side = s;
 	
@@ -370,29 +325,17 @@ Knight::Knight(int a, int b, int s)
 	HaveTransform = 1;
 	SpriteD.setOrigin(55 / 2, 65 / 2);
 
-	//***************************Описываем изображение фигуры в обычном виде*************************//
-
-	ImageD.loadFromFile("images/figures1.png");
-	TextureD.loadFromImage(ImageD);
-	SpriteD.setTexture(TextureD);
-	SpriteD.setTextureRect(IntRect(34 + (85 * y - 85), 28 + (85 * x - 85), 55, 65));//В дальнейшем координаты x,y будут перемножаться на 85  и размеры его будут 85 на 85 p.s Разобраться с картинкой
+    SpriteD.setTexture(T);
+	SpriteD.setTextureRect(IntRect(34 + (85 * 2 - 85), 28 + (85 * 8 - 85), 55, 65));//В дальнейшем координаты x,y будут перемножаться на 85  и размеры его будут 85 на 85 p.s Разобраться с картинкой
+	if (side == 1)
+	{
+		SpriteD.setRotation(180);
+	}
 	SpriteD.setPosition(615 + 80 * (y - 1) + 5 * (y - 1), 195 + 80 * (x - 1) + 5 * (x - 1));
-
-	///////////////////////////////////////////////////////////////////////////////////////////////////
-
-	//********************Описываем изображение фигуры в трансформированном виде*********************//
-
-	ImageSwap.loadFromFile("images/figures1.png");
-	TextureSwap.loadFromImage(ImageSwap);
-	SpriteSwap.setTexture(TextureSwap);
-	SpriteSwap.setTextureRect(IntRect(100, 710, 85, 80));
-	//SpriteSwap.setPosition(655, 135);
-
-	///////////////////////////////////////////////////////////////////////////////////////////////////
 }
 
 
-Arrow::Arrow(int a, int b, int s)
+Arrow::Arrow(int a, int b, int s,Texture& T)
 {
 	side = s;
 	SizeOfRules = 8;
@@ -444,29 +387,17 @@ Arrow::Arrow(int a, int b, int s)
 	transformation = 0;
 	HaveTransform = 1;
 	SpriteD.setOrigin(55 / 2, 65 / 2);
-
-	//***************************Описываем изображение фигуры в обычном виде*************************//
-
-	ImageD.loadFromFile("images/figures1.png");
-	TextureD.loadFromImage(ImageD);
-	SpriteD.setTexture(TextureD);
-	SpriteD.setTextureRect(IntRect(34 + (85 * y - 85), 28 + (85 * x - 85), 55, 65));//В дальнейшем координаты x,y будут перемножаться на 85  и размеры его будут 85 на 85 p.s Разобраться с картинкой
+	SpriteD.setTexture(T);
+	SpriteD.setTextureRect(IntRect(34 + (85 * 1 - 85), 28 + (85 * 9 - 85), 55, 65));//В дальнейшем координаты x,y будут перемножаться на 85  и размеры его будут 85 на 85 p.s Разобраться с картинкой
+	if (side == 1)
+	{
+		SpriteD.setRotation(180);
+	}
 	SpriteD.setPosition(615 + 80 * (y - 1) + 5 * (y - 1), 195 + 80 * (x - 1) + 5 * (x - 1));
 
-	///////////////////////////////////////////////////////////////////////////////////////////////////
-
-	//********************Описываем изображение фигуры в трансформированном виде*********************//
-
-	ImageSwap.loadFromFile("images/figures1.png");
-	TextureSwap.loadFromImage(ImageSwap);
-	SpriteSwap.setTexture(TextureSwap);
-	SpriteSwap.setTextureRect(IntRect(100, 710, 85, 80));
-	//SpriteSwap.setPosition(655, 135);
-
-	///////////////////////////////////////////////////////////////////////////////////////////////////
 
 }
-Horse::Horse(int a, int b, int s)
+Horse::Horse(int a, int b, int s,Texture& T)
 {
 	side = s;
 	SizeOfRules = 2;
@@ -509,28 +440,15 @@ Horse::Horse(int a, int b, int s)
 	transformation = 0;
 	HaveTransform = 1;
 	SpriteD.setOrigin(55 / 2, 65 / 2);
-
-	//***************************Описываем изображение фигуры в обычном виде*************************//
-
-	ImageD.loadFromFile("images/figures1.png");
-	TextureD.loadFromImage(ImageD);
-	SpriteD.setTexture(TextureD);
-	SpriteD.setTextureRect(IntRect(34 + (85 * y - 85), 28 + (85 * x - 85), 55, 65));//В дальнейшем координаты x,y будут перемножаться на 85  и размеры его будут 85 на 85 p.s Разобраться с картинкой
+	SpriteD.setTexture(T);
+	SpriteD.setTextureRect(IntRect(34 + (85 * 2 - 85), 28 + (85 * 9 - 85), 55, 65));//В дальнейшем координаты x,y будут перемножаться на 85  и размеры его будут 85 на 85 p.s Разобраться с картинкой
+	if (side == 1)
+	{
+		SpriteD.setRotation(180);
+	}
 	SpriteD.setPosition(615 + 80 * (y - 1) + 5 * (y - 1), 195 + 80 * (x - 1) + 5 * (x - 1));
-
-	///////////////////////////////////////////////////////////////////////////////////////////////////
-
-	//********************Описываем изображение фигуры в трансформированном виде*********************//
-
-	ImageSwap.loadFromFile("images/figures1.png");
-	TextureSwap.loadFromImage(ImageSwap);
-	SpriteSwap.setTexture(TextureSwap);
-	SpriteSwap.setTextureRect(IntRect(100, 710, 85, 80));
-	//SpriteSwap.setPosition(655, 135);
-
-	///////////////////////////////////////////////////////////////////////////////////////////////////
 }
-Gold::Gold(int a, int b, int s) {
+Gold::Gold(int a, int b, int s,Texture&T) {
 	side = s;
 	SizeOfRules = 6;
 	RulesMove = new VectorMove[6];
@@ -563,19 +481,18 @@ Gold::Gold(int a, int b, int s) {
 	y = b;
 	transformation = 0;
 	SpriteD.setOrigin(55 / 2, 65 / 2);
-
-	//***************************Описываем изображение фигуры в обычном виде*************************//
-
-	ImageD.loadFromFile("images/figures1.png");
-	TextureD.loadFromImage(ImageD);
-	SpriteD.setTexture(TextureD);
-	SpriteD.setTextureRect(IntRect(34 + (85 * y - 85), 28 + (85 * x - 85), 55, 65));//В дальнейшем координаты x,y будут перемножаться на 85  и размеры его будут 85 на 85 p.s Разобраться с картинкой
+	SpriteD.setTexture(T);
+	SpriteD.setTextureRect(IntRect(34 + (85 * 4 - 85), 28 + (85 * 9 - 85), 55, 65));//В дальнейшем координаты x,y будут перемножаться на 85  и размеры его будут 85 на 85 p.s Разобраться с картинкой
+	if (side == 1)
+	{
+		SpriteD.setRotation(180);
+	}
 	SpriteD.setPosition(615 + 80 * (y - 1) + 5 * (y - 1), 195 + 80 * (x - 1) + 5 * (x - 1));
 
 	///////////////////////////////////////////////////////////////////////////////////////////////////
 
 }
-Silver::Silver(int a, int b, int s)
+Silver::Silver(int a, int b, int s,Texture& T)
 {
 	side = s;
 	SizeofRulesTransform = 6;
@@ -606,6 +523,13 @@ Silver::Silver(int a, int b, int s)
 		RulesMove[2] = { -1,0 };
 		RulesMove[3] = { 1,-1 };
 		RulesMove[4] = { 1,1 };
+		RulesMoveTransform[0] = { -1,1 };
+		RulesMoveTransform[1] = { -1,0 };
+		RulesMoveTransform[2] = { -1,-1 };
+		RulesMoveTransform[3] = { 1,0 };
+		RulesMoveTransform[4] = { 0,-1 };
+		RulesMoveTransform[5] = { 0,1 };
+
 	}
 
 	roots[10][10];
@@ -619,13 +543,12 @@ Silver::Silver(int a, int b, int s)
 
 	transformation = 0;
 	SpriteD.setOrigin(55 / 2, 65 / 2);
-
-	//***************************Описываем изображение фигуры в обычном виде*************************//
-
-	ImageD.loadFromFile("images/figures1.png");
-	TextureD.loadFromImage(ImageD);
-	SpriteD.setTexture(TextureD);
-	SpriteD.setTextureRect(IntRect(34 + (85 * y - 85), 28 + (85 * x - 85), 55, 65));//В дальнейшем координаты x,y будут перемножаться на 85  и размеры его будут 85 на 85 p.s Разобраться с картинкой
+	SpriteD.setTexture(T);
+	SpriteD.setTextureRect(IntRect(34 + (85 * 3 - 85), 28 + (85 * 9 - 85), 55, 65));//В дальнейшем координаты x,y будут перемножаться на 85  и размеры его будут 85 на 85 p.s Разобраться с картинкой
+	if (side == 1)
+	{
+		SpriteD.setRotation(180);
+	}
 	SpriteD.setPosition(615 + 80 * (y - 1) + 5 * (y - 1), 195 + 80 * (x - 1) + 5 * (x - 1));
 
 	///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -911,7 +834,7 @@ void Template(int a[10][10], int b[10][10])
 		for (int j = 0; j < 10; j++)
 			a[i][j] = b[i][j];
 }
-bool Figures::Eating(Figures  **&b, Figures **&w, int& sizeb, int& sizew, Figures **&byB, Figures **&byW, int& sizebyB, int&sizebyW)
+bool Figures::Eating(Figures  **&b, Figures **&w, int& sizeb, int& sizew, Figures **&byB, Figures **&byW, int& sizebyB, int&sizebyW,Texture&T)
 {
 	Figures empty;
 	bool isEmpty=0;
@@ -933,7 +856,11 @@ bool Figures::Eating(Figures  **&b, Figures **&w, int& sizeb, int& sizew, Figure
 				
 				NewB = new Figures *[sizeb];
 				NewW = new Figures *[sizew];
-				
+				if (b[i]->transformation==1)
+				{
+					b[i]->transformation = 0;
+					b[i]->Swap(T);
+				}
 				for (int j = 0; j < sizebyW; j++)
 				{
 					if (*byW[j] == empty)
@@ -975,6 +902,7 @@ bool Figures::Eating(Figures  **&b, Figures **&w, int& sizeb, int& sizew, Figure
 				{
 					NewW[j] = w[j];
 				}
+
                 NewW[sizew - 1] = b[i];
 				b = NewB;
 				w = NewW;
@@ -1002,6 +930,11 @@ bool Figures::Eating(Figures  **&b, Figures **&w, int& sizeb, int& sizew, Figure
 				
 				NewB = new Figures *[sizeb];
 				NewW = new Figures *[sizew];
+				if (w[i]->transformation == 1)
+				{
+					w[i]->transformation = 0;
+					w[i]->Swap(T);
+				}
 				for (int j = 0; j < sizebyB; j++)
 				{
 					if (*byB[j] == empty)
@@ -1063,9 +996,27 @@ bool operator==(Figures& left, Figures& right)
 		return false;
 	}
 }
-void Figures::Swap()
+void Figures::Swap(Texture& T)
 {
-	SpriteD.setTexture(TextureSwap);
+	SpriteD.setTexture(T);
 	this->transformation = 1;
+	VectorMove *SwapRules;
+	SwapRules = new VectorMove [SizeOfRules];
+	for (int i = 0; i < SizeOfRules; i++)
+	{
+		SwapRules[i] = RulesMove[i];
+	}
+	int SwapSize = SizeOfRules;
+	delete[] RulesMove;
+    RulesMove = new VectorMove[SizeofRulesTransform];
+	for (int i = 0; i < SizeofRulesTransform; i++)
+	{
+		RulesMove[i] = RulesMoveTransform[i];
+	}
+	delete [] RulesMoveTransform;
+	RulesMoveTransform = new VectorMove[SwapSize];
+	SizeOfRules = SizeofRulesTransform;
+	SizeofRulesTransform = SwapSize;
+	RulesMoveTransform = SwapRules;
 	
 }

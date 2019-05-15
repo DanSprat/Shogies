@@ -95,7 +95,10 @@ int Figures::getTransformCoordsY()
 {
 	return this->TransformCoords.getScaleCompY();
 }
-
+int Figures::getTransformation()
+{
+	return this->transformation;
+}
 
 //////////////////////////////////////////////
 
@@ -131,6 +134,14 @@ King::King(int a, int b, int s)
 	side = s;
 	RulesMove = new VectorMove[8];
 	SizeOfRules = 8;
+	if (side == 1)
+	{
+		TransformCoords = { 10,10 };
+	}
+	else
+	{
+		TransformCoords = { 0,0 };
+	}
 	RulesMove[0] = { 0,1 };
 	RulesMove[1] = { 1,1 };
 	RulesMove[2] = { 1,0 };
@@ -156,6 +167,7 @@ King::King(int a, int b, int s)
 	ImageD.loadFromFile("images/figures1.png");
 	TextureD.loadFromImage(ImageD);
 	SpriteD.setTexture(TextureD);
+	//SpriteD.setPosition(615 + 80 * (y - 1) + 5 * (y - 1), 195 + 80 * (x - 1) + 5 * (x - 1));// тут тоже все будет зависеть от координат  p.s Разобраться с картинкой
 	SpriteD.setTextureRect(IntRect(34 + (85 * y - 85), 28 + (85 * x - 85), 55, 65));//В дальнейшем координаты x,y будут перемножаться на 85  и размеры его будут 85 на 85 p.s Разобраться с картинкой
 	SpriteD.setPosition(615 + 80 * (y - 1) + 5 * (y - 1), 195 + 80 * (x - 1) + 5 * (x - 1));// тут тоже все будет зависеть от координат  p.s Разобраться с картинкой
 }
@@ -524,6 +536,7 @@ Gold::Gold(int a, int b, int s) {
 	RulesMove = new VectorMove[6];
 	if (side == 1)
 	{
+		TransformCoords = { 10,10 };
 		RulesMove[0] = { 1,1 };
 		RulesMove[1] = { 1,0 };
 		RulesMove[2] = { 1,-1 };
@@ -534,6 +547,7 @@ Gold::Gold(int a, int b, int s) {
 	}
 	else
 	{
+		TransformCoords = { 0,0 };
 		RulesMove[0] = { -1,1 };
 		RulesMove[1] = { -1,0 };
 		RulesMove[2] = { -1,-1 };
@@ -1052,5 +1066,6 @@ bool operator==(Figures& left, Figures& right)
 void Figures::Swap()
 {
 	SpriteD.setTexture(TextureSwap);
-	//SpriteD.setTextureRect(IntRect(34 + (85 * y - 85), 28 + (85 * x - 85), 55, 65));
+	this->transformation = 1;
+	
 }

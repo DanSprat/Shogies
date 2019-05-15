@@ -4,7 +4,7 @@
 #include "math.h"
 using namespace sf;
 
-void menu(RenderWindow & window)
+void menu(RenderWindow & window,Music& a)
 {
 	int IsMusic = 1;
 	Texture NewGame, Rules, Exit, Figur, BackBackGround, menuRules1, menuRules2, Musica, YesMusic, NoMusic;
@@ -35,15 +35,9 @@ void menu(RenderWindow & window)
 	NoM.setPosition(1650, 50);
 
 	menubbg.setPosition(0, 0);
-	Music music;//создаем объект музыки
-	music.openFromFile("sounds/shogi.ogg");//загружаем файл
-	music.play();//воспроизводим музыку
-	music.setLoop(true);
-	music.setPitch(1);
-	music.setVolume(25);
 	int k = 0;
 	Image icon;
-	icon.loadFromFile("images/icon.png");
+	icon.loadFromFile("images/icon2.png");
 	window.setIcon(32, 32, icon.getPixelsPtr());
 
 	////////////////////////////////МЕНЮ/////////////////// 
@@ -51,6 +45,10 @@ void menu(RenderWindow & window)
 		Event event;
 		while (window.pollEvent(event))
 		{
+			if (a.getVolume() == 0)
+			{
+				IsMusic = 0;
+			}
 			Num = 0;
 			menu1.setColor(Color::White);
 			menu2.setColor(Color::White);
@@ -107,13 +105,13 @@ void menu(RenderWindow & window)
 						{
 							k++;
 							if ((k % 2) == 1) {
-								music.setVolume(0);
+								a.setVolume(0);
 								IsMusic = 0;
 							}
 							else
 							{
 								IsMusic = 1;
-								music.setVolume(25);
+								a.setVolume(25);
 								
 
 							}

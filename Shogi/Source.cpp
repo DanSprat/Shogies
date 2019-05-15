@@ -27,6 +27,15 @@ int main()
 	int turn = 2;
 	float MouseLeft = false;
 	VectorMove NewCoords = { 0,0 };
+	Image FiguresDef;
+	FiguresDef.loadFromFile("images/figures1.png");
+	Texture FD;
+	FD.loadFromImage(FiguresDef);
+
+	Image FiguresSwap;
+	FiguresSwap.loadFromFile("images/figures3.png");
+	Texture FS;
+	FS.loadFromImage(FiguresSwap);
 	King KingWhite(1, 5, 1);
     Rook RookWhite1(2, 2, 1);
 	King KingBlack(9, 5, 2);
@@ -118,16 +127,6 @@ int main()
 
 	RenderWindow window(VideoMode(1920, 1080), "The Shogi Game");
 	menu(window);
-	Image FiguresDef;
-	FiguresDef.loadFromFile("images/figures1");
-	Texture FD;
-	FD.loadFromImage(FiguresDef);
-
-	Image FiguresSwap;
-	FiguresSwap.loadFromFile("images/figures3");
-	Texture FS;
-	FS.loadFromImage(FiguresSwap);
-
     Image board;
 	board.loadFromFile("images/TestBoard.jpg");
 	Texture boardtexture;
@@ -335,34 +334,36 @@ int main()
 				thanos.play();
 				(*pa).getSprite().setPosition(tempX, tempY);
 				(*pa).getIsMove() = false;
-				
-				if (turn == 1)
+				if (pa->getTransformation() == 0)
 				{
-					if (((pa->getCordX()) >= (pa->getTransformCoordsX())) || (X >= (pa->getTransformCoordsX())))
+					if (turn == 1)
 					{
-						if ((pa->getCordX()) >= (pa->getTransformCoordsY()))
+						if (((pa->getCordX()) >= (pa->getTransformCoordsX())) || (X >= (pa->getTransformCoordsX())))
 						{
-							//Смена Спрайта
-						}
-						else
-						{
-							CanTranSform = 1;
-							
+							if ((pa->getCordX()) >= (pa->getTransformCoordsY()))
+							{
+								pa->Swap();
+							}
+							else
+							{
+								CanTranSform = 1;
+
+							}
 						}
 					}
-				}
-				else
-				{
-					if (((pa->getCordX()) <= (pa->getTransformCoordsX())) || (X <= (pa->getTransformCoordsX())))
+					else
 					{
-						if (pa->getCordX() <= (pa->getTransformCoordsY()))
+						if (((pa->getCordX()) <= (pa->getTransformCoordsX())) || (X <= (pa->getTransformCoordsX())))
 						{
-							//Смена Спрайта
-						}
-						else
-						{
-							CanTranSform = 1;
-							
+							if (pa->getCordX() <= (pa->getTransformCoordsY()))
+							{
+								pa->Swap();
+							}
+							else
+							{
+								CanTranSform = 1;
+
+							}
 						}
 					}
 				}

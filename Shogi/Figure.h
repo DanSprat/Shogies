@@ -32,6 +32,7 @@ protected:
 	int SizeOfRules;
 	int SizeofRulesTransform;
 public:
+	int getTransformation();
 	void Swap();
 	friend bool operator==(Figures& left, Figures& right);
 	bool Eating(Figures  **&b, Figures **&w, int& sizeb, int& sizew,Figures **&,Figures **&,int&,int&);

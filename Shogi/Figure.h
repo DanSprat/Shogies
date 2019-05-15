@@ -13,12 +13,7 @@ using namespace sf;
 class Figures
 {
 protected:
-	Image ImageD;
-	Texture TextureD;
 	Sprite SpriteD;
-    Image ImageSwap;
-	Texture TextureSwap;
-	Sprite SpriteSwap;
 	VectorMove TransformCoords;
 	bool isActive;
 	bool isMove, isClicked;
@@ -33,9 +28,9 @@ protected:
 	int SizeofRulesTransform;
 public:
 	int getTransformation();
-	void Swap();
+	void Swap(Texture&);
 	friend bool operator==(Figures& left, Figures& right);
-	bool Eating(Figures  **&b, Figures **&w, int& sizeb, int& sizew,Figures **&,Figures **&,int&,int&);
+	bool Eating(Figures  **&b, Figures **&w, int& sizeb, int& sizew,Figures **&,Figures **&,int&,int&,Texture&);
 	void setCordX(int x);
 	void setCordY(int y);
 	int getTransformCoordsX();
@@ -69,7 +64,7 @@ protected:
 	bool check;//For the Kings
 	bool checkmate;//also
 public:
-	King(int x, int y, int s);
+	King(int x, int y, int s,Texture&);
 	King();
 };
 ////////////////////////////////////////////////////////////
@@ -78,7 +73,7 @@ public:
 class Pawn:public Figures {
 protected:
 public:
-	Pawn(int a, int b, int side);
+	Pawn(int a, int b, int side,Texture&);
 	virtual void ChangeArr()
 	{
 		delete[] RulesMove;
@@ -95,7 +90,7 @@ public:
 class Rook :public Figures {
 protected:
 public:
-	Rook(int a, int b, int s);
+	Rook(int a, int b, int s,Texture&);
 	virtual void ChangeArr()
 	{
 		delete[] RulesMove;
@@ -113,7 +108,7 @@ public:
 /////////CLASS OF THE KNIGHT//////////////////////
 class Knight :public Figures {
 public:
-	Knight(int a, int b, int side);
+	Knight(int a, int b, int side,Texture&);
 	virtual void ChangeArr()
 	{
 		delete[] RulesMove;
@@ -130,7 +125,7 @@ public:
 ////////////////CLASS OF THE ARROW///////////////////////////
 class Arrow :public Figures {
 public:
-	Arrow(int a, int b, int side);
+	Arrow(int a, int b, int side,Texture&);
 	virtual void ChangeArr()
 	{
 		delete[] RulesMove;
@@ -151,7 +146,7 @@ public:
 
 class Horse :public Figures {
 public:
-	Horse(int a, int b, int side);
+	Horse(int a, int b, int side,Texture&);
 	virtual void ChangeArr()
 	{
 		delete[] RulesMove;
@@ -170,13 +165,13 @@ public:
 //////////////CLASS OF THE GOLD////////////////////////////////////
 class Gold :public Figures {
 public:
-	Gold(int a, int b, int side);
+	Gold(int a, int b, int side,Texture&);
 	Gold();
 };
 
 class Silver : public Figures {
 public:
-	Silver(int a, int b, int side);
+	Silver(int a, int b, int side,Texture&);
 	Silver();
 };
 void Template(int a[10][10], int b[10][10]);

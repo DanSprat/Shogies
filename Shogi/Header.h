@@ -6,7 +6,7 @@ using namespace sf;
 
 void menu(RenderWindow & window,Music& a)
 {
-	int IsMusic = 1;
+	
 	Texture NewGame, Rules, Exit, Figur, BackBackGround, menuRules1, menuRules2, Musica, YesMusic, NoMusic;
 	YesMusic.loadFromFile("images/YesMusic.png");
 	NoMusic.loadFromFile("images/NoMusic.png");
@@ -36,6 +36,17 @@ void menu(RenderWindow & window,Music& a)
 
 	menubbg.setPosition(0, 0);
 	int k = 0;
+	int IsMusic;
+	if (a.getVolume() == 0)
+	{
+		IsMusic = 0;
+		k = 1;
+	}
+	else
+	{
+		IsMusic = 1;
+		k = 0;
+	}
 	Image icon;
 	icon.loadFromFile("images/icon2.png");
 	window.setIcon(32, 32, icon.getPixelsPtr());

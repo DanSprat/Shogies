@@ -9,7 +9,7 @@ int main()
 {
 	Figures empty;//Нулевой (пустой) элмемент класса фигур
 	bool CanTranSform=0;
-	int X;
+	int X, IsMusic = 0,k=0;
 	int SizeBlack = 20;
 	int SizeWhite = 20;
 	int SizeByBlack = 0;
@@ -26,56 +26,58 @@ int main()
 	int tempX = 0; int tempY = 0;
 	int turn = 2;
 	float MouseLeft = false;
+
 	VectorMove NewCoords = { 0,0 };
 	Image FiguresDef;
-	FiguresDef.loadFromFile("images/figures1.png");
+	FiguresDef.loadFromFile("images/figuresDef.png");
 	Texture FD;
 	FD.loadFromImage(FiguresDef);
 
 	Image FiguresSwap;
-	FiguresSwap.loadFromFile("images/figures3.png");
+	FiguresSwap.loadFromFile("images/figuresSwap.png");
 	Texture FS;
 	FS.loadFromImage(FiguresSwap);
-	King KingWhite(1, 5, 1);
-    Rook RookWhite1(2, 2, 1);
-	King KingBlack(9, 5, 2);
-	Rook RookBlack1(8, 8, 2);
-	Horse HorseWhite1(1, 2, 1);
-	Horse HorseBlack1(9, 2, 2);
-	Horse HorseBlack2(9, 8, 2);
-	Horse HorseWhite2(1, 8, 1);
-	Knight KnightBlack1(8, 2, 2);
-	Knight KnightWhite1(2, 8, 1);
-	Pawn PawnWhite1(3, 1, 1);
-	Pawn PawnWhite2(3, 2, 1);
-	Pawn PawnWhite3(3, 3, 1);
-	Pawn PawnWhite4(3, 4, 1);
-	Pawn PawnWhite5(3, 5, 1);
-	Pawn PawnWhite6(3, 6, 1);
-	Pawn PawnWhite7(3, 7, 1);
-	Pawn PawnWhite8(3, 8, 1);
-	Pawn PawnWhite9(3, 9, 1);
-	Pawn PawnBlack1(7, 1, 2);
-	Pawn PawnBlack2(7, 2, 2);
-	Pawn PawnBlack3(7, 3, 2);
-	Pawn PawnBlack4(7, 4, 2);
-	Pawn PawnBlack5(7, 5, 2);
-	Pawn PawnBlack6(7, 6, 2);
-	Pawn PawnBlack7(7, 7, 2);
-	Pawn PawnBlack8(7, 8, 2);
-	Pawn PawnBlack9(7, 9, 2);
-	Silver SilverWhite1(1, 3, 1);
-	Silver SilverWhite2(1, 7, 1);
-	Silver SilverBlack1(9, 3, 2);
-	Silver SilverBlack2(9, 7, 2);
-	Gold GoldWhite1(1, 4, 1);
-	Gold GoldWhite2(1, 6, 1);
-	Arrow ArrowWhite1(1, 1, 1);
-	Arrow ArrowWhite2(1, 9, 1);
-	Arrow ArrowBlack1(9, 1, 2);
-	Arrow ArrowBlack2(9, 9, 2);
-	Gold GoldBlack1(9, 4, 2);
-	Gold GoldBlack2(9, 6, 2);
+
+	King KingWhite(1, 5, 1,FD);
+    Rook RookWhite1(2, 2, 1,FD);
+	King KingBlack(9, 5, 2,FD);
+	Rook RookBlack1(8, 8, 2,FD);
+	Horse HorseWhite1(1, 2, 1,FD);
+	Horse HorseBlack1(9, 2, 2,FD);
+	Horse HorseBlack2(9, 8, 2,FD);
+	Horse HorseWhite2(1, 8, 1,FD);
+	Knight KnightBlack1(8, 2, 2,FD);
+	Knight KnightWhite1(2, 8, 1,FD);
+	Pawn PawnWhite1(3, 1, 1,FD);
+	Pawn PawnWhite2(3, 2, 1,FD);
+	Pawn PawnWhite3(3, 3, 1,FD);
+	Pawn PawnWhite4(3, 4, 1,FD);
+	Pawn PawnWhite5(3, 5, 1,FD);
+	Pawn PawnWhite6(3, 6, 1,FD);
+	Pawn PawnWhite7(3, 7, 1,FD);
+	Pawn PawnWhite8(3, 8, 1,FD);
+	Pawn PawnWhite9(3, 9, 1,FD);
+	Pawn PawnBlack1(7, 1, 2,FD);
+	Pawn PawnBlack2(7, 2, 2,FD);
+	Pawn PawnBlack3(7, 3, 2,FD);
+	Pawn PawnBlack4(7, 4, 2,FD);
+	Pawn PawnBlack5(7, 5, 2,FD);
+	Pawn PawnBlack6(7, 6, 2,FD);
+	Pawn PawnBlack7(7, 7, 2,FD);
+	Pawn PawnBlack8(7, 8, 2,FD);
+	Pawn PawnBlack9(7, 9, 2,FD);
+	Silver SilverWhite1(1, 3, 1,FD);
+	Silver SilverWhite2(1, 7, 1,FD);
+	Silver SilverBlack1(9, 3, 2,FD);
+	Silver SilverBlack2(9, 7, 2,FD);
+	Gold GoldWhite1(1, 4, 1,FD);
+	Gold GoldWhite2(1, 6, 1,FD);
+	Arrow ArrowWhite1(1, 1, 1,FD);
+	Arrow ArrowWhite2(1, 9, 1,FD);
+	Arrow ArrowBlack1(9, 1, 2,FD);
+	Arrow ArrowBlack2(9, 9, 2,FD);
+	Gold GoldBlack1(9, 4, 2,FD);
+	Gold GoldBlack2(9, 6, 2,FD);
 
 
     Figures *FiguresBlack[20] = {
@@ -124,9 +126,37 @@ int main()
 	Sprite s_map;//создаём спрайт для карты
 	s_map.setTexture(map);//заливаем текстуру спрайтом
 
+	Music music;//создаем объект музыки
+	music.openFromFile("sounds/shogi.ogg");//загружаем файл
+
 
 	RenderWindow window(VideoMode(1920, 1080), "The Shogi Game");
-	menu(window);
+	music.play();//воспроизводим музыку
+	music.setLoop(true);
+	music.setPitch(1);
+	music.setVolume(25);
+	menu(window,music);
+	if (music.getVolume() == 0)
+	{
+		IsMusic = 0;
+		k = 1;
+	}
+	else
+	{
+		IsMusic = 1;
+		k = 0;
+	}
+	Texture YesMusic, NoMusic;
+	YesMusic.loadFromFile("images/YesMusic.png");
+	NoMusic.loadFromFile("images/NoMusic.png");
+	Sprite YesM(YesMusic), NoM(NoMusic);
+	YesM.setPosition(1650, 50);
+	NoM.setPosition(1650, 50);
+
+
+
+
+
     Image board;
 	board.loadFromFile("images/TestBoard.jpg");
 	Texture boardtexture;
@@ -206,14 +236,11 @@ int main()
 			  if (IntRect(1420, 490, 200, 113).contains(Mouse::getPosition(window))) { Yes.setColor(Color::Green); Num = 2; }
 			  if (IntRect(1620, 490, 200, 113).contains(Mouse::getPosition(window))) { No.setColor(Color::Red); Num = 3; }
 		  }
+		  if (IntRect(1650, 50, 200, 200).contains(Mouse::getPosition(window))) { Num = 4; }
 
 
 
-
-		 /* if (IntRect(1420, 490, 200, 113).contains(Mouse::getPosition(window))) { Yes.setColor(Color::Green); }
-		  else { Yes.setColor(Color::White); }
-		  if (IntRect(1620, 490, 200, 113).contains(Mouse::getPosition(window))) { No.setColor(Color::Red); }
-		  else { No.setColor(Color::White); }*/
+		
 
 			im.setColor(Color::White);
 			if (IntRect(-50, 980, 400, 100).contains(Mouse::getPosition(window))) { im.setColor(Color::Yellow); Num = 1; }
@@ -225,7 +252,7 @@ int main()
 				}
 				if (event.type == Event::MouseButtonReleased)
 				{
-					menu(window);
+					menu(window,music);
 				}
 			}
 			if (Num == 2)
@@ -236,7 +263,7 @@ int main()
 				}
 				if (event.type == Event::MouseButtonReleased)
 				{
-					pa->Swap();
+					pa->Swap(FS);
 					CanTranSform = 0;
 
 				}
@@ -252,6 +279,44 @@ int main()
 					CanTranSform = 0;
 					Num = 0;
 				}
+			}
+			if (Num == 4) {
+				if (Mouse::isButtonPressed(Mouse::Left))
+				{
+					int Check = 1;
+				while (Mouse::isButtonPressed(Mouse::Left))
+				{
+					if (!IntRect(1650, 50, 200, 200).contains(Mouse::getPosition(window)))
+					{
+						Check = 0;
+						break;
+					}
+
+				}
+
+				if (Check == 1)
+				{
+					event.type = Event::MouseButtonReleased;
+
+
+					if (event.type == Event::MouseButtonReleased)
+					{
+						k++;
+						if ((k % 2) == 1) {
+							music.setVolume(0);
+							IsMusic = 0;
+						}
+						else
+						{
+							IsMusic = 1;
+							music.setVolume(25);
+
+
+						}
+
+					}
+				}
+			}
 			}
 			if (event.type == Event::Closed)
 				window.close();
@@ -306,7 +371,7 @@ int main()
 									boardTrue[pa->getCordX()][pa->getCordY()] = 0;
 									pa->setCordX(NewCoords.getScaleCompX());
 									pa->setCordY(NewCoords.getScaleCompY());
-									pa->Eating(BlackFigures, WhiteFigures, SizeBlack, SizeWhite,EatenByBlack,EatenByWhite,SizeByBlack,SizeByWhite);
+									pa->Eating(BlackFigures, WhiteFigures, SizeBlack, SizeWhite,EatenByBlack,EatenByWhite,SizeByBlack,SizeByWhite,FD);
 						            boardTrue[pa->getCordX()][pa->getCordY()] = pa->getSide();
 									Template(boardik, boardTrue);
 									(*pa).getIsClicked() = false;
@@ -342,7 +407,7 @@ int main()
 						{
 							if ((pa->getCordX()) >= (pa->getTransformCoordsY()))
 							{
-								pa->Swap();
+								pa->Swap(FS);
 							}
 							else
 							{
@@ -357,7 +422,7 @@ int main()
 						{
 							if (pa->getCordX() <= (pa->getTransformCoordsY()))
 							{
-								pa->Swap();
+								pa->Swap(FS);
 							}
 							else
 							{
@@ -425,6 +490,11 @@ int main()
 		window.draw(GoldWhite2.getSprite());
 		window.draw(SilverWhite1.getSprite());
 		window.draw(SilverWhite2.getSprite());
+		if (IsMusic == 0)
+		{
+			window.draw(NoM);
+		}
+		else window.draw(YesM);
 
 		if (pa != 0)
 		{

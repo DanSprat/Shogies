@@ -13,6 +13,7 @@ using namespace sf;
 class Figures
 {
 protected:
+	bool isZero;
 	Sprite SpriteD;
 	VectorMove TransformCoords;
 	bool isActive;
@@ -27,6 +28,7 @@ protected:
 	int SizeOfRules;
 	int SizeofRulesTransform;
 public:
+	friend bool IsMate(Figures *FiguresB[],Figures *FiguresW[],int turn,int ,int,int array[10][10] );
 	int getTransformation();
 	void Swap(Texture&);
 	friend bool operator==(Figures& left, Figures& right);
@@ -42,12 +44,12 @@ public:
 	int getCordX();
 	int getCordY();
 	bool IsCheck(int array[10][10], int KingX, int KingY);
-	bool CheckCheck(Figures *FiguresB[], Figures* FiguresW[], Figures &a, int array[10][10], int NewX, int NewY, int SizeB, int SizeW);
+	bool CheckCheck(Figures *FiguresB[], Figures* FiguresW[],int array[10][10], int NewX, int NewY, int SizeB, int SizeW);
 	int getSizeOfRules();
 	Sprite& getSprite();
 	bool& getIsMove();
 	bool& getIsClicked();
-	void SearchRoots(Figures *FiguresB[], Figures* FiguresW[], int array[10][10], Figures &pa, int SizeB, int SizeW);
+	void SearchRoots(Figures *FiguresB[], Figures* FiguresW[], int array[10][10],int SizeB, int SizeW);
 	virtual void ChangeArr();
 	Figures(int x, int y, int side, String FS, String FT, bool HaveTransform);
 	VectorMove getRulesMove(int i);

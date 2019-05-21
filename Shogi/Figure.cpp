@@ -78,7 +78,10 @@ int Figures::getTransformation()
 {
 	return this->transformation;
 }
-
+bool& Figures::getIsActive()
+{
+	return this->isActive;
+}
 //////////////////////////////////////////////
 
 

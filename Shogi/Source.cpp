@@ -8,8 +8,8 @@ int main()
 
 {
 	Figures empty;//Нулевой (пустой) элмемент класса фигур
-	bool CanTranSform=0;
-	int X, IsMusic = 0,k=0;
+	bool CanTranSform = 0;
+	int X, IsMusic = 0, k = 0;
 	int SizeBlack = 20;
 	int SizeWhite = 20;
 	int SizeByBlack = 0;
@@ -21,7 +21,7 @@ int main()
 	Figures **EatenByBlack;
 	Figures **EatenByWhite;
 	EatenByBlack = new Figures *[1];
-	EatenByWhite= new Figures *[0];
+	EatenByWhite = new Figures *[0];
 	int j = 0;
 	int tempX = 0; int tempY = 0;
 	int turn = 2;
@@ -38,49 +38,49 @@ int main()
 	Texture FS;
 	FS.loadFromImage(FiguresSwap);
 
-	King KingWhite(1, 5, 1,FD);
-    Rook RookWhite1(2, 2, 1,FD);
-	King KingBlack(9, 5, 2,FD);
-	Rook RookBlack1(8, 8, 2,FD);
-	Horse HorseWhite1(1, 2, 1,FD);
-	Horse HorseBlack1(9, 2, 2,FD);
-	Horse HorseBlack2(9, 8, 2,FD);
-	Horse HorseWhite2(1, 8, 1,FD);
-	Knight KnightBlack1(8, 2, 2,FD);
-	Knight KnightWhite1(2, 8, 1,FD);
-	Pawn PawnWhite1(3, 1, 1,FD);
-	Pawn PawnWhite2(3, 2, 1,FD);
-	Pawn PawnWhite3(3, 3, 1,FD);
-	Pawn PawnWhite4(3, 4, 1,FD);
-	Pawn PawnWhite5(3, 5, 1,FD);
-	Pawn PawnWhite6(3, 6, 1,FD);
-	Pawn PawnWhite7(3, 7, 1,FD);
-	Pawn PawnWhite8(3, 8, 1,FD);
-	Pawn PawnWhite9(3, 9, 1,FD);
-	Pawn PawnBlack1(7, 1, 2,FD);
-	Pawn PawnBlack2(7, 2, 2,FD);
-	Pawn PawnBlack3(7, 3, 2,FD);
-	Pawn PawnBlack4(7, 4, 2,FD);
-	Pawn PawnBlack5(7, 5, 2,FD);
-	Pawn PawnBlack6(7, 6, 2,FD);
-	Pawn PawnBlack7(7, 7, 2,FD);
-	Pawn PawnBlack8(7, 8, 2,FD);
-	Pawn PawnBlack9(7, 9, 2,FD);
-	Silver SilverWhite1(1, 3, 1,FD);
-	Silver SilverWhite2(1, 7, 1,FD);
-	Silver SilverBlack1(9, 3, 2,FD);
-	Silver SilverBlack2(9, 7, 2,FD);
-	Gold GoldWhite1(1, 4, 1,FD);
-	Gold GoldWhite2(1, 6, 1,FD);
-	Arrow ArrowWhite1(1, 1, 1,FD);
-	Arrow ArrowWhite2(1, 9, 1,FD);
-	Arrow ArrowBlack1(9, 1, 2,FD);
-	Arrow ArrowBlack2(9, 9, 2,FD);
-	Gold GoldBlack1(9, 4, 2,FD);
-	Gold GoldBlack2(9, 6, 2,FD);
+	King KingWhite(1, 5, 1, FD);
+	Rook RookWhite1(2, 2, 1, FD);
+	King KingBlack(9, 5, 2, FD);
+	Rook RookBlack1(8, 8, 2, FD);
+	Horse HorseWhite1(1, 2, 1, FD);
+	Horse HorseBlack1(9, 2, 2, FD);
+	Horse HorseBlack2(9, 8, 2, FD);
+	Horse HorseWhite2(1, 8, 1, FD);
+	Knight KnightBlack1(8, 2, 2, FD);
+	Knight KnightWhite1(2, 8, 1, FD);
+	Pawn PawnWhite1(3, 1, 1, FD);
+	Pawn PawnWhite2(3, 2, 1, FD);
+	Pawn PawnWhite3(3, 3, 1, FD);
+	Pawn PawnWhite4(3, 4, 1, FD);
+	Pawn PawnWhite5(3, 5, 1, FD);
+	Pawn PawnWhite6(3, 6, 1, FD);
+	Pawn PawnWhite7(3, 7, 1, FD);
+	Pawn PawnWhite8(3, 8, 1, FD);
+	Pawn PawnWhite9(3, 9, 1, FD);
+	Pawn PawnBlack1(7, 1, 2, FD);
+	Pawn PawnBlack2(7, 2, 2, FD);
+	Pawn PawnBlack3(7, 3, 2, FD);
+	Pawn PawnBlack4(7, 4, 2, FD);
+	Pawn PawnBlack5(7, 5, 2, FD);
+	Pawn PawnBlack6(7, 6, 2, FD);
+	Pawn PawnBlack7(7, 7, 2, FD);
+	Pawn PawnBlack8(7, 8, 2, FD);
+	Pawn PawnBlack9(7, 9, 2, FD);
+	Silver SilverWhite1(1, 3, 1, FD);
+	Silver SilverWhite2(1, 7, 1, FD);
+	Silver SilverBlack1(9, 3, 2, FD);
+	Silver SilverBlack2(9, 7, 2, FD);
+	Gold GoldWhite1(1, 4, 1, FD);
+	Gold GoldWhite2(1, 6, 1, FD);
+	Arrow ArrowWhite1(1, 1, 1, FD);
+	Arrow ArrowWhite2(1, 9, 1, FD);
+	Arrow ArrowBlack1(9, 1, 2, FD);
+	Arrow ArrowBlack2(9, 9, 2, FD);
+	Gold GoldBlack1(9, 4, 2, FD);
+	Gold GoldBlack2(9, 6, 2, FD);
 
 
-    Figures *FiguresBlack[20] = {
+	Figures *FiguresBlack[20] = {
 								 &KingBlack,&ArrowBlack2,&ArrowBlack1,&GoldBlack1,&GoldBlack2,&SilverBlack1,&SilverBlack2,
 								 &PawnBlack1,&PawnBlack2,&PawnBlack3,&PawnBlack4,&PawnBlack5,&PawnBlack6,&PawnBlack7,&PawnBlack8,
 								 &PawnBlack9,&KnightBlack1,&HorseBlack2,&RookBlack1,&HorseBlack1
@@ -91,7 +91,7 @@ int main()
 								 &PawnWhite1,&PawnWhite2,&PawnWhite3,&PawnWhite4,&PawnWhite5,&PawnWhite6,&PawnWhite7,&PawnWhite8,
 								 &PawnWhite9,&KnightWhite1,&HorseWhite2,&RookWhite1,&HorseWhite1
 	};
-	
+
 	for (int i = 0; i < 20; i++)
 	{
 		BlackFigures[i] = FiguresBlack[i];
@@ -115,7 +115,7 @@ int main()
 							0,0,2,0,0,0,0,0,2,0,
 							0,2,2,2,2,2,2,2,2,2 };
 
-	
+
 	int boardik[10][10];
 	Template(boardik, boardTrue);
 
@@ -135,7 +135,7 @@ int main()
 	music.setLoop(true);
 	music.setPitch(1);
 	music.setVolume(25);
-	menu(window,music);
+	menu(window, music);
 	if (music.getVolume() == 0)
 	{
 		IsMusic = 0;
@@ -157,7 +157,7 @@ int main()
 
 
 
-    Image board;
+	Image board;
 	board.loadFromFile("images/TestBoard.jpg");
 	Texture boardtexture;
 	boardtexture.loadFromImage(board);
@@ -199,7 +199,7 @@ int main()
 	Sprite No;
 	No.setTexture(YON);
 	No.setTextureRect(IntRect(200, 0, 200, 113));
-	Yes.setPosition(1420,490);
+	Yes.setPosition(1420, 490);
 	No.setPosition(1620, 490);
 	Image Swap;
 	Swap.loadFromFile("images/mbSwap.png");
@@ -222,25 +222,26 @@ int main()
 	int Num;
 	while (window.isOpen())
 	{
-		
-		int Num = 0;
+
+
 		Vector2i pixelPos = Mouse::getPosition(window);
 		Event event;
-
-      while (window.pollEvent(event))
-		  No.setColor(Color::White);
-	  Yes.setColor(Color::White);
-		{
-		  if (CanTranSform == 1)
-		  {
-			  if (IntRect(1420, 490, 200, 113).contains(Mouse::getPosition(window))) { Yes.setColor(Color::Green); Num = 2; }
-			  if (IntRect(1620, 490, 200, 113).contains(Mouse::getPosition(window))) { No.setColor(Color::Red); Num = 3; }
-		  }
-		  if (IntRect(1650, 50, 200, 200).contains(Mouse::getPosition(window))) { Num = 4; }
-
-
-
 		
+		while (window.pollEvent(event))
+			{
+			int Num = 0;
+			No.setColor(Color::White);
+			Yes.setColor(Color::White);
+			if (CanTranSform == 1)
+			{
+				if (IntRect(1420, 490, 200, 113).contains(Mouse::getPosition(window))) { Yes.setColor(Color::Green); Num = 2; }
+				if (IntRect(1620, 490, 200, 113).contains(Mouse::getPosition(window))) { No.setColor(Color::Red); Num = 3; }
+			}
+			if (IntRect(1650, 50, 200, 200).contains(Mouse::getPosition(window))) { Num = 4; }
+
+
+
+
 
 			im.setColor(Color::White);
 			if (IntRect(-50, 980, 400, 100).contains(Mouse::getPosition(window))) { im.setColor(Color::Yellow); Num = 1; }
@@ -252,7 +253,7 @@ int main()
 				}
 				if (event.type == Event::MouseButtonReleased)
 				{
-					menu(window,music);
+					menu(window, music);
 				}
 			}
 			if (Num == 2)
@@ -265,6 +266,11 @@ int main()
 				{
 					pa->Swap(FS);
 					CanTranSform = 0;
+					if (IsMate(BlackFigures, WhiteFigures, turn, SizeBlack, SizeWhite, boardik) == 1)
+					{
+						cout << "MAT SUKA";
+					}
+					turn = (turn % 2) + 1;
 
 				}
 			}
@@ -278,50 +284,56 @@ int main()
 				{
 					CanTranSform = 0;
 					Num = 0;
+
+					if (IsMate(BlackFigures, WhiteFigures, turn, SizeBlack, SizeWhite, boardik) == 1)
+					{
+						cout << "MAT SUKA";
+					}
+					turn = (turn % 2) + 1;
 				}
 			}
 			if (Num == 4) {
 				if (Mouse::isButtonPressed(Mouse::Left))
 				{
 					int Check = 1;
-				while (Mouse::isButtonPressed(Mouse::Left))
-				{
-					if (!IntRect(1650, 50, 200, 200).contains(Mouse::getPosition(window)))
+					while (Mouse::isButtonPressed(Mouse::Left))
 					{
-						Check = 0;
-						break;
-					}
-
-				}
-
-				if (Check == 1)
-				{
-					event.type = Event::MouseButtonReleased;
-
-
-					if (event.type == Event::MouseButtonReleased)
-					{
-						k++;
-						if ((k % 2) == 1) {
-							music.setVolume(0);
-							IsMusic = 0;
-						}
-						else
+						if (!IntRect(1650, 50, 200, 200).contains(Mouse::getPosition(window)))
 						{
-							IsMusic = 1;
-							music.setVolume(25);
-
-
+							Check = 0;
+							break;
 						}
 
 					}
+
+					if (Check == 1)
+					{
+						event.type = Event::MouseButtonReleased;
+
+
+						if (event.type == Event::MouseButtonReleased)
+						{
+							k++;
+							if ((k % 2) == 1) {
+								music.setVolume(0);
+								IsMusic = 0;
+							}
+							else
+							{
+								IsMusic = 1;
+								music.setVolume(25);
+
+
+							}
+
+						}
+					}
 				}
-			}
 			}
 			if (event.type == Event::Closed)
 				window.close();
 
-			if ((MouseLeft == false)&&(CanTranSform==0))
+			if ((MouseLeft == false) && (CanTranSform == 0))
 			{
 				if (event.type == Event::MouseButtonPressed)//если нажата клавиша мыши
 					if (event.key.code == Mouse::Left)
@@ -334,7 +346,7 @@ int main()
 						pa = SelectedFigure(turn, BlackFigures, WhiteFigures, pixelPos.x, pixelPos.y, SizeBlack, SizeWhite);
 						if (pa != 0)
 						{
-							(*pa).SearchRoots(BlackFigures, WhiteFigures, boardik, *pa, SizeBlack, SizeWhite);
+							(*pa).SearchRoots(BlackFigures, WhiteFigures, boardik, SizeBlack, SizeWhite);
 							(*pa).getSprite().setColor(Color::Green);//красим спрайт в зеленый,тем самым говоря игроку,что он выбрал персонажа и может сделать ход
 							(*pa).getIsClicked() = true;
 							event.type = Event::MouseButtonReleased;
@@ -365,14 +377,14 @@ int main()
 								if ((*pa).CheckTrue(pixelPos.x, pixelPos.y, NewCoords) == true)
 
 								{
-									
+
 									X = pa->getCordX();
 									cout << boardTrue[pa->getCordX()][pa->getCordY()];
 									boardTrue[pa->getCordX()][pa->getCordY()] = 0;
 									pa->setCordX(NewCoords.getScaleCompX());
 									pa->setCordY(NewCoords.getScaleCompY());
-									pa->Eating(BlackFigures, WhiteFigures, SizeBlack, SizeWhite,EatenByBlack,EatenByWhite,SizeByBlack,SizeByWhite,FD);
-						            boardTrue[pa->getCordX()][pa->getCordY()] = pa->getSide();
+									pa->Eating(BlackFigures, WhiteFigures, SizeBlack, SizeWhite, EatenByBlack, EatenByWhite, SizeByBlack, SizeByWhite, FD);
+									boardTrue[pa->getCordX()][pa->getCordY()] = pa->getSide();
 									Template(boardik, boardTrue);
 									(*pa).getIsClicked() = false;
 									(*pa).getIsMove() = true;
@@ -394,7 +406,7 @@ int main()
 		{
 			if ((*pa).getIsMove())
 			{
-				
+
 				thanos.setVolume(50);
 				thanos.play();
 				(*pa).getSprite().setPosition(tempX, tempY);
@@ -408,12 +420,17 @@ int main()
 							if ((pa->getCordX()) >= (pa->getTransformCoordsY()))
 							{
 								pa->Swap(FS);
+								turn = (turn % 2) + 1;
 							}
 							else
 							{
 								CanTranSform = 1;
 
 							}
+						}
+						else
+						{
+							turn = (turn % 2) + 1;
 						}
 					}
 					else
@@ -423,6 +440,11 @@ int main()
 							if (pa->getCordX() <= (pa->getTransformCoordsY()))
 							{
 								pa->Swap(FS);
+								if (IsMate(BlackFigures, WhiteFigures, turn, SizeBlack, SizeWhite, boardik) == 1)
+								{
+									cout << "MAT SUKA";
+								}
+								turn = (turn % 2) + 1;
 							}
 							else
 							{
@@ -430,10 +452,26 @@ int main()
 
 							}
 						}
+						else
+						{
+							if (IsMate(BlackFigures, WhiteFigures, turn, SizeBlack, SizeWhite, boardik) == 1)
+							{
+								cout << "MAT SUKA";
+							}
+							turn = (turn % 2) + 1;
+						}
 					}
 				}
-				turn = (turn % 2) + 1;
+				else
+				{
+					if (IsMate(BlackFigures, WhiteFigures, turn, SizeBlack, SizeWhite, boardik) == 1)
+					{
+						cout << "MAT SUKA";
+					}
+					turn = (turn % 2) + 1;
+				}
 				
+
 			}
 		}
 

@@ -130,7 +130,7 @@ int main()
 	music.openFromFile("sounds/shogi.ogg");//загружаем файл
 
 
-	RenderWindow window(VideoMode(1920, 1080), "The Shogi Game");
+	RenderWindow window(VideoMode(1920, 1080), "The Shogi Game",Style::Fullscreen);
 	music.play();//воспроизводим музыку
 	music.setLoop(true);
 	music.setPitch(1);
@@ -189,6 +189,12 @@ int main()
 	figuresprite.setTexture(figuretexture);
 	figuresprite.setPosition(555, 135);
 
+	Image YourTurn;
+	YourTurn.loadFromFile("images/YT.png");
+	Texture YT;
+	YT.loadFromImage(YourTurn);
+	Sprite YourT;
+	YourT.setTexture(YT);
 	Image YesOrNo;
 	YesOrNo.loadFromFile("images/YesOrNo.png");
 	Texture YON;
@@ -411,9 +417,9 @@ int main()
 				thanos.play();
 				(*pa).getSprite().setPosition(tempX, tempY);
 				(*pa).getIsMove() = false;
-				if (pa->getTransformation() == 0)
+				if ((pa->getTransformation() == 0) && (pa->getIsActive() == 1))
 				{
-					if (turn == 1)
+					if ((turn == 1))
 					{
 						if (((pa->getCordX()) >= (pa->getTransformCoordsX())) || (X >= (pa->getTransformCoordsX())))
 						{
@@ -462,6 +468,7 @@ int main()
 						}
 					}
 				}
+				
 				else
 				{
 					if (IsMate(BlackFigures, WhiteFigures, turn, SizeBlack, SizeWhite, boardik) == 1)
@@ -470,7 +477,8 @@ int main()
 					}
 					turn = (turn % 2) + 1;
 				}
-				
+				if (pa->getIsActive() == 0)
+					pa->getIsActive() = 1;
 
 			}
 		}
@@ -487,6 +495,16 @@ int main()
 			window.draw(Yes);
 			window.draw(No);
 			window.draw(mbSwap);
+		}
+		if (turn == 1)
+		{
+			YourT.setPosition(750, 50);
+			window.draw(YourT);
+		}
+		else
+		{
+			YourT.setPosition(750, 950);
+			window.draw(YourT);
 		}
 		window.draw(PawnBlack1.getSprite());
 		window.draw(PawnBlack2.getSprite());

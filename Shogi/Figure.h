@@ -28,6 +28,7 @@ protected:
 	int SizeOfRules;
 	int SizeofRulesTransform;
 public:
+	bool& getIsActive();
 	friend bool IsMate(Figures *FiguresB[],Figures *FiguresW[],int turn,int ,int,int array[10][10] );
 	int getTransformation();
 	void Swap(Texture&);

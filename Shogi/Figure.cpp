@@ -554,14 +554,16 @@ Silver::Silver(int a, int b, int s,Texture& T)
 	///////////////////////////////////////////////////////////////////////////////////////////////////
 
 }
-void Figures::SearchRoots(Figures *FiguresB[], Figures* FiguresW[], int array[10][10], Figures& pa, int SizeB, int SizeW)
+void Figures::SearchRoots(Figures *FiguresB[], Figures* FiguresW[], int array[10][10], int SizeB, int SizeW)
 {
-
-	for (int i = 0; i < 10; i++)
-		for (int j = 0; j < 10; j++)
-		{
-			roots[i][j] = 0;
-		}
+	isZero = true;
+	if (isActive == 1)
+	{
+		for (int i = 0; i < 10; i++)
+			for (int j = 0; j < 10; j++)
+			{
+				roots[i][j] = 0;
+			}
 	int i = 0;
 	int  tempX = 0;
 	int tempY = 0;
@@ -573,30 +575,30 @@ void Figures::SearchRoots(Figures *FiguresB[], Figures* FiguresW[], int array[10
 
 		if ((tempX < 10) && (tempX > 0) && (tempY < 10) && (tempY > 0))
 		{
-			if ((SizeOfRules > 7) && ((typeid(pa).name())!= typeid(King).name()))
+			if ((SizeOfRules > 7) && ((typeid(*this).name()) != typeid(King).name()))
 			{
-				if ((array[tempX][tempY] != side) && ((pa).CheckCheck(FiguresB, FiguresW, pa, array, RulesMove[i].getScaleCompX(), RulesMove[i].getScaleCompY(), SizeB, SizeW) == 1)&&(CheckCheck(FiguresB, FiguresW, pa, array, 0, 0, SizeB, SizeW) == 1))
+				if ((array[tempX][tempY] != side) && ((*this).CheckCheck(FiguresB, FiguresW, array, RulesMove[i].getScaleCompX(), RulesMove[i].getScaleCompY(), SizeB, SizeW) == 1) && (CheckCheck(FiguresB, FiguresW, array, 0, 0, SizeB, SizeW) == 1))
 				{
 					roots[tempX][tempY] = 1;
 					if (array[tempX][tempY] == 0)
 					{
-						
+
 					}
 					else
 					{
-						if (i<32)
-							while (i%8!=7)
+						if (i < 32)
+							while (i % 8 != 7)
 							{
 								i++;
 							}
-						
 
-						
+
+
 					}
 				}
 				else
 				{
-					if (CheckCheck(FiguresB, FiguresW, pa, array, 0, 0, SizeB, SizeW) == 1)
+					if (CheckCheck(FiguresB, FiguresW, array, 0, 0, SizeB, SizeW) == 1)
 					{
 						if (i < 32)
 							while (i % 8 != 7)
@@ -610,11 +612,12 @@ void Figures::SearchRoots(Figures *FiguresB[], Figures* FiguresW[], int array[10
 						{
 
 
-							if ((pa).CheckCheck(FiguresB, FiguresW, pa, array, RulesMove[i].getScaleCompX(), RulesMove[i].getScaleCompY(), SizeB, SizeW) == 1)
+							if ((*this).CheckCheck(FiguresB, FiguresW,array, RulesMove[i].getScaleCompX(), RulesMove[i].getScaleCompY(), SizeB, SizeW) == 1)
 							{
 								if (array[tempX][tempY] == 0)
 								{
 									roots[tempX][tempY] = 1;
+									isZero = false;
 								}
 								else
 								{
@@ -626,8 +629,8 @@ void Figures::SearchRoots(Figures *FiguresB[], Figures* FiguresW[], int array[10
 										}
 								}
 							}
-								
-							
+
+
 						}
 						else
 						{
@@ -638,14 +641,15 @@ void Figures::SearchRoots(Figures *FiguresB[], Figures* FiguresW[], int array[10
 								}
 						}
 					}
-					
-				
+
+
 
 				}
 			}
-			else if ((array[tempX][tempY] != side) && ((pa).CheckCheck(FiguresB, FiguresW, pa, array, RulesMove[i].getScaleCompX(), RulesMove[i].getScaleCompY(), SizeB, SizeW) == 1))
+			else if ((array[tempX][tempY] != side) && ((*this).CheckCheck(FiguresB, FiguresW, array, RulesMove[i].getScaleCompX(), RulesMove[i].getScaleCompY(), SizeB, SizeW) == 1))
 			{
 				roots[tempX][tempY] = 1;
+				isZero = false;
 			}
 			else
 			{
@@ -653,9 +657,45 @@ void Figures::SearchRoots(Figures *FiguresB[], Figures* FiguresW[], int array[10
 			}
 
 		}
-	}	
+	}
 }
-bool Figures::CheckCheck(Figures* FiguresB[], Figures* FiguresW[], Figures &a, int array[10][10], int NewX, int NewY, int SizeB, int SizeW)
+	else
+	{
+	for (int i = 1; i < 10; i++)
+		for (int j = 1; j < 10; j++)
+		{
+			roots[i][j] = 1;
+		}
+	if ((typeid(*this).name()) == typeid(Pawn).name())
+	    {
+		if (side == 1)
+		   {
+			for (int i = 0; i < SizeW; i++)
+			{
+				if (((typeid(FiguresW[i]).name()) == typeid(Pawn).name()) && ((*FiguresW[i]).isActive == 1))
+				{
+					for (int j = 1; j < 10; j++)
+					{
+						roots[j][FiguresW[i]->y]=0;
+					}
+				}
+			}
+			for (int i = 1; i < 10; i++)
+			{
+				roots[9][i]=0;
+			}
+			Figures *FigW;
+			FigW = new Figures[SizeW];
+			for (int i = 0; i < SizeW; i++)
+			  {
+				FigW[i] = *FiguresW[i];
+			  }
+
+		   }
+		}
+    }
+}
+bool Figures::CheckCheck(Figures* FiguresB[], Figures* FiguresW[], int array[10][10], int NewX, int NewY, int SizeB, int SizeW)
 {
 	int arrayHelp[10][10];
 	//Template(arrayHelp, array);
@@ -1018,5 +1058,39 @@ void Figures::Swap(Texture& T)
 	SizeOfRules = SizeofRulesTransform;
 	SizeofRulesTransform = SwapSize;
 	RulesMoveTransform = SwapRules;
+	
+}
+bool IsMate(Figures* FiguresBlack[], Figures* FiguresWhite[],int turn,int SizeBlack,int SizeWhite,int array[10][10])
+{
+	if (turn == 1)
+	{
+		for (int i = 0; i < SizeBlack;i++)
+		{
+			if (FiguresBlack[i]->isActive == 1)
+			{
+				FiguresBlack[i]->SearchRoots(FiguresBlack,FiguresWhite,array,SizeBlack,SizeWhite);
+				if (FiguresBlack[i]->isZero == 0)
+				{
+
+					return false;
+				}
+			}
+		}
+	}
+	else
+	{
+		for (int i = 0; i < SizeWhite; i++)
+		{
+			if (FiguresWhite[i]->isActive == 1)
+			{
+				FiguresWhite[i]->SearchRoots(FiguresBlack, FiguresWhite, array, SizeBlack, SizeBlack);
+				if (FiguresWhite[i]->isZero == 0)
+				{
+					return false;
+				}
+			}
+		}
+	}
+	return true;
 	
 }

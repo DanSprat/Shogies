@@ -28,6 +28,7 @@ protected:
 	int SizeOfRules;
 	int SizeofRulesTransform;
 public:
+	void ChangeRulesSide();
 	bool& getIsActive();
 	friend bool IsMate(Figures *FiguresB[],Figures *FiguresW[],int turn,int ,int,int array[10][10] );
 	int getTransformation();
@@ -50,7 +51,7 @@ public:
 	Sprite& getSprite();
 	bool& getIsMove();
 	bool& getIsClicked();
-	void SearchRoots(Figures *FiguresB[], Figures* FiguresW[], int array[10][10],int SizeB, int SizeW);
+	void SearchRoots(Figures **&FiguresB, Figures**& FiguresW, int array[10][10],int SizeB, int SizeW);
 	virtual void ChangeArr();
 	Figures(int x, int y, int side, String FS, String FT, bool HaveTransform);
 	VectorMove getRulesMove(int i);

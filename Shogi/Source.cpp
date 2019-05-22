@@ -78,7 +78,7 @@ int main()
 	Arrow ArrowBlack2(9, 9, 2, FD);
 	Gold GoldBlack1(9, 4, 2, FD);
 	Gold GoldBlack2(9, 6, 2, FD);
-
+	Figures *Test;
 
 	Figures *FiguresBlack[20] = {
 								 &KingBlack,&ArrowBlack2,&ArrowBlack1,&GoldBlack1,&GoldBlack2,&SilverBlack1,&SilverBlack2,
@@ -130,7 +130,7 @@ int main()
 	music.openFromFile("sounds/shogi.ogg");//загружаем файл
 
 
-	RenderWindow window(VideoMode(1920, 1080), "The Shogi Game",Style::Fullscreen);
+	RenderWindow window(VideoMode(1920, 1080), "The Shogi Game");
 	music.play();//воспроизводим музыку
 	music.setLoop(true);
 	music.setPitch(1);

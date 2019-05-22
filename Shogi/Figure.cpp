@@ -790,6 +790,13 @@ void Figures::SearchRoots(Figures **&FiguresB, Figures**& FiguresW, int array[10
 			y = Save.getScaleCompY();
 		    }
 		}
+		else
+		{
+		for (int i = 1; i < 10; i++)
+			for (int j = 1; j < 10; j++)
+				if (array[i][j] != 0)
+					roots[i][j] = 0;
+        }
     }
 }
 bool Figures::CheckCheck(Figures* FiguresB[], Figures* FiguresW[], int array[10][10], int NewX, int NewY, int SizeB, int SizeW)
@@ -1010,7 +1017,8 @@ bool Figures::Eating(Figures  **&b, Figures **&w, int& sizeb, int& sizew, Figure
 				if (isEmpty == true)
 				{
 					byW[k] = b[i];
-					byW[k]->getSprite().setPosition(1400+90*k, 240);
+					byW[k]->getSprite().setPosition(500 - 70 * ((k) % 5), 365 + (-80 * ((k - 1) / 5)));
+					(**&byW[k]).getSprite().rotate(180);
 				}
 				else
 				{
@@ -1024,7 +1032,7 @@ bool Figures::Eating(Figures  **&b, Figures **&w, int& sizeb, int& sizew, Figure
 					byWhite[sizebyW - 1] = b[i];
 					
 					byW = byWhite;
-					(**&byW[sizebyW - 1]).getSprite().setPosition(500 - 80 * (sizebyW - 1), 365);
+					(**&byW[sizebyW - 1]).getSprite().setPosition(500 - 70 * ((sizebyW - 1)%5), 365+(-80*((sizebyW-1)/5)));
 					(**&byW[sizebyW - 1]).getSprite().rotate(180);
 				}
 				for (int j = 0; j < i; j++)

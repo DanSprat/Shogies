@@ -82,6 +82,12 @@ bool& Figures::getIsActive()
 {
 	return this->isActive;
 }
+/*bool& Figures::SetActive()
+{
+	return 0;
+}
+*/
+
 //////////////////////////////////////////////
 
 
@@ -520,7 +526,7 @@ Silver::Silver(int a, int b, int s,Texture& T)
 	}
 	else
 	{
-		TransformCoords = { 3,1 };
+		TransformCoords = { 3,0 };
 		RulesMove[0] = { -1,1 };
 		RulesMove[1] = { -1,-1 };
 		RulesMove[2] = { -1,0 };
@@ -557,7 +563,7 @@ Silver::Silver(int a, int b, int s,Texture& T)
 	///////////////////////////////////////////////////////////////////////////////////////////////////
 
 }
-void Figures::SearchRoots(Figures *FiguresB[], Figures* FiguresW[], int array[10][10], int SizeB, int SizeW)
+void Figures::SearchRoots(Figures **&FiguresB, Figures**& FiguresW, int array[10][10], int SizeB, int SizeW)
 {
 	isZero = true;
 	if (isActive == 1)
@@ -675,7 +681,7 @@ void Figures::SearchRoots(Figures *FiguresB[], Figures* FiguresW[], int array[10
 		   {
 			for (int i = 0; i < SizeW; i++)
 			{
-				if (((typeid(FiguresW[i]).name()) == typeid(Pawn).name()) && ((*FiguresW[i]).isActive == 1))
+				if (((typeid(*FiguresW[i]).name()) == typeid(Pawn).name()) && ((*FiguresW[i]).isActive == 1)&& (*FiguresW[i]).transformation == 0)
 				{
 					for (int j = 1; j < 10; j++)
 					{
@@ -687,14 +693,102 @@ void Figures::SearchRoots(Figures *FiguresB[], Figures* FiguresW[], int array[10
 			{
 				roots[9][i]=0;
 			}
-			Figures *FigW;
-			FigW = new Figures[SizeW];
+			for (int i = 1; i < 10; i++)
+			{
+				for (int j = 1; j < 10; j++)
+				{
+					if (array[i][j] != 0)
+						roots[i][j] = 0;
+				}
+			}
+			Figures **FiguresWhite;
+			FiguresWhite = new Figures *[SizeW + 1];
 			for (int i = 0; i < SizeW; i++)
-			  {
-				FigW[i] = *FiguresW[i];
-			  }
+			{
+				FiguresWhite[i] = FiguresW[i];
+			}
+			FiguresWhite[SizeW] = this;
+			VectorMove Save = { this->x,this->y };
+			bool SaveActive = this->isActive;
+			isActive = true;
+			for (int i=1;i<10;i++)
+				for (int j = 1; j < 10; j++)
+				{
+					if (roots[i][j] == 1)
+					{
+						FiguresWhite[SizeW]->x = i;
+						FiguresWhite[SizeW]->y = j;
 
+						int HelpBoard[10][10];
+						Template(HelpBoard, array);
+						HelpBoard[i][j] = 1;
+
+						if (IsMate(FiguresB, FiguresWhite, 1, SizeB, SizeW + 1, HelpBoard) == 1)
+						{
+							roots[i][j] = 0;
+						}
+					}
+				}
+			isActive = false;
+			x = Save.getScaleCompX();
+			y = Save.getScaleCompY();
 		   }
+		else
+		    {
+			for (int i = 0; i < SizeB; i++)
+			{
+				if (((typeid(*FiguresB[i]).name()) == typeid(Pawn).name()) && ((*FiguresB[i]).isActive == 1) && (*FiguresB[i]).transformation == 0)
+				{
+					for (int j = 1; j < 10; j++)
+					{
+						roots[j][FiguresB[i]->y] = 0;
+					}
+				}
+			}
+			for (int i = 1; i < 10; i++)
+			{
+				roots[1][i] = 0;
+			}
+			for (int i = 1; i < 10; i++)
+			{
+				for (int j = 1; j < 10; j++)
+				{
+					if (array[i][j] != 0)
+						roots[i][j] = 0;
+				}
+			}
+			Figures **FiguresBlack;
+			FiguresBlack = new Figures *[SizeB + 1];
+			for (int i = 0; i < SizeB; i++)
+			{
+				FiguresBlack[i] = FiguresB[i];
+			}
+			FiguresBlack[SizeB] = this;
+			VectorMove Save = { this->x,this->y };
+			bool SaveActive = this->isActive;
+			isActive = true;
+			for (int i = 1; i < 10; i++)
+				for (int j = 1; j < 10; j++)
+				{
+					if (roots[i][j] == 1)
+					{
+						FiguresBlack[SizeB]->x = i;
+						FiguresBlack[SizeB]->y = j;
+
+						int HelpBoard[10][10];
+						Template(HelpBoard, array);
+						HelpBoard[i][j] = 1;
+
+						if (IsMate(FiguresBlack, FiguresW, 1, SizeB+1, SizeW, HelpBoard) == 1)
+						{
+							roots[i][j] = 0;
+						}
+					}
+				}
+			isActive = false;
+			x = Save.getScaleCompX();
+			y = Save.getScaleCompY();
+		    }
 		}
     }
 }
@@ -896,7 +990,7 @@ bool Figures::Eating(Figures  **&b, Figures **&w, int& sizeb, int& sizew, Figure
 				Figures **NewW;
 				sizeb -= 1;
 				sizew += 1;
-				
+				b[i]->ChangeRulesSide();
 				NewB = new Figures *[sizeb];
 				NewW = new Figures *[sizew];
 				if (b[i]->transformation==1)
@@ -961,7 +1055,7 @@ bool Figures::Eating(Figures  **&b, Figures **&w, int& sizeb, int& sizew, Figure
 		{
 			if ((x == (*w[i]).getCordX()) && (y == (*w[i]).getCordY()))
 			{
-				w[i]->side = 1;
+				w[i]->side = 2;
 				w[i]->isActive = 0;
 				w[i]->x = -100;
 				w[i]->y = -100;
@@ -970,7 +1064,7 @@ bool Figures::Eating(Figures  **&b, Figures **&w, int& sizeb, int& sizew, Figure
 				Figures **NewB;
 				Figures **NewW;
 				
-				
+				w[i]->ChangeRulesSide();
 				NewB = new Figures *[sizeb];
 				NewW = new Figures *[sizew];
 				if (w[i]->transformation == 1)
@@ -1096,4 +1190,24 @@ bool IsMate(Figures* FiguresBlack[], Figures* FiguresWhite[],int turn,int SizeBl
 	}
 	return true;
 	
+}
+void Figures::ChangeRulesSide()
+{
+	if (SizeOfRules < 10)
+	{
+		int Save = 0;
+		for (int i = 0; i < SizeOfRules; i++)
+		{
+			RulesMove[i].getCompX() = RulesMove[i].getScaleCompX()*(-1);
+			RulesMove[i].getCompY() = RulesMove[i].getScaleCompY()*(-1);
+		}
+		for (int i = 0; i < SizeofRulesTransform; i++)
+		{
+			RulesMoveTransform[i].getCompX() = RulesMoveTransform[i].getScaleCompX()*(-1);
+			RulesMoveTransform[i].getCompY() = RulesMoveTransform[i].getScaleCompY()*(-1);
+		}
+
+    }
+	TransformCoords.getCompX() = abs(TransformCoords.getScaleCompX() - 10);
+	TransformCoords.getCompY() = abs(TransformCoords.getScaleCompY() - 10);
 }

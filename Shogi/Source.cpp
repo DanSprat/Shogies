@@ -7,6 +7,7 @@ using namespace sf;
 int main()
 
 {
+	int EndGame=0;
 	Figures empty;//Нулевой (пустой) элмемент класса фигур
 	bool CanTranSform = 0;
 	int X, IsMusic = 0, k = 0;
@@ -153,7 +154,20 @@ int main()
 	YesM.setPosition(1650, 50);
 	NoM.setPosition(1650, 50);
 
+	Image VictoryBlack;
+	VictoryBlack.loadFromFile("images/BlackVictory.png");
+	Texture VicB;
+	VicB.loadFromImage(VictoryBlack);
+	Sprite VB;
+	VB.setTexture(VicB);
 
+
+	Image VictoryWhite;
+	VictoryWhite.loadFromFile("images/WhiteVictory.png");
+	Texture VicW;
+	VicW.loadFromImage(VictoryWhite);
+	Sprite VW;
+	VW.setTexture(VicW);
 
 
 
@@ -274,7 +288,7 @@ int main()
 					CanTranSform = 0;
 					if (IsMate(BlackFigures, WhiteFigures, turn, SizeBlack, SizeWhite, boardik) == 1)
 					{
-						cout << "MAT SUKA";
+						EndGame = turn;
 					}
 					turn = (turn % 2) + 1;
 
@@ -293,7 +307,7 @@ int main()
 
 					if (IsMate(BlackFigures, WhiteFigures, turn, SizeBlack, SizeWhite, boardik) == 1)
 					{
-						cout << "MAT SUKA";
+						EndGame = turn;
 					}
 					turn = (turn % 2) + 1;
 				}
@@ -417,6 +431,31 @@ int main()
 				thanos.play();
 				(*pa).getSprite().setPosition(tempX, tempY);
 				(*pa).getIsMove() = false;
+				if (pa->getIsActive() == 0)
+				{
+					if (turn == 1)
+					{
+						for (int i = 0; i< SizeByWhite; i++)
+						{
+							if (EatenByWhite[i] == pa)
+							{
+								EatenByWhite[i] = &empty;
+							}
+
+						}
+					}
+					else
+					{
+						for (int i = 0; i< SizeByBlack; i++)
+						{
+							if (EatenByBlack[i] == pa)
+							{
+								EatenByBlack[i] = &empty;
+							}
+
+						}
+					}
+				}
 				if ((pa->getTransformation() == 0) && (pa->getIsActive() == 1))
 				{
 					if ((turn == 1))
@@ -448,7 +487,7 @@ int main()
 								pa->Swap(FS);
 								if (IsMate(BlackFigures, WhiteFigures, turn, SizeBlack, SizeWhite, boardik) == 1)
 								{
-									cout << "MAT SUKA";
+									EndGame = turn;
 								}
 								turn = (turn % 2) + 1;
 							}
@@ -462,7 +501,7 @@ int main()
 						{
 							if (IsMate(BlackFigures, WhiteFigures, turn, SizeBlack, SizeWhite, boardik) == 1)
 							{
-								cout << "MAT SUKA";
+								EndGame = turn;
 							}
 							turn = (turn % 2) + 1;
 						}
@@ -473,7 +512,7 @@ int main()
 				{
 					if (IsMate(BlackFigures, WhiteFigures, turn, SizeBlack, SizeWhite, boardik) == 1)
 					{
-						cout << "MAT SUKA";
+						EndGame = turn;
 					}
 					turn = (turn % 2) + 1;
 				}
@@ -558,6 +597,16 @@ int main()
 
 				pa->ShowRoots(TileMap, s_map, window);
 		}
+		if (EndGame == 1)
+		{
+			window.draw(VB);
+		}
+		if (EndGame ==2)
+		{
+			window.draw(VW);
+		}
+
+
 
 
 

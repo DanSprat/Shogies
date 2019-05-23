@@ -10,23 +10,26 @@ using namespace sf;
 ////////////////////////////////////ОБЪЯВЛЯЕМ ФИГУРЫ//////////////////////////////
 
 
-class Figures
+
+class Figures//базовый класс фигур
+	
 {
 protected:
-	bool isZero;
-	Sprite SpriteD;
-	VectorMove TransformCoords;
-	bool isActive;
-	bool isMove, isClicked;
+	bool isZero;//нашлись ли ходы
+	Sprite SpriteD;//спрайт фигуры
+	VectorMove TransformCoords;//где фигура может и где обязательно трансформируется
+	bool isActive;//находится ли на доске
+	bool isMove, isClicked;//двигается ли фигура, нажали ли на фигуру
 	bool HaveTransform = 0;//Может ли фигура трансфромироваться
 	int side; //Сторона к которой принадлежит фигура
 	int roots[10][10];//Матрица ходов,куда доступно ходить фигуре
 	int turn, transformation;//Флаг очереди хода {0,1} и состояние трансформации {0(обычная фигура),1(трансформированная),2(выбывшая)}
 	int x, y;//позиция фигуры на доске относительно левого верхнего угла
-	VectorMove *RulesMove;
-	VectorMove *RulesMoveTransform;
-	int SizeOfRules;
-	int SizeofRulesTransform;
+	VectorMove *RulesMove;//указатель на массив векторов движения фигуры
+	VectorMove *RulesMoveTransform;//указатель на массив векторов движения трансформированной фигуры
+	int SizeOfRules;//размер массива векторов движения фигуры
+	int SizeofRulesTransform;//размер массива векторов движения трансформированной фигуры
+
 public:
 	void ChangeRulesSide();
 	bool& getIsActive();

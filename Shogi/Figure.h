@@ -55,7 +55,7 @@ public:
 	Figures(int x, int y, int side, String FS, String FT, bool HaveTransform);
 	VectorMove getRulesMove(int i);
 	Figures();
-	~Figures();
+	virtual ~Figures() {};
 };
 Figures* SelectedFigure(int &turn, Figures *FiguresBlack[], Figures *FiguresWhite[], int x, int y, int SizeB, int SizeW);
 
@@ -85,6 +85,15 @@ class Rook :public Figures {
 protected:
 public:
 	Rook(int a, int b, int s,Texture&);
+	virtual void ChangeArr()
+	{
+		delete[] RulesMove;
+		RulesMove = new VectorMove[36];
+		for (int i = 0; i < 36; i++)
+		{
+			RulesMove[i] = RulesMoveTransform[i];
+		}
+	}
 	Rook();
 };
 
@@ -94,6 +103,15 @@ public:
 class Knight :public Figures {
 public:
 	Knight(int a, int b, int side,Texture&);
+	virtual void ChangeArr()
+	{
+		delete[] RulesMove;
+		RulesMove = new VectorMove[36];
+		for (int i = 0; i < 36; i++)
+		{
+			RulesMove[i] = RulesMoveTransform[i];
+		}
+	}
 	Knight();
 
 };
@@ -102,6 +120,15 @@ public:
 class Arrow :public Figures {
 public:
 	Arrow(int a, int b, int side,Texture&);
+	virtual void ChangeArr()
+	{
+		delete[] RulesMove;
+		RulesMove = new VectorMove[6];
+		for (int i = 0; i < 6; i++)
+		{
+			RulesMove[i] = RulesMoveTransform[i];
+		}
+	}
 	Arrow();
 
 };
@@ -114,6 +141,15 @@ public:
 class Horse :public Figures {
 public:
 	Horse(int a, int b, int side,Texture&);
+	virtual void ChangeArr()
+	{
+		delete[] RulesMove;
+		RulesMove = new VectorMove[6];
+		for (int i = 0; i < 6; i++)
+		{
+			RulesMove[i] = RulesMoveTransform[i];
+		}
+	}
 	Horse();
 
 };

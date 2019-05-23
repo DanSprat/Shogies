@@ -1,14 +1,14 @@
-#include <SFML/Graphics.hpp>
-#include "map.h"
-#include "Figure.h"
-#include "Header.h"
+#include <SFML/Graphics.hpp> 
+#include "map.h" 
+#include "Figure.h" 
+#include "Header.h" 
 
 using namespace sf;
 int main()
 
 {
-	int EndGame=0;
-	Figures empty;//Нулевой (пустой) элмемент класса фигур
+	int EndGame = 0;
+	Figures empty;//Нулевой (пустой) элмемент класса фигур 
 	bool CanTranSform = 0;
 	int X, IsMusic = 0, k = 0;
 	int SizeBlack = 20;
@@ -82,15 +82,15 @@ int main()
 	Figures *Test;
 
 	Figures *FiguresBlack[20] = {
-								 &KingBlack,&ArrowBlack2,&ArrowBlack1,&GoldBlack1,&GoldBlack2,&SilverBlack1,&SilverBlack2,
-								 &PawnBlack1,&PawnBlack2,&PawnBlack3,&PawnBlack4,&PawnBlack5,&PawnBlack6,&PawnBlack7,&PawnBlack8,
-								 &PawnBlack9,&KnightBlack1,&HorseBlack2,&RookBlack1,&HorseBlack1
+	&KingBlack,&ArrowBlack2,&ArrowBlack1,&GoldBlack1,&GoldBlack2,&SilverBlack1,&SilverBlack2,
+	&PawnBlack1,&PawnBlack2,&PawnBlack3,&PawnBlack4,&PawnBlack5,&PawnBlack6,&PawnBlack7,&PawnBlack8,
+	&PawnBlack9,&KnightBlack1,&HorseBlack2,&RookBlack1,&HorseBlack1
 	};
 
 	Figures *FiguresWhite[20] = {
-								 &KingWhite,&ArrowWhite2,&ArrowWhite1,&GoldWhite1,&GoldWhite2,&SilverWhite1,&SilverWhite2,
-								 &PawnWhite1,&PawnWhite2,&PawnWhite3,&PawnWhite4,&PawnWhite5,&PawnWhite6,&PawnWhite7,&PawnWhite8,
-								 &PawnWhite9,&KnightWhite1,&HorseWhite2,&RookWhite1,&HorseWhite1
+	&KingWhite,&ArrowWhite2,&ArrowWhite1,&GoldWhite1,&GoldWhite2,&SilverWhite1,&SilverWhite2,
+	&PawnWhite1,&PawnWhite2,&PawnWhite3,&PawnWhite4,&PawnWhite5,&PawnWhite6,&PawnWhite7,&PawnWhite8,
+	&PawnWhite9,&KnightWhite1,&HorseWhite2,&RookWhite1,&HorseWhite1
 	};
 
 	for (int i = 0; i < 20; i++)
@@ -106,35 +106,36 @@ int main()
 	float heroteleporttimer = 0;
 	Clock clock;
 	int boardTrue[10][10] = { 0,0,0,0,0,0,0,0,0,0,
-							0,1,1,1,1,1,1,1,1,1,
-							0,0,1,0,0,0,0,0,1,0,
-							0,1,1,1,1,1,1,1,1,1,
-							0,0,0,0,0,0,0,0,0,0,
-							0,0,0,0,0,0,0,0,0,0,
-							0,0,0,0,0,0,0,0,0,0,
-							0,2,2,2,2,2,2,2,2,2,
-							0,0,2,0,0,0,0,0,2,0,
-							0,2,2,2,2,2,2,2,2,2 };
+	0,1,1,1,1,1,1,1,1,1,
+	0,0,1,0,0,0,0,0,1,0,
+	0,1,1,1,1,1,1,1,1,1,
+	0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,
+	0,2,2,2,2,2,2,2,2,2,
+	0,0,2,0,0,0,0,0,2,0,
+	0,2,2,2,2,2,2,2,2,2 };
 
 
 	int boardik[10][10];
 	Template(boardik, boardTrue);
 
-	Image map_image;//объект изображения для карты
-	map_image.loadFromFile("images/Green.png");//загружаем файл для карты
-	Texture map;//текстура карты
-	map.loadFromImage(map_image);//заряжаем текстуру картинкой
-	Sprite s_map;//создаём спрайт для карты
-	s_map.setTexture(map);//заливаем текстуру спрайтом
+	Image map_image;//объект изображения для карты 
+	map_image.loadFromFile("images/Green.png");//загружаем файл для карты 
+	Texture map;//текстура карты 
+	map.loadFromImage(map_image);//заряжаем текстуру картинкой 
+	Sprite s_map;//создаём спрайт для карты 
+	s_map.setTexture(map);//заливаем текстуру спрайтом 
 
-	Music music;//создаем объект музыки
-	music.openFromFile("sounds/shogi.ogg");//загружаем файл
+	Music music;//создаем объект музыки 
+	music.openFromFile("sounds/shogi.ogg");//загружаем файл 
 
 
 	RenderWindow window(VideoMode(1920, 1080), "The Shogi Game");
-	music.play();//воспроизводим музыку
+	music.play();//воспроизводим музыку 
 	music.setLoop(true);
 	music.setPitch(1);
+
 	music.setVolume(25);
 	menu(window, music);
 	if (music.getVolume() == 0)
@@ -229,10 +230,10 @@ int main()
 	mbSwap.setTexture(mSwap);
 	mbSwap.setPosition(1400, 390);
 
-	SoundBuffer Click, Thanos;//создаём буфер для звука
-	Thanos.loadFromFile("sounds/thanos.ogg");//загружаем в него звук
+	SoundBuffer Click, Thanos;//создаём буфер для звука 
+	Thanos.loadFromFile("sounds/thanos.ogg");//загружаем в него звук 
 	Click.loadFromFile("sounds/click.ogg");
-	Sound thanos(Thanos), click(Click);//создаем звук и загружаем в него звук из буфера
+	Sound thanos(Thanos), click(Click);//создаем звук и загружаем в него звук из буфера 
 	Image icon;
 	if (!icon.loadFromFile("images/icon2.png"))
 	{
@@ -246,9 +247,9 @@ int main()
 
 		Vector2i pixelPos = Mouse::getPosition(window);
 		Event event;
-		
+
 		while (window.pollEvent(event))
-			{
+		{
 			int Num = 0;
 			No.setColor(Color::White);
 			Yes.setColor(Color::White);
@@ -300,6 +301,7 @@ int main()
 				{
 					event.type = Event::MouseButtonReleased;
 				}
+
 				if (event.type == Event::MouseButtonReleased)
 				{
 					CanTranSform = 0;
@@ -355,19 +357,19 @@ int main()
 
 			if ((MouseLeft == false) && (CanTranSform == 0))
 			{
-				if (event.type == Event::MouseButtonPressed)//если нажата клавиша мыши
+				if (event.type == Event::MouseButtonPressed)//если нажата клавиша мыши 
 					if (event.key.code == Mouse::Left)
 					{
 						j++;
 						if (j == 8)
 						{
-							cout << "Hello";
+							
 						}
 						pa = SelectedFigure(turn, BlackFigures, WhiteFigures, pixelPos.x, pixelPos.y, SizeBlack, SizeWhite);
 						if (pa != 0)
 						{
 							(*pa).SearchRoots(BlackFigures, WhiteFigures, boardik, SizeBlack, SizeWhite);
-							(*pa).getSprite().setColor(Color::Green);//красим спрайт в зеленый,тем самым говоря игроку,что он выбрал персонажа и может сделать ход
+							(*pa).getSprite().setColor(Color::Green);//красим спрайт в зеленый,тем самым говоря игроку,что он выбрал персонажа и может сделать ход 
 							(*pa).getIsClicked() = true;
 							event.type = Event::MouseButtonReleased;
 							MouseLeft = true;
@@ -378,7 +380,7 @@ int main()
 			{
 				if ((*pa).getIsClicked())
 				{
-					if (event.type == Event::MouseButtonPressed)//если нажата клавиша мыши
+					if (event.type == Event::MouseButtonPressed)//если нажата клавиша мыши 
 						if (event.key.code == Mouse::Right)
 
 						{
@@ -399,7 +401,7 @@ int main()
 								{
 
 									X = pa->getCordX();
-									cout << boardTrue[pa->getCordX()][pa->getCordY()];
+									boardTrue[pa->getCordX()][pa->getCordY()];
 									boardTrue[pa->getCordX()][pa->getCordY()] = 0;
 									pa->setCordX(NewCoords.getScaleCompX());
 									pa->setCordY(NewCoords.getScaleCompY());
@@ -435,7 +437,7 @@ int main()
 				{
 					if (turn == 1)
 					{
-						for (int i = 0; i< SizeByWhite; i++)
+						for (int i = 0; i < SizeByWhite; i++)
 						{
 							if (EatenByWhite[i] == pa)
 							{
@@ -446,7 +448,7 @@ int main()
 					}
 					else
 					{
-						for (int i = 0; i< SizeByBlack; i++)
+						for (int i = 0; i < SizeByBlack; i++)
 						{
 							if (EatenByBlack[i] == pa)
 							{
@@ -467,6 +469,7 @@ int main()
 								pa->Swap(FS);
 								turn = (turn % 2) + 1;
 							}
+
 							else
 							{
 								CanTranSform = 1;
@@ -507,7 +510,7 @@ int main()
 						}
 					}
 				}
-				
+
 				else
 				{
 					if (IsMate(BlackFigures, WhiteFigures, turn, SizeBlack, SizeWhite, boardik) == 1)
@@ -601,7 +604,7 @@ int main()
 		{
 			window.draw(VB);
 		}
-		if (EndGame ==2)
+		if (EndGame == 2)
 		{
 			window.draw(VW);
 		}
@@ -618,4 +621,3 @@ int main()
 
 	return 0;
 }
-

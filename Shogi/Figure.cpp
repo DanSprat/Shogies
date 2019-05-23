@@ -17,16 +17,15 @@ Figures::Figures(int a, int b, int side, String FS, String FT, bool HaveTransfor
 
 }
 
-Figures::Figures()  {     }
-Figures::~Figures() {     }
-King::King()        {     }
-Pawn::Pawn()        {     }
-Rook::Rook()        {     }
-Knight::Knight()    {     }
-Arrow::Arrow()      {     }
-Horse::Horse()      {     }
-Gold::Gold()        {     }
-Silver::Silver()    {     }
+Figures::Figures() {     }
+King::King() {     }
+Pawn::Pawn() {     }
+Rook::Rook() {     }
+Knight::Knight() {     }
+Arrow::Arrow() {     }
+Horse::Horse() {     }
+Gold::Gold() {     }
+Silver::Silver() {     }
 
 //////ТУТ БУДУТ ВСЕ GET & PUT ФУНКЦИИ /////////
 
@@ -117,7 +116,7 @@ Figures* SelectedFigure(int &turn, Figures* FiguresBlack[], Figures* FiguresWhit
 	}
 
 }
-King::King(int a, int b, int s,Texture& T)
+King::King(int a, int b, int s, Texture& T)
 {
 	side = s;
 	RulesMove = new VectorMove[8];
@@ -156,7 +155,7 @@ King::King(int a, int b, int s,Texture& T)
 	}
 	SpriteD.setPosition(615 + 80 * (y - 1) + 5 * (y - 1), 195 + 80 * (x - 1) + 5 * (x - 1));// тут тоже все будет зависеть от координат  p.s Разобраться с картинкой
 }
-Pawn::Pawn(int a, int b, int s,Texture& T)
+Pawn::Pawn(int a, int b, int s, Texture& T)
 {
 	SizeOfRules = 1;
 	SizeofRulesTransform = 6;
@@ -165,7 +164,7 @@ Pawn::Pawn(int a, int b, int s,Texture& T)
 	side = s;
 	if (side == 1)
 	{
-		TransformCoords= { 7,9 };
+		TransformCoords = { 7,9 };
 		RulesMove[0] = { 1,0 };
 		RulesMoveTransform[0] = { 1,0 };
 		RulesMoveTransform[1] = { 1,1 };
@@ -196,22 +195,22 @@ Pawn::Pawn(int a, int b, int s,Texture& T)
 	transformation = 0;
 	HaveTransform = 1;
 	SpriteD.setOrigin(55 / 2, 65 / 2);
-    SpriteD.setTexture(T);
+	SpriteD.setTexture(T);
 	SpriteD.setTextureRect(IntRect(34 + (85 * 1 - 85), 28 + (85 * 7 - 85), 55, 65));//В дальнейшем координаты x,y будут перемножаться на 85  и размеры его будут 85 на 85 p.s Разобраться с картинкой
 	if (side == 1)
 	{
 		SpriteD.setRotation(180);
 	}
-	SpriteD.setPosition(615 + 80 * (y - 1) + 5 * (y - 1), 195 + 80 * (x - 1) + 5 * (x - 1)); 
+	SpriteD.setPosition(615 + 80 * (y - 1) + 5 * (y - 1), 195 + 80 * (x - 1) + 5 * (x - 1));
 
-	
+
 
 }
 VectorMove Figures::getRulesMove(int i)
 {
 	return RulesMove[i];
 }
-Rook::Rook(int a, int b, int s,Texture &T)
+Rook::Rook(int a, int b, int s, Texture &T)
 
 {
 	side = s;
@@ -219,7 +218,7 @@ Rook::Rook(int a, int b, int s,Texture &T)
 	{
 		TransformCoords = { 7,10 };
 	}
-	else 
+	else
 	{
 		TransformCoords = { 3,0 };
 	}
@@ -261,7 +260,7 @@ Rook::Rook(int a, int b, int s,Texture &T)
 	transformation = 0;
 	HaveTransform = 1;
 	SpriteD.setOrigin(55 / 2, 65 / 2);
-	
+
 
 	//***************************Описываем изображение фигуры в обычном виде*************************//
 	SpriteD.setTexture(T);
@@ -277,10 +276,10 @@ Rook::Rook(int a, int b, int s,Texture &T)
 
 }
 
-Knight::Knight(int a, int b, int s,Texture& T)
+Knight::Knight(int a, int b, int s, Texture& T)
 {
 	side = s;
-	
+
 	if (side == 1)
 	{
 		TransformCoords = { 7,10 };
@@ -330,7 +329,7 @@ Knight::Knight(int a, int b, int s,Texture& T)
 	HaveTransform = 1;
 	SpriteD.setOrigin(55 / 2, 65 / 2);
 
-    SpriteD.setTexture(T);
+	SpriteD.setTexture(T);
 	SpriteD.setTextureRect(IntRect(34 + (85 * 2 - 85), 28 + (85 * 8 - 85), 55, 65));//В дальнейшем координаты x,y будут перемножаться на 85  и размеры его будут 85 на 85 p.s Разобраться с картинкой
 	if (side == 1)
 	{
@@ -340,7 +339,7 @@ Knight::Knight(int a, int b, int s,Texture& T)
 }
 
 
-Arrow::Arrow(int a, int b, int s,Texture& T)
+Arrow::Arrow(int a, int b, int s, Texture& T)
 {
 	side = s;
 	SizeOfRules = 8;
@@ -356,7 +355,7 @@ Arrow::Arrow(int a, int b, int s,Texture& T)
 		}
 
 	}
-	else 
+	else
 	{
 		TransformCoords = { 3,1 };
 		for (int i = 1; i < 9; i++)
@@ -402,7 +401,7 @@ Arrow::Arrow(int a, int b, int s,Texture& T)
 
 
 }
-Horse::Horse(int a, int b, int s,Texture& T)
+Horse::Horse(int a, int b, int s, Texture& T)
 {
 	side = s;
 	SizeOfRules = 2;
@@ -453,7 +452,7 @@ Horse::Horse(int a, int b, int s,Texture& T)
 	}
 	SpriteD.setPosition(615 + 80 * (y - 1) + 5 * (y - 1), 195 + 80 * (x - 1) + 5 * (x - 1));
 }
-Gold::Gold(int a, int b, int s,Texture&T) {
+Gold::Gold(int a, int b, int s, Texture&T) {
 	side = s;
 	SizeOfRules = 6;
 	RulesMove = new VectorMove[6];
@@ -497,7 +496,7 @@ Gold::Gold(int a, int b, int s,Texture&T) {
 	///////////////////////////////////////////////////////////////////////////////////////////////////
 
 }
-Silver::Silver(int a, int b, int s,Texture& T)
+Silver::Silver(int a, int b, int s, Texture& T)
 {
 	side = s;
 	SizeofRulesTransform = 6;
@@ -506,7 +505,7 @@ Silver::Silver(int a, int b, int s,Texture& T)
 	SizeOfRules = 5;
 	if (side == 1)
 	{
-		TransformCoords = {7,10};
+		TransformCoords = { 7,10 };
 		RulesMove[0] = { 1,1 };
 		RulesMove[1] = { 1,-1 };
 		RulesMove[2] = { 1,0 };
@@ -569,256 +568,256 @@ void Figures::SearchRoots(Figures **&FiguresB, Figures**& FiguresW, int array[10
 			{
 				roots[i][j] = 0;
 			}
-	int i = 0;
-	int  tempX = 0;//Времменая координата X
-	int tempY = 0;//Временная координата Y
-	for (i = 0; i < SizeOfRules; i++)//Проходим по всем векторам, по которым может двигаться фигура
-	{
-		tempX = x + RulesMove[i].getScaleCompX();//Для проверки доступности хода "смещаем" фигуру по X 
-		tempY = y + RulesMove[i].getScaleCompY();//Для проверки доступности хода "смещаем" фигуру по Y
-
-		if ((tempX < 10) && (tempX > 0) && (tempY < 10) && (tempY > 0))//Проверяем не вышли ли мы за пределы доски
+		int i = 0;
+		int  tempX = 0;//Времменая координата X
+		int tempY = 0;//Временная координата Y
+		for (i = 0; i < SizeOfRules; i++)//Проходим по всем векторам, по которым может двигаться фигура
 		{
-			if ((SizeOfRules > 7) && ((typeid(*this).name()) != typeid(King).name()))//Проверка на "Дальнобойности выбранной фигуры"
+			tempX = x + RulesMove[i].getScaleCompX();//Для проверки доступности хода "смещаем" фигуру по X 
+			tempY = y + RulesMove[i].getScaleCompY();//Для проверки доступности хода "смещаем" фигуру по Y
+
+			if ((tempX < 10) && (tempX > 0) && (tempY < 10) && (tempY > 0))//Проверяем не вышли ли мы за пределы доски
 			{
-if ((array[tempX][tempY] != side) && ((*this).CheckCheck(FiguresB, FiguresW, array, RulesMove[i].getScaleCompX(), RulesMove[i].getScaleCompY(), SizeB, SizeW) == 1) && (CheckCheck(FiguresB, FiguresW, array, 0, 0, SizeB, SizeW) == 1))
+				if ((SizeOfRules > 7) && ((typeid(*this).name()) != typeid(King).name()))//Проверка на "Дальнобойности выбранной фигуры"
 				{
-	//Выполняем проверку наличия союзной фигуры на новых координатах
-	//Проверяем будет ли шах союзному королю если фигура сдивентся на новые координаты
-	//Проверяем будет ли шах союзному королю если фигура останется на данном месте
-					roots[tempX][tempY] = 1;//присваиваем элементу массива с "проверенными" координатам значение 1 (одить можно)
-					if (array[tempX][tempY] == 0)// Проверка на пустую клетку
+					if ((array[tempX][tempY] != side) && ((*this).CheckCheck(FiguresB, FiguresW, array, RulesMove[i].getScaleCompX(), RulesMove[i].getScaleCompY(), SizeB, SizeW) == 1) && (CheckCheck(FiguresB, FiguresW, array, 0, 0, SizeB, SizeW) == 1))
 					{
-
-					}
-					else//Если она не пуста (значит занята фигурой противника)
-					{
-						if (i < 32) //Максимальное количество возможных ходов 36,до 32 они каждые 8 "векторов" движения сонаправлены и отличаются только длинной 
-							while (i % 8 != 7)//фигура на одном из векторов встретила фигуру противника,прыгать через них она не может,поэтому проверять 
-								//Векторы в том направлении большей длинны нет необходимости
-							{
-								i++;
-							}
-
-
-
-					}
-				}
-				else
-				{
-					if (CheckCheck(FiguresB, FiguresW, array, 0, 0, SizeB, SizeW) == 1)//Проверяем есть ли сейчас шах союзному королю
-					{
-						if (i < 32)
-							while (i % 8 != 7)
-							{
-								i++;
-							}
-					}
-					else //Если шах есть
-					{
-						if (array[tempX][tempY] != side)//и клетка не занята союзной фигурой
+						//Выполняем проверку наличия союзной фигуры на новых координатах
+						//Проверяем будет ли шах союзному королю если фигура сдивентся на новые координаты
+						//Проверяем будет ли шах союзному королю если фигура останется на данном месте
+						roots[tempX][tempY] = 1;//присваиваем элементу массива с "проверенными" координатам значение 1 (одить можно)
+						if (array[tempX][tempY] == 0)// Проверка на пустую клетку
 						{
 
+						}
+						else//Если она не пуста (значит занята фигурой противника)
+						{
+							if (i < 32) //Максимальное количество возможных ходов 36,до 32 они каждые 8 "векторов" движения сонаправлены и отличаются только длинной 
+								while (i % 8 != 7)//фигура на одном из векторов встретила фигуру противника,прыгать через них она не может,поэтому проверять 
+									//Векторы в том направлении большей длинны нет необходимости
+								{
+									i++;
+								}
 
-							if ((*this).CheckCheck(FiguresB, FiguresW,array, RulesMove[i].getScaleCompX(), RulesMove[i].getScaleCompY(), SizeB, SizeW) == 1)
-								//проверка шаха союзному королю при данном ходе
-							{
-								if (array[tempX][tempY] == 0)//Если это клетка не занята
-								{
-									roots[tempX][tempY] = 1;//Можем ходить на нее
-									isZero = false;//Массив уже точно ненулевой 
-								}
-								else//Если занята (фигурой противоположной стороны)
-								{
-									roots[tempX][tempY] = 1;//Можем сходить на эту клетку
-									if (i < 32)//Но другое перемещение в тоже направление 
-										while (i % 8 != 7)//невозможно
-										{
-											i++;
-										}
-								}
-							}
 
 
 						}
-						else//Если она занята союзной фигурой
+					}
+					else
+					{
+						if (CheckCheck(FiguresB, FiguresW, array, 0, 0, SizeB, SizeW) == 1)//Проверяем есть ли сейчас шах союзному королю
 						{
-							if (i < 32)//То на нее ходить не сможем 
-								while (i % 8 != 7)//И на другие клетки того же направления тоже,переходим к другому вектору
+							if (i < 32)
+								while (i % 8 != 7)
 								{
 									i++;
 								}
 						}
+						else //Если шах есть
+						{
+							if (array[tempX][tempY] != side)//и клетка не занята союзной фигурой
+							{
+
+
+								if ((*this).CheckCheck(FiguresB, FiguresW, array, RulesMove[i].getScaleCompX(), RulesMove[i].getScaleCompY(), SizeB, SizeW) == 1)
+									//проверка шаха союзному королю при данном ходе
+								{
+									if (array[tempX][tempY] == 0)//Если это клетка не занята
+									{
+										roots[tempX][tempY] = 1;//Можем ходить на нее
+										isZero = false;//Массив уже точно ненулевой 
+									}
+									else//Если занята (фигурой противоположной стороны)
+									{
+										roots[tempX][tempY] = 1;//Можем сходить на эту клетку
+										if (i < 32)//Но другое перемещение в тоже направление 
+											while (i % 8 != 7)//невозможно
+											{
+												i++;
+											}
+									}
+								}
+
+
+							}
+							else//Если она занята союзной фигурой
+							{
+								if (i < 32)//То на нее ходить не сможем 
+									while (i % 8 != 7)//И на другие клетки того же направления тоже,переходим к другому вектору
+									{
+										i++;
+									}
+							}
+						}
+
+
+
 					}
-
-
-
 				}
-			}
-			else if ((array[tempX][tempY] != side) && ((*this).CheckCheck(FiguresB, FiguresW, array, RulesMove[i].getScaleCompX(), RulesMove[i].getScaleCompY(), SizeB, SizeW) == 1))
-			//Если количество возможных ходов меньше 8, проводим провекрку будет ли шах при перемещении на новые координаты
-			{
-				roots[tempX][tempY] = 1;//Ходить можно 
-				isZero = false;//Массив ходов уже ненулевой присваиваем false
-			}
-			else//Тогда если шах будет
-			{
-				roots[tempX][tempY] = 0;//Присваиваем значение 0
-			}
+				else if ((array[tempX][tempY] != side) && ((*this).CheckCheck(FiguresB, FiguresW, array, RulesMove[i].getScaleCompX(), RulesMove[i].getScaleCompY(), SizeB, SizeW) == 1))
+					//Если количество возможных ходов меньше 8, проводим провекрку будет ли шах при перемещении на новые координаты
+				{
+					roots[tempX][tempY] = 1;//Ходить можно 
+					isZero = false;//Массив ходов уже ненулевой присваиваем false
+				}
+				else//Тогда если шах будет
+				{
+					roots[tempX][tempY] = 0;//Присваиваем значение 0
+				}
 
+			}
 		}
 	}
-}
 	else//Если фигура лежив в руке
 	{
-	for (int i = 1; i < 10; i++)//Обнуляем массив
-		for (int j = 1; j < 10; j++)
+		for (int i = 1; i < 10; i++)//Обнуляем массив
+			for (int j = 1; j < 10; j++)
+			{
+				roots[i][j] = 1;
+			}
+		if ((typeid(*this).name()) == typeid(Pawn).name())//Проверяем является ли пешкой выбранная фигура
 		{
-			roots[i][j] = 1;
-		}
-	if ((typeid(*this).name()) == typeid(Pawn).name())//Проверяем является ли пешкой выбранная фигура
-	    {
-		if (side == 1)//Если ходящая строная "Белые"
-		   {
-			for (int i = 0; i < SizeW; i++)//"Проходимся" по всем белым фигурам 
+			if (side == 1)//Если ходящая строная "Белые"
 			{
-				if (((typeid(*FiguresW[i]).name()) == typeid(Pawn).name()) && ((*FiguresW[i]).isActive == 1)&& (*FiguresW[i]).transformation == 0)
-					//если фигура - Пешка, находится на доске и не перевернута
+				for (int i = 0; i < SizeW; i++)//"Проходимся" по всем белым фигурам 
 				{
-					for (int j = 1; j < 10; j++)//Зануляем вертикаль на которой она стоит
+					if (((typeid(*FiguresW[i]).name()) == typeid(Pawn).name()) && ((*FiguresW[i]).isActive == 1) && (*FiguresW[i]).transformation == 0)
+						//если фигура - Пешка, находится на доске и не перевернута
 					{
-						roots[j][FiguresW[i]->y]=0;
-					}
-				}
-			}
-			for (int i = 1; i < 10; i++)//Зануляем последнюю горизонталь
-			{
-				roots[9][i]=0;
-			}
-			for (int i = 1; i < 10; i++)//Проверяем все клетки доски
-			{
-				for (int j = 1; j < 10; j++)
-				{
-					if (array[i][j] != 0)  //Если клета занята
-						roots[i][j] = 0; // Ходить сюда не сможем
-				}
-			}
-			Figures **FiguresWhite;//Создаем новый указатель на указатель на массив 
-			FiguresWhite = new Figures *[SizeW + 1];//Выделяем память на 1 больше
-			for (int i = 0; i < SizeW; i++)//Копируем до предпоследнего элемента  (включительной)
-			{
-				FiguresWhite[i] = FiguresW[i];
-			}
-			FiguresWhite[SizeW] = this;// Последнему присваиваем выбранную фигуру
-			VectorMove Save = { this->x,this->y };//Запоминаем старые координат, чтобы потом вернуть
-			bool SaveActive = this->isActive;//Запоминаем состояние фигуры
-			isActive = true;//Фигура на Активна(на доске)
-			for (int i=1;i<10;i++)//проверяем каждую клетку
-				for (int j = 1; j < 10; j++)
-				{
-					if (roots[i][j] == 1)//на которую можно ходить
-					{
-						FiguresWhite[SizeW]->x = i;//перемещаем на новую координату по X
-						FiguresWhite[SizeW]->y = j;//Перемещаем на новую координату по Y
-
-						int HelpBoard[10][10];//создаю вспомогательный массив
-						Template(HelpBoard, array);// Копируем в него массив состояния доски
-						HelpBoard[i][j] = 1;//Текущий координам присваиваем сторону ходящей фигуры
-
-						if (IsMate(FiguresB, FiguresWhite, 1, SizeB, SizeW + 1, HelpBoard) == 1)// Если при данном ходе будет мат
+						for (int j = 1; j < 10; j++)//Зануляем вертикаль на которой она стоит
 						{
-							roots[i][j] = 0;//Ходить нельзя
+							roots[j][FiguresW[i]->y] = 0;
 						}
 					}
 				}
-			isActive = false;//Возращаем состояние фигуры
-			x = Save.getScaleCompX();//Координаты X
-			y = Save.getScaleCompY();//Координаты Y
-		   }
-		else // если стороная фигуры "Черная"
-			//Все действия повторяются но уже для фигур черного цвета
-		    {
-			for (int i = 0; i < SizeB; i++)
-			{
-				if (((typeid(*FiguresB[i]).name()) == typeid(Pawn).name()) && ((*FiguresB[i]).isActive == 1) && (*FiguresB[i]).transformation == 0)
+				for (int i = 1; i < 10; i++)//Зануляем последнюю горизонталь
+				{
+					roots[9][i] = 0;
+				}
+				for (int i = 1; i < 10; i++)//Проверяем все клетки доски
 				{
 					for (int j = 1; j < 10; j++)
 					{
-						roots[j][FiguresB[i]->y] = 0;
+						if (array[i][j] != 0)  //Если клета занята
+							roots[i][j] = 0; // Ходить сюда не сможем
 					}
 				}
-			}
-			for (int i = 1; i < 10; i++)
-			{
-				roots[1][i] = 0;
-			}
-			for (int i = 1; i < 10; i++)
-			{
-				for (int j = 1; j < 10; j++)
+				Figures **FiguresWhite;//Создаем новый указатель на указатель на массив 
+				FiguresWhite = new Figures *[SizeW + 1];//Выделяем память на 1 больше
+				for (int i = 0; i < SizeW; i++)//Копируем до предпоследнего элемента  (включительной)
 				{
-					if (array[i][j] != 0)
-						roots[i][j] = 0;
+					FiguresWhite[i] = FiguresW[i];
 				}
-			}
-			Figures **FiguresBlack;
-			FiguresBlack = new Figures *[SizeB + 1];
-			for (int i = 0; i < SizeB; i++)
-			{
-				FiguresBlack[i] = FiguresB[i];
-			}
-			FiguresBlack[SizeB] = this;
-			VectorMove Save = { this->x,this->y };
-			bool SaveActive = this->isActive;
-			isActive = true;
-			for (int i = 1; i < 10; i++)
-				for (int j = 1; j < 10; j++)
-				{
-					if (roots[i][j] == 1)
+				FiguresWhite[SizeW] = this;// Последнему присваиваем выбранную фигуру
+				VectorMove Save = { this->x,this->y };//Запоминаем старые координат, чтобы потом вернуть
+				bool SaveActive = this->isActive;//Запоминаем состояние фигуры
+				isActive = true;//Фигура на Активна(на доске)
+				for (int i = 1; i < 10; i++)//проверяем каждую клетку
+					for (int j = 1; j < 10; j++)
 					{
-						FiguresBlack[SizeB]->x = i;
-						FiguresBlack[SizeB]->y = j;
-
-						int HelpBoard[10][10];
-						Template(HelpBoard, array);
-						HelpBoard[i][j] = 1;
-
-						if (IsMate(FiguresBlack, FiguresW, 1, SizeB+1, SizeW, HelpBoard) == 1)
+						if (roots[i][j] == 1)//на которую можно ходить
 						{
-							roots[i][j] = 0;
+							FiguresWhite[SizeW]->x = i;//перемещаем на новую координату по X
+							FiguresWhite[SizeW]->y = j;//Перемещаем на новую координату по Y
+
+							int HelpBoard[10][10];//создаю вспомогательный массив
+							Template(HelpBoard, array);// Копируем в него массив состояния доски
+							HelpBoard[i][j] = 1;//Текущий координам присваиваем сторону ходящей фигуры
+
+							if (IsMate(FiguresB, FiguresWhite, 1, SizeB, SizeW + 1, HelpBoard) == 1)// Если при данном ходе будет мат
+							{
+								roots[i][j] = 0;//Ходить нельзя
+							}
+						}
+					}
+				isActive = false;//Возращаем состояние фигуры
+				x = Save.getScaleCompX();//Координаты X
+				y = Save.getScaleCompY();//Координаты Y
+			}
+			else // если стороная фигуры "Черная"
+				//Все действия повторяются но уже для фигур черного цвета
+			{
+				for (int i = 0; i < SizeB; i++)
+				{
+					if (((typeid(*FiguresB[i]).name()) == typeid(Pawn).name()) && ((*FiguresB[i]).isActive == 1) && (*FiguresB[i]).transformation == 0)
+					{
+						for (int j = 1; j < 10; j++)
+						{
+							roots[j][FiguresB[i]->y] = 0;
 						}
 					}
 				}
-			isActive = false;
-			x = Save.getScaleCompX();
-			y = Save.getScaleCompY();
-		    }
+				for (int i = 1; i < 10; i++)
+				{
+					roots[1][i] = 0;
+				}
+				for (int i = 1; i < 10; i++)
+				{
+					for (int j = 1; j < 10; j++)
+					{
+						if (array[i][j] != 0)
+							roots[i][j] = 0;
+					}
+				}
+				Figures **FiguresBlack;
+				FiguresBlack = new Figures *[SizeB + 1];
+				for (int i = 0; i < SizeB; i++)
+				{
+					FiguresBlack[i] = FiguresB[i];
+				}
+				FiguresBlack[SizeB] = this;
+				VectorMove Save = { this->x,this->y };
+				bool SaveActive = this->isActive;
+				isActive = true;
+				for (int i = 1; i < 10; i++)
+					for (int j = 1; j < 10; j++)
+					{
+						if (roots[i][j] == 1)
+						{
+							FiguresBlack[SizeB]->x = i;
+							FiguresBlack[SizeB]->y = j;
+
+							int HelpBoard[10][10];
+							Template(HelpBoard, array);
+							HelpBoard[i][j] = 1;
+
+							if (IsMate(FiguresBlack, FiguresW, 1, SizeB + 1, SizeW, HelpBoard) == 1)
+							{
+								roots[i][j] = 0;
+							}
+						}
+					}
+				isActive = false;
+				x = Save.getScaleCompX();
+				y = Save.getScaleCompY();
+			}
 		}
 		else //Есил выбранная фигура не пешка
 		{
-		for (int i = 1; i < 10; i++)//Ей можно ходить куда угодно 
-			for (int j = 1; j < 10; j++)
-				if (array[i][j] != 0)//если данная клета не занята другой фигурой
-					roots[i][j] = 0;
-        }
-    }
+			for (int i = 1; i < 10; i++)//Ей можно ходить куда угодно 
+				for (int j = 1; j < 10; j++)
+					if (array[i][j] != 0)//если данная клета не занята другой фигурой
+						roots[i][j] = 0;
+		}
+	}
 }
 bool Figures::CheckCheck(Figures* FiguresB[], Figures* FiguresW[], int array[10][10], int NewX, int NewY, int SizeB, int SizeW)
 {
 	int arrayHelp[10][10];//Вспомогательный массив для копирования в него массива состояния доски
 	int mate = 0;//Флаг на окончание игры
 	int KingX, KingY;//Координаты короля
-	int k=-1;
+	int k = -1;
 	if (side == 1)//Если сторона "Белая"
 	{
 		if (array[x + NewX][y + NewY] == 2)//Если на новых координатах стоит черная фигура
 		{
-			for (int i = 0; i<SizeB; i++)//Узнаем какой у нее номер в массиве
+			for (int i = 0; i < SizeB; i++)//Узнаем какой у нее номер в массиве
 			{
 				if ((x + NewX == FiguresB[i]->x) && (y + NewY == FiguresB[i]->y))
 					k = i;//Сохраняем номер
 			}
 		}
-		
+
 		KingX = (*FiguresW[0]).getCordX();//Координата белого короля по X
 		KingY = (*FiguresW[0]).getCordY();//Координата белого короля по Y
 		if ((x == KingX) && (y == KingY))//Если выбранная фигура Король (Белый)
@@ -832,7 +831,7 @@ bool Figures::CheckCheck(Figures* FiguresB[], Figures* FiguresW[], int array[10]
 		{
 			if (i != k)//Кроме той на которую мы можем встать
 			{
-				
+
 				Template(arrayHelp, array);//Копируем в вспомогательный массив массив текущего состояния доски 
 				arrayHelp[x][y] = 0;//Клета с предыдущими координатами теперь свободна
 				arrayHelp[x + NewX][y + NewY] = 1;//Клетка с новыми координатами занята белой фигурой
@@ -872,7 +871,7 @@ bool Figures::CheckCheck(Figures* FiguresB[], Figures* FiguresW[], int array[10]
 				Template(arrayHelp, array);
 				arrayHelp[x][y] = 0;
 				arrayHelp[x + NewX][y + NewY] = 2;
-             if ((*FiguresW[i]).IsCheck(arrayHelp, KingX, KingY) == true)
+				if ((*FiguresW[i]).IsCheck(arrayHelp, KingX, KingY) == true)
 				{
 					return false;
 				}
@@ -972,7 +971,7 @@ bool Figures::CheckTrue(int x, int y, VectorMove& a)
 		}
 		else {
 			return false;
-		   }
+		}
 	}
 
 
@@ -985,10 +984,10 @@ void Template(int a[10][10], int b[10][10])
 		for (int j = 0; j < 10; j++)
 			a[i][j] = b[i][j];
 }
-bool Figures::Eating(Figures  **&b, Figures **&w, int& sizeb, int& sizew, Figures **&byB, Figures **&byW, int& sizebyB, int&sizebyW,Texture&T)
+bool Figures::Eating(Figures  **&b, Figures **&w, int& sizeb, int& sizew, Figures **&byB, Figures **&byW, int& sizebyB, int&sizebyW, Texture&T)
 {
 	Figures empty;//Создаем пустой элемент
-	bool isEmpty=0;//Наличие пустого элемента
+	bool isEmpty = 0;//Наличие пустого элемента
 	int k;
 	if (side == 1)//Если сторона выбранной фигуры "Белые"
 	{
@@ -1007,7 +1006,7 @@ bool Figures::Eating(Figures  **&b, Figures **&w, int& sizeb, int& sizew, Figure
 				b[i]->ChangeRulesSide();//Меняем правила "Ходьбы фигуры"
 				NewB = new Figures *[sizeb];//Создаем динамический массив
 				NewW = new Figures *[sizew];//Создаем динамический массив
-				if (b[i]->transformation==1)//присваиваем состояние трансформации фигуры
+				if (b[i]->transformation == 1)//присваиваем состояние трансформации фигуры
 				{
 					b[i]->transformation = 0;//присваиваем состояние трансформации фигуры
 					b[i]->Swap(T);//Пеняем правила перемещения фигуры и ее текстуру
@@ -1037,9 +1036,9 @@ bool Figures::Eating(Figures  **&b, Figures **&w, int& sizeb, int& sizew, Figure
 						byWhite[j] = byW[j];//Копируем из исходного все элементы
 					}
 					byWhite[sizebyW - 1] = b[i];//последнему элементу нового массива определяем схеденную фигуру
-					
+
 					byW = byWhite;//Копируем в основной массив
-					(**&byW[sizebyW - 1]).getSprite().setPosition(500 - 70 * ((sizebyW - 1)%5), 365+(-80*((sizebyW-1)/5)));//Ставим на новые координаты
+					(**&byW[sizebyW - 1]).getSprite().setPosition(500 - 70 * ((sizebyW - 1) % 5), 365 + (-80 * ((sizebyW - 1) / 5)));//Ставим на новые координаты
 					(**&byW[sizebyW - 1]).getSprite().rotate(180);//Поворачиваем на 180 градусов
 				}
 				for (int j = 0; j < i; j++)
@@ -1055,10 +1054,10 @@ bool Figures::Eating(Figures  **&b, Figures **&w, int& sizeb, int& sizew, Figure
 					NewW[j] = w[j];
 				}
 
-                NewW[sizew - 1] = b[i];
+				NewW[sizew - 1] = b[i];
 				b = NewB;//Копируем обновленные массивы
 				w = NewW;//Копируем обновленные массивы
-				
+
 				return true;
 			}
 		}
@@ -1079,7 +1078,7 @@ bool Figures::Eating(Figures  **&b, Figures **&w, int& sizeb, int& sizew, Figure
 				sizeb += 1;
 				Figures **NewB;
 				Figures **NewW;
-				
+
 				w[i]->ChangeRulesSide();
 				NewB = new Figures *[sizeb];
 				NewW = new Figures *[sizew];
@@ -1097,25 +1096,25 @@ bool Figures::Eating(Figures  **&b, Figures **&w, int& sizeb, int& sizew, Figure
 						break;
 					}
 				}
-					if (isEmpty == true)
+				if (isEmpty == true)
+				{
+					byB[k] = w[i];
+				}
+				else
+				{
+					Figures **byBlack;
+					sizebyB += 1;
+					byBlack = new Figures *[sizebyB];
+					for (int j = 0; j < sizebyB - 1; j++)
 					{
-						byB[k] = w[i];
+						byBlack[j] = byB[j];
 					}
-					else
-					{
-						Figures **byBlack;
-						sizebyB += 1;
-						byBlack = new Figures *[sizebyB];
-						for (int j = 0; j < sizebyB - 1; j++)
-						{
-							byBlack[j] = byB[j];
-						}
-						byBlack[sizebyB - 1] = w[i];
-						byB = byBlack;
-						(**&byB[sizebyB - 1]).getSprite().setPosition(1450 + 70 * ((sizebyB - 1)%5), 710 + 80*((sizebyB-1)/5));
-						(**&byB[sizebyB - 1]).getSprite().rotate(180);
-					}
-				
+					byBlack[sizebyB - 1] = w[i];
+					byB = byBlack;
+					(**&byB[sizebyB - 1]).getSprite().setPosition(1450 + 70 * ((sizebyB - 1) % 5), 710 + 80 * ((sizebyB - 1) / 5));
+					(**&byB[sizebyB - 1]).getSprite().rotate(180);
+				}
+
 				for (int j = 0; j < i; j++)
 				{
 					NewW[j] = w[j];
@@ -1139,7 +1138,7 @@ bool Figures::Eating(Figures  **&b, Figures **&w, int& sizeb, int& sizew, Figure
 }
 bool operator==(Figures& left, Figures& right)
 {
-	
+
 	if ((left.x == right.x) && (left.y == right.y) && (left.side == right.side) && (left.SizeOfRules == right.SizeOfRules) && (left.isActive == right.isActive))
 	{
 		return true;
@@ -1154,34 +1153,34 @@ void Figures::Swap(Texture& T)
 	SpriteD.setTexture(T);//меняем вид объекта 
 	this->transformation = 1;//меняем значение состояния трансформирования
 	VectorMove *SwapRules;//Ниже и до конца меняем местами два динамических массива
-	SwapRules = new VectorMove [SizeOfRules];
+	SwapRules = new VectorMove[SizeOfRules];
 	for (int i = 0; i < SizeOfRules; i++)
 	{
 		SwapRules[i] = RulesMove[i];
 	}
 	int SwapSize = SizeOfRules;
 	delete[] RulesMove;
-    RulesMove = new VectorMove[SizeofRulesTransform];
+	RulesMove = new VectorMove[SizeofRulesTransform];
 	for (int i = 0; i < SizeofRulesTransform; i++)
 	{
 		RulesMove[i] = RulesMoveTransform[i];
 	}
-	delete [] RulesMoveTransform;
+	delete[] RulesMoveTransform;
 	RulesMoveTransform = new VectorMove[SwapSize];
 	SizeOfRules = SizeofRulesTransform;
 	SizeofRulesTransform = SwapSize;
 	RulesMoveTransform = SwapRules;
-	
+
 }
-bool IsMate(Figures* FiguresBlack[], Figures* FiguresWhite[],int turn,int SizeBlack,int SizeWhite,int array[10][10])
+bool IsMate(Figures* FiguresBlack[], Figures* FiguresWhite[], int turn, int SizeBlack, int SizeWhite, int array[10][10])
 {
 	if (turn == 1)//Если ход "белых"
 	{
-		for (int i = 0; i < SizeBlack;i++)
+		for (int i = 0; i < SizeBlack; i++)
 		{
 			if (FiguresBlack[i]->isActive == 1)
 			{
-				FiguresBlack[i]->SearchRoots(FiguresBlack,FiguresWhite,array,SizeBlack,SizeWhite);//Узнаем для каждой фигуры, есть ли у нее доступные ходы
+				FiguresBlack[i]->SearchRoots(FiguresBlack, FiguresWhite, array, SizeBlack, SizeWhite);//Узнаем для каждой фигуры, есть ли у нее доступные ходы
 				if (FiguresBlack[i]->isZero == 0)
 				{
 
@@ -1207,7 +1206,7 @@ bool IsMate(Figures* FiguresBlack[], Figures* FiguresWhite[],int turn,int SizeBl
 		}
 	}
 	return true;
-	
+
 }
 void Figures::ChangeRulesSide()
 {
@@ -1225,7 +1224,7 @@ void Figures::ChangeRulesSide()
 			RulesMoveTransform[i].getCompY() = RulesMoveTransform[i].getScaleCompY()*(-1);
 		}
 
-    }
+	}
 	TransformCoords.getCompX() = abs(TransformCoords.getScaleCompX() - 10);//меняем координаты возможной трасформации
 	TransformCoords.getCompY() = abs(TransformCoords.getScaleCompY() - 10);//меняем координаты обязательной трансформации
 }
